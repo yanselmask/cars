@@ -372,7 +372,7 @@ class ListingResource extends Resource
                     ->badge()
             ])
             ->modifyQueryUsing(function (Builder $query) {
-                if (!auth()->user()->isSuperAdmin()) {
+                if (!auth()->user()->isSuperAdmin() && auth()->user()->id != 1) {
                     return $query->where('user_id', auth()->id());
                 }
 

@@ -5,6 +5,7 @@
     ->orderByDesc('created_at')
     ->get()
 @endphp
+@if($posts->count() > 0)
 <section class="container pb-4 pb-sm-5 mb-2 mb-md-4">
     <div class="d-sm-flex align-items-center justify-content-between mb-3 mb-sm-4 pb-sm-2">
         <h2 class="h3 text-light mb-2 mb-sm-0">{{$data['title']}}</h2>
@@ -18,3 +19,4 @@
         </div>
     </div>
 </section>
+@endif

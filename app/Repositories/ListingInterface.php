@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Repositories;
+
+
+interface ListingInterface
+{
+    public function getPaginated($limit = 8);
+
+    public function getFavorites();
+
+    public function getCompares();
+
+    public function getRelated($id, $limit = 6);
+
+    public function getPaginateForVendor($userId, $limit = 6);
+
+    public function makemodelsJson($make);
+
+    public function findById($id);
+}

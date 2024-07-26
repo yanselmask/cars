@@ -30,6 +30,6 @@
             @endauth
         @endif
         <!-- MENU -->
-        <x-menu :menu='$menu' />
+        <x-filament-menu menu="header" view="menu-item" />
     </div>
 </header>

@@ -90,9 +90,7 @@ return [
     | sections for the home page and other content areas.
     |
     */
-    'locations_menus' => [
-        'header' => 'Header' // Menu located in the header of the page
-    ],
+    'menus_cached' => false,
     'front_sections_type' => [
         'about_us_hero' => 'About Us Hero',
         'list_grid_card' => 'List Grid Card',
@@ -155,8 +153,11 @@ return [
     'path_listing' => 'listing', // Path for listings
     'path_page' => 'page', // Path for pages
     'path_blog' => 'blog', // Path for the blog
+    'path_favorites' => 'favorites', // Path for the blog
+    'path_compares' => 'compares', // Path for the blog
     'admin_path' => 'admin', // Path for the admin panel
-    'vendor_path' => 'vendor', // Path for vendor sections
+    'vendor_path' => 'vendor', // Path for vendor sections,
+    'super_admin_email' => 'super@admin.com',
 
     /*
     |--------------------------------------------------------------------------

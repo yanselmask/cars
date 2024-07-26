@@ -5,6 +5,7 @@
          ->approved()
          ->get();
  @endphp
+ @if($listings->count() > 0)
  <section class="container pt-sm-1 pb-5 mb-md-4">
      <div class="d-sm-flex align-items-center justify-content-between mb-4 pb-sm-2">
          <h2 class="h3 text-light mb-2 mb-sm-0">{{ $data['title'] }}</h2>
@@ -31,3 +32,4 @@
          @endif
      </div>
  </section>
+@endif

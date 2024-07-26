@@ -37,7 +37,7 @@ class AdminPanelProvider extends PanelProvider
             ->path(config('listing.admin_path'))
             ->login()
             ->colors([
-                'primary' => Color::Emerald,
+                'primary' => Color::Cyan,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
@@ -52,6 +52,7 @@ class AdminPanelProvider extends PanelProvider
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
+                \Shipu\WebInstaller\Middleware\RedirectIfNotInstalled::class,
                 StartSession::class,
                 AuthenticateSession::class,
                 ShareErrorsFromSession::class,
@@ -64,6 +65,8 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->plugin(FilamentSpatieRolesPermissionsPlugin::make())
+            ->plugin(\Filament\SpatieLaravelTranslatablePlugin::make()->defaultLocales(config('language.allowed')))
+            ->plugin(\TomatoPHP\FilamentMenus\FilamentMenusPlugin::make())
             ->plugins([
                 FilamentEditProfilePlugin::make()
                     ->setNavigationLabel('My Profile')

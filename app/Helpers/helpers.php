@@ -1,11 +1,34 @@
 <?php
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use TomatoPHP\FilamentMenus\Models\Menu;
 
 if (!function_exists('setActive')) {
     function setActive($routeName, $active = 'active', $none = '')
     {
         return request()->routeIs($routeName) ? $active : $none;
+    }
+}
+
+if (!function_exists('menuTitle')) {
+    function menuTitle($menu)
+    {
+        $key = 'menu.key.' . $menu;
+
+        $titleMenu = Menu::where('key', $menu)->first();
+
+        if (is_null($titleMenu)) {
+            return null;
+        }
+
+        if (config('listing.menus_cached', false)) {
+            return Cache::rememberForever($key, function () use ($titleMenu) {
+                return $titleMenu->title;
+            });
+        }
+
+        return $titleMenu->title;
     }
 }
 

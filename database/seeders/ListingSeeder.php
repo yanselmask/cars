@@ -90,6 +90,25 @@ class ListingSeeder extends Seeder
         ]);
 
         Models\Color::factory(10)->create();
-        Models\Feature::factory(30)->create();
+        Models\Feature::factory(40)->create();
+        Models\Post::factory(30)->create();
+
+        // Models\Condition::factory(2)->create();
+        // Models\Engine::factory(5)->create();
+        // Models\Color::factory(10)->create();
+        // Models\DriveType::factory(6)->create();
+        // Models\Feature::factory(20)->create();
+        // Models\ListedBy::factory(2)->create();
+        // Models\Type::factory(5)->create();
+        // Models\Make::factory(10)->has(
+        //     Models\MakeModel::factory()->count(5),
+        //     'makemodels'
+        // )->create();
+        // Models\FuelType::factory(10)->create();
+        // Models\OfferType::factory(3)->create();
+        // Models\Transmission::factory(5)->create();
+        // Models\Currency::factory(2)->create();
+        // Models\Listing::factory(3)->create();
+        //Models\Post::factory(30)->create();
     }
 }

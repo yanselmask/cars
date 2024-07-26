@@ -24,6 +24,7 @@
     ->orderByDesc('created_at')
     ->get()
 @endphp
+@if($listings->count() > 0)
 <section class="container pt-sm-5 pt-4 pb-3">
       <div class="d-sm-flex align-items-center justify-content-between mb-3 mb-sm-4 pb-2">
           <h2 class="h3 text-light mb-3 mb-sm-0">{{ $data['title'] }}</h2>
@@ -44,3 +45,4 @@
           </div>
       </div>
 </section>
+@endif

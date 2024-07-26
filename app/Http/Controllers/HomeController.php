@@ -8,12 +8,20 @@ use App\Models\Listing;
 use App\Models\Make;
 use App\Models\Page;
 use App\Models\User;
+use App\Repositories\ListingInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Newsletter\Facades\Newsletter;
 
 class HomeController extends Controller
 {
+    protected $listings;
+
+    public function __construct(ListingInterface $listings)
+    {
+        $this->listings = $listings;
+    }
+
     public function home()
     {
         $page = Page::where('slug', config('listing.slug_home'))->first();
@@ -37,7 +45,7 @@ class HomeController extends Controller
 
     public function favorites()
     {
-        $listings = auth()->user()?->favoritedListings()->paginate() ?? [];
+        $listings = $this->listings->getFavorites();
 
         return view('listing.favorites', compact('listings'));
     }
@@ -45,7 +53,7 @@ class HomeController extends Controller
     public function compares()
     {
         $features = Feature::all();
-        $listings = auth()->user()?->comparedListings()->limit(3)->get() ?? [];
+        $listings = $this->listings->getCompares();
 
         return view('listing.compares', compact('listings', 'features'));
     }
@@ -68,7 +76,7 @@ class HomeController extends Controller
     public function addFavorite(Request $request)
     {
         $user = auth()->user();
-        $listing = Listing::find($request->listing);
+        $listing = $this->listings->findById($request->listing);
 
         if ($user->hasFavorited($listing->id)) {
             $user->favoritedListings()->detach($listing);
@@ -87,7 +95,7 @@ class HomeController extends Controller
     public function addCompare(Request $request)
     {
         $user = auth()->user();
-        $listing = Listing::find($request->listing);
+        $listing = $this->listings->findById($request->listing);
 
         if ($user->hasCompared($listing->id)) {
             $user->comparedListings()->detach($listing);
@@ -110,11 +118,12 @@ class HomeController extends Controller
     public function removeFavorite(Request $request)
     {
         $user = User::find($request->user);
-        $listing = Listing::find($request->listing);
+        $listing = $this->listings->findById($request->listing);
 
         if (!$user || !$listing) {
             return response()->json(['error' => 'User or listing not found'], 404);
         }
+
         $user->favoritedListings()->attach($listing);
 
         return response()->json(['message' => 'Listing removed from favorite']);
@@ -137,33 +146,6 @@ class HomeController extends Controller
         $user->comparedListings()->attach($listing);
 
         return response()->json(['message' => 'Listing added to comparisons']);
-    }
-
-    public function removeComparison($userId, $listingId)
-    {
-        $user = User::find($userId);
-        $listing = Listing::find($listingId);
-
-        if (!$user || !$listing) {
-            return response()->json(['error' => 'User or listing not found'], 404);
-        }
-
-        $user->comparedListings()->detach($listing);
-
-        return response()->json(['message' => 'Listing removed from comparisons']);
-    }
-
-    public function checkComparison($userId, $listingId)
-    {
-        $user = User::find($userId);
-
-        if (!$user) {
-            return response()->json(['error' => 'User not found'], 404);
-        }
-
-        $isCompared = $user->hasCompared($listingId);
-
-        return response()->json(['isCompared' => $isCompared]);
     }
 
     public function consultSubmit(Request $request)
@@ -190,7 +172,7 @@ class HomeController extends Controller
         $consult->sender_id = auth()->user()?->id ?? null;
 
         if (isset($validated['listing'])) {
-            $listing = \App\Models\Listing::with('user')->find($validated['listing']);
+            $listing = $this->listings->findById($validated['listing']);
             $consult->listing_id = $listing->id;
             $consult->receiver_id = $listing->user->id;
         } else {

@@ -58,7 +58,7 @@
                         @foreach ($related as $rt)
                             <div class="d-flex align-items-start border-bottom border-light pb-3 mb-3">
                                 <a class="flex-shrink-0" href="#">
-                                    <img class="rounded-3" src="{{ $rt->small_image }}" width="80"
+                                    <img class="rounded-3" src="{{ $rt->thumb_image }}" width="80"
                                         alt="{{ $rt->name }}">
                                 </a>
                                 <div class="ps-3">

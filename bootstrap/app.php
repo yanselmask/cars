@@ -11,11 +11,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->web([
-            // 'redirect.if.not.installed',
-            \Torann\Currency\Middleware\CurrencyMiddleware::class,
-            'language'
-        ]);
+        $middleware->web([]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

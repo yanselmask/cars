@@ -37,6 +37,7 @@ class SeederListing extends Command
             $url = 'https://auto.dev/api/models?apikey=' . config('listing.auto_dev_api');
             $request = Http::get($url);
             $data = $request->json();
+
             $bar = $this->output->createProgressBar(count($data));
 
             foreach ($data as $k => $m) {
@@ -45,9 +46,10 @@ class SeederListing extends Command
                 ]);
                 foreach ($m as $kt) {
                     $make->makemodels()->create(['name' => $kt]);
-                    $bar->advance();
                 }
+                $bar->advance();
             }
+
             $bar->finish();
         }
     }

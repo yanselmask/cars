@@ -51,30 +51,27 @@ class Post extends Model implements HasMedia
     {
         $this
             ->addMediaConversion('large')
-            ->width(1284)
-            ->height(600)
-            ->sharpen(10)
+            ->fit(Fit::Crop, 1284, 600)
             ->nonQueued();
 
         $this
             ->addMediaConversion('medium')
-            ->width(954)
-            ->height(450)
-            ->sharpen(10)
+            ->fit(Fit::Crop, 954, 450)
             ->nonQueued();
 
         $this
             ->addMediaConversion('small')
-            ->width(624)
-            ->height(300)
-            ->sharpen(10)
+            ->fit(Fit::Crop, 624, 300)
+            ->nonQueued();
+
+        $this
+            ->addMediaConversion('thumb')
+            ->fit(Fit::Crop, 150, 150)
             ->nonQueued();
 
         $this
             ->addMediaConversion('single')
-            ->width(1944)
-            ->height(900)
-            ->sharpen(10)
+            ->fit(Fit::Crop, 1944, 900)
             ->nonQueued();
     }
 
@@ -82,28 +79,35 @@ class Post extends Model implements HasMedia
     {
         $mediaItems = $this->getMedia();
 
-        return count($mediaItems)  > 0 ? $mediaItems[0]->getUrl('single') : 'https://via.assets.so/img.jpg?w=1944&h=900&tc=blue&bg=#cecece';
+        return count($mediaItems)  > 0 ? $mediaItems[0]->getUrl('single') : 'https://placehold.co/1944x900';
     }
 
     public function getLargeImageAttribute()
     {
         $mediaItems = $this->getMedia();
 
-        return count($mediaItems)  > 0 ? $mediaItems[0]->getUrl('large') : 'https://via.assets.so/img.jpg?w=1284&h=600&tc=blue&bg=#cecece';
+        return count($mediaItems)  > 0 ? $mediaItems[0]->getUrl('large') : 'https://placehold.co/1284x600';
     }
 
     public function getMediumImageAttribute()
     {
         $mediaItems = $this->getMedia();
 
-        return count($mediaItems)  > 0 ? $mediaItems[0]->getUrl('medium') : 'https://via.assets.so/img.jpg?w=954&h=450&tc=blue&bg=#cecece';
+        return count($mediaItems)  > 0 ? $mediaItems[0]->getUrl('medium') : 'https://placehold.co/954x450';
     }
 
     public function getSmallImageAttribute()
     {
         $mediaItems = $this->getMedia();
 
-        return count($mediaItems)  > 0 ? $mediaItems[0]->getUrl('small') : 'https://via.assets.so/img.jpg?w=624&h=300&tc=blue&bg=#cecece';
+        return count($mediaItems)  > 0 ? $mediaItems[0]->getUrl('small') : 'https://placehold.co/624x300';
+    }
+
+    public function getThumbImageAttribute()
+    {
+        $mediaItems = $this->getMedia();
+
+        return count($mediaItems)  > 0 ? $mediaItems[0]->getUrl('thumb') : 'https://placehold.co/150x150';
     }
 
     public function getDateAttribute()

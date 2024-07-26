@@ -39,17 +39,17 @@
             @endif
             @if (config('listing.footer_widgets.show_widget_2'))
                 <div class="col-lg-2 col-md-3 col-sm-6 offset-xl-1 mb-2 mb-sm-4">
-                    {!! Menu::footer_widget_1() !!}
+                     <x-filament-menu menu="footer_menu_1" view="menu-item" />
                 </div>
             @endif
             @if (config('listing.footer_widgets.show_widget_3'))
                 <div class="col-lg-2 col-md-3 col-sm-6 mb-2 mb-sm-4">
-                    {!! Menu::footer_widget_2() !!}
+                        <x-filament-menu menu="footer_menu_2" view="menu-item" />
                 </div>
             @endif
             @if (config('listing.footer_widgets.show_widget_4'))
                 <div class="col-lg-2 col-md-3 col-sm-6 mb-2 mb-sm-4">
-                    {!! Menu::footer_widget_3() !!}
+                    <x-filament-menu menu="footer_menu_3" view="menu-item" />
                 </div>
             @endif
             @if (config('listing.footer_widgets.show_widget_5'))
@@ -99,7 +99,7 @@
         </div>
     </div>
     <div class="container d-lg-flex align-items-center justify-content-between fs-sm pb-3">
-        {!! Menu::footer_bottom() !!}
+         <x-filament-menu menu="footer_bottom" view="menu-item" />
         <p class="text-center text-lg-start order-lg-1 mb-lg-0">{!! copyright() !!}</p>
     </div>
 </footer>
