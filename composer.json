@@ -2,15 +2,40 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "keywords": [
+        "laravel",
+        "framework"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "akaunting/laravel-language": "^1.0",
+        "althinect/filament-spatie-roles-permissions": "^2.2",
+        "arbermustafa/filament-locationpickr-field": "^2.0.0",
+        "filament/filament": "^3.2",
+        "filament/spatie-laravel-media-library-plugin": "^3.2",
+        "filament/spatie-laravel-settings-plugin": "^3.2",
+        "filament/spatie-laravel-tags-plugin": "^3.2",
+        "flowframe/laravel-trend": "^0.2.0",
+        "joaopaulolndev/filament-edit-profile": "^1.0",
+        "joaopaulolndev/filament-general-settings": "^1.0",
         "laravel/breeze": "^2.1",
         "laravel/framework": "^11.9",
-        "laravel/tinker": "^2.9"
+        "laravel/spark-paddle": "dev-main",
+        "laravel/tinker": "^2.9",
+        "mckenziearts/laravel-notify": "^2.5",
+        "ralphjsmit/laravel-filament-seo": "^1.3",
+        "shetabit/visitor": "^2.0",
+        "solution-forest/filament-tree": "^2.0",
+        "spatie/laravel-menu": "^4.2",
+        "spatie/laravel-newsletter": "^5.2",
+        "spatie/laravel-sluggable": "^3.6",
+        "spatie/mailcoach-sdk-php": "^1.6",
+        "tomatophp/filament-translations": "^1.0",
+        "torann/currency": "^1.1"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.13",
         "fakerphp/faker": "^1.23",
         "laravel/pint": "^1.13",
         "laravel/sail": "^1.26",
@@ -19,12 +44,21 @@
         "pestphp/pest": "^2.0",
         "pestphp/pest-plugin-laravel": "^2.0"
     },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "./spark-paddle"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "App/Helpers/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
@@ -34,7 +68,8 @@
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "@php artisan filament:upgrade"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
@@ -62,6 +97,6 @@
             "php-http/discovery": true
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true
 }
