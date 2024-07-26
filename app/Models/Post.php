@@ -115,6 +115,7 @@ class Post extends Model implements HasMedia
         return $this->created_at->format(config('listing.date_format'));
     }
 
+
     /**
      * Get the route key for the model.
      *
