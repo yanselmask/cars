@@ -24,7 +24,7 @@
                             <div class="ps-3">
                                 <h3 class="h5 text-light mb-2">{{ $post->user->full_name }}</h3>
                                 <p class="fs-sm text-light opacity-70">
-                                    {{ __('Chief Editor at :site', ['site' => config('app.name')]) }}</p>
+                                    {{ __('Chief Editor at :site', ['site' => gs('site_name') ?? config('app.name')]) }}</p>
                                 <div class="d-flex">
                                     @if (site_social('facebook'))
                                         <a class="btn btn-icon btn-translucent-light btn-xs rounded-circle me-2"
