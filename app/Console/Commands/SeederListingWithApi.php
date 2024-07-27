@@ -149,7 +149,7 @@ class SeederListingWithApi extends Command
                                     ->preservingOriginal()
                                     ->toMediaCollection();
                             } catch (\Exception $e) {
-                                $this->danger('Error getting image');
+                                $this->error('Error getting image');
                                 continue;
                             }
                         }
@@ -160,7 +160,7 @@ class SeederListingWithApi extends Command
                                 ->preservingOriginal()
                                 ->toMediaCollection();
                         } catch (\Exception $e) {
-                            $this->danger('Error getting image');
+                            $this->error('Error getting image');
                         }
                     }
                 });
