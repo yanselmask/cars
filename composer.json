@@ -12,6 +12,7 @@
         "akaunting/laravel-language": "^1.0",
         "althinect/filament-spatie-roles-permissions": "^2.2",
         "arbermustafa/filament-locationpickr-field": "^2.0.0",
+        "barryvdh/laravel-debugbar": "^3.13",
         "filament/filament": "^3.2",
         "filament/spatie-laravel-media-library-plugin": "^3.2",
         "filament/spatie-laravel-settings-plugin": "^3.2",
@@ -37,7 +38,6 @@
         "torann/currency": "^1.1"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.13",
         "fakerphp/faker": "^1.23",
         "laravel/pint": "^1.13",
         "laravel/sail": "^1.26",
