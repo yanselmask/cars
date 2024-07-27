@@ -6,7 +6,7 @@
                 'name' => __('Home'),
                 'link' => route('home')
             ]
-        ]" active="{{__('Blog')}}" />
+        ]" active="{{__('Blog')}}" class="mb-4 pt-md-3" />
         <!-- Page title-->
         <h1 class="text-light mb-4">{{$titlePage}}</h1>
         <!-- Sorting, filters and search-->
