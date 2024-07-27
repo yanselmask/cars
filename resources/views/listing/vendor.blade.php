@@ -226,6 +226,7 @@
                 const selectedValue = event.target.value;
                 const url = new URL(window.location);
                 url.searchParams.set('sort', selectedValue);
+                 url.searchParams.delete('page');
                 window.location.href = url.toString();
             })
         </script>
