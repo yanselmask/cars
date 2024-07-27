@@ -91,6 +91,7 @@ return [
     |
     */
     'menus_cached' => false,
+    'progress_bar' => true,
     'front_sections_type' => [
         'about_us_hero' => 'About Us Hero',
         'list_grid_card' => 'List Grid Card',
