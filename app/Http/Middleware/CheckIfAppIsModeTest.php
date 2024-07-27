@@ -15,9 +15,8 @@ class CheckIfAppIsModeTest
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (env('APP_MODE_TEST') && ($request->method('update') || $request->method('put') || $request->method('delete'))) {
-            emotify('warning', __('This is not allowed'));
-            return redirect()->route('home');
+        if (env('APP_MODE_TEST') && ($request->isMethod('update') || $request->isMethod('put') || $request->isMethod('delete'))) {
+            return back();
         }
 
         return $next($request);
