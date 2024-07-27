@@ -1,7 +1,7 @@
 <x-app-layout>
         @push('seo')
         @if(!$post->seo->image && count($post->media))
-          {{-- <meta property="og:image" content="{{ $post->media->getUrl('single') }}"> --}}
+          <meta property="og:image" content="{{ $post->media[0]->getUrl('single') }}">
         @endif
         {!! seo()->for($post) !!}
     @endpush

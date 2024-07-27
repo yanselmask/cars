@@ -50,7 +50,8 @@ class PostResource extends Resource
                     SpatieMediaLibraryFileUpload::make('featured_image'),
                     // Forms\Components\FileUpload::make('featured_image'),
                     Forms\Components\Select::make('user_id')
-                        ->relationship(name: 'user', titleAttribute: 'name'),
+                        ->relationship(name: 'user', titleAttribute: 'name')
+                        ->default(auth()->user()->id),
                 ]),
                 SEO::make()
             ]);

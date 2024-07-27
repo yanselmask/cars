@@ -60,6 +60,8 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+                \App\Http\Middleware\CheckIfAppIsModeTest::class,
+                \App\Http\Middleware\ClearCacheEveryUpdate::class
             ])
             ->authMiddleware([
                 Authenticate::class,

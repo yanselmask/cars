@@ -11,9 +11,14 @@ class breadcrumb extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public $class = 'mb-4 pt-md-3', public $routes = [], public $active = 'Home')
+    public $class;
+    public $routes;
+    public $active;
+    public function __construct($class = 'mb-4 pt-md-3',  $routes = [], $active = 'Home')
     {
-        //
+        $this->class = $class;
+        $this->routes = $routes;
+        $this->active = $active;
     }
 
     /**

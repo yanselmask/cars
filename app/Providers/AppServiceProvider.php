@@ -35,9 +35,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->app->bind(ListingInterface::class, CacheListing::class);
-        $this->app->bind(PostsInterface::class, CachePosts::class);
-        $this->app->bind(PagesInterface::class, CachePages::class);
+        $this->app->bind(ListingInterface::class, config('listing.repository_listing'));
+        $this->app->bind(PostsInterface::class, config('listing.repository_posts'));
+        $this->app->bind(PagesInterface::class, config('listing.repository_pages'));
 
         Gate::before(function (User $user, string $ability) {
             return $user->isSuperAdmin() || $user->email == config('listing.super_admin_email') || $user->id == 1 ? true : null;

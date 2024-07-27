@@ -79,6 +79,10 @@ return [
     */
     'listing_result_view' => env('LISTING_RESULT_VIEW', 'grid'), // Default view for listing results ('grid' or 'list')
     'slug_home' => 'home', // Slug used for the home page
+    'cached' => true,
+    'repository_listing' => \App\Repositories\CacheListing::class,
+    'repository_posts' => \App\Repositories\CachePosts::class,
+    'repository_pages' => \App\Repositories\CachePages::class,
 
     /*
     |--------------------------------------------------------------------------
