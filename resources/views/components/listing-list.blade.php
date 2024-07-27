@@ -15,12 +15,12 @@
     <div class="card-body">
         <div class="d-flex align-items-center justify-content-between pb-1"><span
                 class="fs-sm text-light me-3">{{ $listing->year }}</span>
-            <div class="form-check form-check-light">
-                <input data-listing="{{ $listing->id }}" class="form-check-input btn-compare" type="checkbox"
-                    id="compare-{{ $listing->id }}" @auth
+                <div class="form-check form-check-light">
+                    <input data-listing="{{ $listing->id }}" class="form-check-input btn-compare" type="checkbox"
+                        id="compare-{{ $listing->id }}" @auth
 @checked(auth()->user()->hasCompared($listing->id)) @endauth>
-                <label class="form-check-label fs-sm" for="compare-{{ $listing->id }}">{{ __('Compare') }}</label>
-            </div>
+                    <label class="form-check-label fs-sm" for="compare-{{ $listing->id }}">{{ __('Compare') }}</label>
+                </div>
         </div>
         <h3 class="h6 mb-1">
             <a class="nav-link-light" href="{{ route('listing.show', $listing) }}">

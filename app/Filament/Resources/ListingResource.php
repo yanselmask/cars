@@ -361,7 +361,7 @@ class ListingResource extends Resource
                 Tables\Columns\TextColumn::make('condition.name')
                     ->searchable(),
                 Tables\Columns\CheckboxColumn::make('is_featured')
-                    ->visible(auth()->user()->isSuperAdmin()),
+                    ->visible(auth()->user()->isSuperAdmin() || auth()->user()->canFeatureListing()),
                 Tables\Columns\TextColumn::make('fueltype.name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('offertype.name')

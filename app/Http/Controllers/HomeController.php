@@ -81,6 +81,7 @@ class HomeController extends Controller
 
         if ($user->hasFavorited($listing->id)) {
             $user->favoritedListings()->detach($listing);
+            Cache::flush();
             return response()->json(['message' => 'Listing removed from favorite']);
         }
 
@@ -89,6 +90,8 @@ class HomeController extends Controller
         }
 
         $user->favoritedListings()->attach($listing);
+
+        Cache::flush();
 
         return response()->json(['message' => 'Listing added to favorite']);
     }
@@ -100,6 +103,7 @@ class HomeController extends Controller
 
         if ($user->hasCompared($listing->id)) {
             $user->comparedListings()->detach($listing);
+            Cache::flush();
             return response()->json(['message' => 'Listing removed from compare']);
         }
 
@@ -113,21 +117,9 @@ class HomeController extends Controller
 
         $user->comparedListings()->attach($listing);
 
+        Cache::flush();
+
         return response()->json(['message' => 'Listing added to compare']);
-    }
-
-    public function removeFavorite(Request $request)
-    {
-        $user = User::find($request->user);
-        $listing = $this->listings->findById($request->listing);
-
-        if (!$user || !$listing) {
-            return response()->json(['error' => 'User or listing not found'], 404);
-        }
-
-        $user->favoritedListings()->attach($listing);
-
-        return response()->json(['message' => 'Listing removed from favorite']);
     }
 
     public function compare()

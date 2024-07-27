@@ -11,20 +11,7 @@
                          <h2 class="h5 text-light fw-normal text-center py-1 mb-0">{{ $plan['name'] }}</h2>
                          <div class="d-flex align-items-end justify-content-center mb-4">
                              <div class="h1 text-light mb-0">
-                               @switch($plan['monthly_id'])
-                                   @case('pri_01j38742kbrzd2ccyydaeghh0s')
-                                        $9.99
-                                       @break
-                                   @case('pri_01j3jjpdgvjxk5xj39y9025qk7')
-                                        $25
-                                       @break
-
-                                    @case('pri_01j3kgrt2yj3zemwxx316bxq1m')
-                                        $50
-                                       @break
-                                   @default
-
-                               @endswitch
+                               {{$plan['price_formatted']}}
                             </div>
                              <div class="pb-2 ps-2">/{{__('month')}}</div>
                          </div>

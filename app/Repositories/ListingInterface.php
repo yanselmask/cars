@@ -7,7 +7,7 @@ interface ListingInterface
 {
     public function getPaginated($limit = 8);
 
-    public function getFavorites();
+    public function getFavorites($limit = 6);
 
     public function getCompares();
 

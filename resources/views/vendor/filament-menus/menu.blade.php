@@ -3,7 +3,7 @@
         <ul class="navbar-nav navbar-nav-scroll" style="max-height: 35rem;">
             @foreach ($menuItems as $item)
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ $item['route'] ? route($item['route']) : $item['url'] }}" @if($item['blank']) target="_blank" @endif>
+                    <a class="nav-link {{strlen($item['url']) == 1 && setActive('home') ? 'active' : ''}} {{ request()->path() == substr($item['url'],1) && strlen($item['url']) > 1 ? 'active' : ''}}" href="{{ $item['route'] ? route($item['route']) : $item['url'] }}" @if($item['blank']) target="_blank" @endif>
                         {{ $item['title'][app()->getLocale()] }}
                     </a>
                 </li>

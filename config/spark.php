@@ -102,6 +102,7 @@ return [
                 [
                     'icon' => 'theme/img/icon-1.svg',
                     'name' => 'Basic',
+                    'price_formatted' => '$9.99',
                     'short_description' => 'This is a short, human friendly description of the plan.',
                     'monthly_id' => env('SPARK_STANDARD_MONTHLY_PLAN', 'pri_01j38742kbrzd2ccyydaeghh0s'),
                     'yearly_id' => env('SPARK_STANDARD_YEARLY_PLAN', 'pri_01j3874eqz5nz619twfghe14xp'),
@@ -119,6 +120,7 @@ return [
                     'icon' => 'theme/img/icon-2.svg',
                     'featured' => true,
                     'name' => 'Standard',
+                    'price_formatted' => '$24.99',
                     'short_description' => 'This is a short, human friendly description of the plan.',
                     'monthly_id' => env('SPARK_STANDARD_MONTHLY_PLAN', 'pri_01j3jjpdgvjxk5xj39y9025qk7'),
                     'yearly_id' => env('SPARK_STANDARD_YEARLY_PLAN', 'pri_01j3jjqb9n92cm0tbrts5t8462'),
@@ -136,6 +138,7 @@ return [
                 [
                     'icon' => 'theme/img/icon-3.svg',
                     'name' => 'Premium',
+                    'price_formatted' => '$49.99',
                     'short_description' => 'This is a short, human friendly description of the plan.',
                     'monthly_id' => env('SPARK_STANDARD_MONTHLY_PLAN', 'pri_01j3kgrt2yj3zemwxx316bxq1m'),
                     'yearly_id' => env('SPARK_STANDARD_YEARLY_PLAN', 'pri_01j3kgs5keym2vjffnz5pjm7kx'),

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Cache;
 
 class Listing implements ListingInterface
 {
-    public function getPaginated($limit = 8)
+    public function getQuery()
     {
         return $this->listingWithResourcers()
             ->when(request()->query('location'), function ($sql) {
@@ -37,7 +37,7 @@ class Listing implements ListingInterface
             })
             ->when(request()->query('min_price') || request()->query('max_price'), function ($sql) {
                 $sql->where(function ($q) {
-                    $q->whereBetween('price', [request()->query('min_price', 0), request()->query('max_price', Listing::max('price'))]);
+                    $q->whereBetween('price', [request()->query('min_price', 0), request()->query('max_price', \App\Models\Listing::max('price'))]);
                 });
             })
             ->when(request()->query('is_negotiated'), function ($sql) {
@@ -121,14 +121,18 @@ class Listing implements ListingInterface
                         ->orderByDesc('visit_logs_count'),
                     default => $sql->orderBy('id', 'desc'),
                 };
-            })
+            });
+    }
+    public function getPaginated($limit = 8)
+    {
+        return $this->getQuery()
             ->sorting()
             ->paginate($limit);
     }
 
-    public function getFavorites()
+    public function getFavorites($limit = 6)
     {
-        return auth()->user()?->favoritedListings()->paginate() ?? [];
+        return auth()->user()?->favoritedListings()->paginate($limit) ?? [];
     }
 
     public function getCompares()

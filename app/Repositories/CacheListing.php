@@ -22,12 +22,12 @@ class CacheListing implements ListingInterface
         });
     }
 
-    public function getFavorites()
+    public function getFavorites($limit = 6)
     {
         $key = 'listing.favorites.by.' . auth()->user()?->id ?? 0;
 
-        return Cache::rememberForever($key, function () {
-            return $this->listings->getFavorites();
+        return Cache::rememberForever($key, function () use ($limit) {
+            return $this->listings->getFavorites($limit);
         });
     }
 

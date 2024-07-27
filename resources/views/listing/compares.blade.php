@@ -1,5 +1,12 @@
 <x-app-layout title="{{ 'Compares - ' . gs('site_name') }}">
     <section class="container mt-5 py-5">
+          <!-- Breadcrumb-->
+        <x-breadcrumb active="{{__('Compares')}}" :routes="[
+            [
+                'name' => 'Home',
+                'link' => route('home'),
+            ],
+        ]" />
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h2 class="h3 text-light mb- mb-sm-0">{{ __('Compares') }}</h2>
         </div>

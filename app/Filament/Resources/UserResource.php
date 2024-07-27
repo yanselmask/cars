@@ -26,10 +26,8 @@ class UserResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->searchable(),
+                    ->required(),
                 Forms\Components\TextInput::make('email')
-                    ->searchable()
                     ->required()
                     ->email(),
                 Forms\Components\DatePicker::make('email_verified_at'),

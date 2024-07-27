@@ -5,8 +5,6 @@ namespace App\View\Components;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
-use Spatie\Menu\Laravel\Facades\Menu;
-use Spatie\Menu\Laravel\Link;
 
 class header extends Component
 {
@@ -23,10 +21,6 @@ class header extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.header', [
-            'menu' => Menu::new()
-                ->add(Link::to('/', 'Home'))
-                ->add(Link::to('/about', 'About'))
-        ]);
+        return view('components.header');
     }
 }

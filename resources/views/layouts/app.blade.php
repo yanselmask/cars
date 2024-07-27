@@ -11,6 +11,7 @@
     <!-- Vendor Styles-->
     <link rel="stylesheet" media="screen" href="{{ asset('theme/css/simplebar.min.css') }}" />
     <link rel="stylesheet" media="screen" href="{{ asset('theme/css/tiny-slider.css') }}" />
+    <link rel="stylesheet" media="screen" href="https://unpkg.com/nprogress@0.2.0/nprogress.css" />
 
     <!-- Main Theme Styles + Bootstrap-->
     <link rel="stylesheet" media="screen" href="{{ asset('theme/css/theme.min.css') }}">
@@ -27,11 +28,12 @@
 
     @stack('seo')
 
-     <title>{{ $title ?? gs('site_name') }}</title>
+    <title>{{ $title ?? gs('site_name') }}</title>
 
 </head>
 
 <body class="bg-dark">
+    <div id="app"></div>
     <!-- Page Content -->
     <main class="page-wrapper">
         @include('notify::components.notify')
@@ -53,7 +55,17 @@
     <script src="{{ asset('theme/js/nouislider.min.js') }}"></script>
     <script src="{{ asset('theme/js/jarallax.min.js') }}"></script>
     <script src="{{ asset('theme/js/rellax.min.js') }}"></script>
-
+    <script src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
+    <script src="https://unpkg.com/htmx.org@2.0.1"></script>
+    <script>
+        if (document.readyState === "loading") {
+            NProgress.start();
+            // Loading hasn't finished yet
+            document.addEventListener("DOMContentLoaded", () => {
+                NProgress.done();
+            });
+        }
+    </script>
     @stack('js-libs')
     <script>
         const btns = document.querySelectorAll('.btn-favorite');
