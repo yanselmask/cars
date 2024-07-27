@@ -101,7 +101,8 @@ class SeederListingWithApi extends Command
                             'lat' => $listing['lat'],
                             'lng' => $listing['lon']
                         ],
-                        'content' => fake()->paragraph(40),
+                        'description' => 'Lorem tincidunt lectus vitae id vulputate diam quam. Imperdiet non scelerisque turpis sed etiam ultrices. Blandit mollis dignissim egestas consectetur porttitor. Vulputate dolor pretium, dignissim eu augue sit ut convallis. Lectus est, magna urna feugiat sed ultricies sed in lacinia. Fusce potenti sit id pharetra vel ornare. Vestibulum sed tellus ullamcorper arcu.',
+                        'content' => 'Asperiores eos molestias, aspernatur assumenda vel corporis ex, magni excepturi totam exercitationem quia inventore quod amet labore impedit quae distinctio? Officiis blanditiis consequatur alias, atque, sed est incidunt accusamus repudiandae tempora repellendus obcaecati delectus ducimus inventore tempore harum numquam autem eligendi culpa.',
                         'currency_id' => Models\Currency::where('symbol', substr($listing['price'], 0, 1))->first()->id,
                         'price' =>  $listing['priceUnformatted'],
                         'mileage' => $listing['mileageUnformatted'],

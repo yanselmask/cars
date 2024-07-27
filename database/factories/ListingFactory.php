@@ -36,6 +36,7 @@ class ListingFactory extends Factory
             'year' => rand(1950, 2025),
             'cylinders' => rand(1, 16),
             'vin' => fake()->sentence(1),
+            'description' => fake()->paragraph(20),
             'content' => fake()->paragraph(50),
             'video_link' => fake()->randomElement(['https://www.youtube.com/watch?v=L9_xKVwVkso', 'https://www.youtube.com/watch?v=qChhd2Rsx4A', 'https://www.youtube.com/watch?v=4Ic2hXWTaBk', 'https://www.youtube.com/watch?v=8QkGS1rSmG0']),
             'price' => rand(10000, 999999),
