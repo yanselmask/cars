@@ -51,6 +51,8 @@ class AppPanelProvider extends PanelProvider
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
                 \Shipu\WebInstaller\Middleware\RedirectIfNotInstalled::class,
+                \App\Http\Middleware\CheckIfAppIsModeTest::class,
+                \App\Http\Middleware\ClearCacheEveryUpdate::class,
                 StartSession::class,
                 AuthenticateSession::class,
                 ShareErrorsFromSession::class,
