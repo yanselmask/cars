@@ -17,7 +17,7 @@ class SeederListingWithApi extends Command
      *
      * @var string
      */
-    protected $signature = 'listing:listings {qty?} {page?} {--images}';
+    protected $signature = 'listing:listings {qty?} {page?} {make?} {model?} {--images}';
 
     /**
      * The console command description.
@@ -40,7 +40,13 @@ class SeederListingWithApi extends Command
             $models = ['All'];
 
             if ($this->argument('qty')) {
-                $url = 'https://auto.dev/api/listings?apikey=' . config('listing.auto_dev_api') . '&limit=' . $this->argument('qty') . '&page=' . $this->argument('page') ?? 1;
+                if ($this->argument('make')) {
+                    if ($this->argument('model')) {
+                        $url = 'https://auto.dev/api/listings?apikey=' . config('listing.auto_dev_api') . '&make=' . $this->argument('make') . '&model=' . $this->argument('model') . '&limit=' . $this->argument('qty') . '&page=' . $this->argument('page') ?? 1;
+                    } else {
+                        $url = 'https://auto.dev/api/listings?apikey=' . config('listing.auto_dev_api') . '&make=' . $this->argument('make') . '&limit=' . $this->argument('qty') . '&page=' . $this->argument('page') ?? 1;
+                    }
+                }
             } else {
 
                 foreach ($makesOptionsData as $k => $v) {
