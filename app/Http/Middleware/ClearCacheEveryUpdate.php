@@ -16,7 +16,7 @@ class ClearCacheEveryUpdate
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (config('listing.cached') && ($request->method('post') || $request->method('update') || $request->method('put') || $request->method('delete'))) {
+        if (config('listing.cached') && ($request->isMethod('patch') || $request->method('post') || $request->method('update') || $request->method('put') || $request->method('delete'))) {
             Cache::flush();
         }
 

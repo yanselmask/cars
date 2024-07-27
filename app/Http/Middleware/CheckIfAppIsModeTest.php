@@ -15,7 +15,7 @@ class CheckIfAppIsModeTest
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (env('APP_MODE_TEST') && ($request->isMethod('update') || $request->isMethod('put') || $request->isMethod('delete'))) {
+        if (env('APP_MODE_TEST') && ($request->isMethod('patch') || $request->isMethod('update') || $request->isMethod('put') || $request->isMethod('delete'))) {
             return back();
         }
 
