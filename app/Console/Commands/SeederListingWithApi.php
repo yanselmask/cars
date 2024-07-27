@@ -17,7 +17,7 @@ class SeederListingWithApi extends Command
      *
      * @var string
      */
-    protected $signature = 'listing:listings {--images}';
+    protected $signature = 'listing:listings {qty?} {--images}';
 
     /**
      * The console command description.
@@ -39,45 +39,50 @@ class SeederListingWithApi extends Command
             $makes = ['All'];
             $models = ['All'];
 
-            foreach ($makesOptionsData as $k => $v) {
-                $makes[] = $k;
-            }
-
-            $selectedMake = $this->choice(
-                'What is the make?',
-                $makes,
-                'All'
-            );
-
-            if ($selectedMake != 'All') {
-                $options = MakeModel::select('id', 'name')
-                    ->whereHas('make', function ($query) use ($selectedMake) {
-                        $query->where('name', $selectedMake);
-                    })->get();
-
-                foreach ($options as $k) {
-                    $models[$k->name] = $k->name;
-                }
-            }
-
-            $selectedModel = $this->choice(
-                'What is the model?',
-                $models,
-                'All'
-            );
-
-            $selectedQty = $this->ask('How many listing?') ?? 20;
-
-            $selectedPage = $this->ask('What is the page?') ?? 0;
-
-            if ($selectedMake != 'All') {
-                if ($selectedModel != 'All') {
-                    $url = 'https://auto.dev/api/listings?apikey=' . config('listing.auto_dev_api') . '&make=' . $selectedMake . '&model=' . $selectedModel . '&limit=' . $selectedQty . '&page=' . $selectedPage;
-                } else {
-                    $url = 'https://auto.dev/api/listings?apikey=' . config('listing.auto_dev_api') . '&make=' . $selectedMake . '&limit=' . $selectedQty . '&page=' . $selectedPage;
-                }
+            if ($this->argument('qty')) {
+                $url = 'https://auto.dev/api/listings?apikey=' . config('listing.auto_dev_api') . '&limit=' . $this->argument('qty') . '&page=' . 1;
             } else {
-                $url = 'https://auto.dev/api/listings?apikey=' . config('listing.auto_dev_api') . '&limit=' . $selectedQty . '&page=' . $selectedPage;
+
+                foreach ($makesOptionsData as $k => $v) {
+                    $makes[] = $k;
+                }
+
+                $selectedMake = $this->choice(
+                    'What is the make?',
+                    $makes,
+                    'All'
+                );
+
+                if ($selectedMake != 'All') {
+                    $options = MakeModel::select('id', 'name')
+                        ->whereHas('make', function ($query) use ($selectedMake) {
+                            $query->where('name', $selectedMake);
+                        })->get();
+
+                    foreach ($options as $k) {
+                        $models[$k->name] = $k->name;
+                    }
+                }
+
+                $selectedModel = $this->choice(
+                    'What is the model?',
+                    $models,
+                    'All'
+                );
+
+                $selectedQty = $this->ask('How many listing?') ?? 20;
+
+                $selectedPage = $this->ask('What is the page?') ?? 0;
+
+                if ($selectedMake != 'All') {
+                    if ($selectedModel != 'All') {
+                        $url = 'https://auto.dev/api/listings?apikey=' . config('listing.auto_dev_api') . '&make=' . $selectedMake . '&model=' . $selectedModel . '&limit=' . $selectedQty . '&page=' . $selectedPage;
+                    } else {
+                        $url = 'https://auto.dev/api/listings?apikey=' . config('listing.auto_dev_api') . '&make=' . $selectedMake . '&limit=' . $selectedQty . '&page=' . $selectedPage;
+                    }
+                } else {
+                    $url = 'https://auto.dev/api/listings?apikey=' . config('listing.auto_dev_api') . '&limit=' . $selectedQty . '&page=' . $selectedPage;
+                }
             }
 
             $request = Http::get($url);
