@@ -16,9 +16,8 @@ class CheckIfAppIsModeTest
     public function handle(Request $request, Closure $next): Response
     {
         if (env('APP_MODE_TEST') && ($request->method('update') || $request->method('put') || $request->method('delete'))) {
-            return back()->with(['flash' => __('You can\'t do this in test mode')]);
+        } else {
+            return $next($request);
         }
-
-        return $next($request);
     }
 }
