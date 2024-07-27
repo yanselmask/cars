@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 use TomatoPHP\FilamentMenus\Models\Menu;
 
 if (!function_exists('setActive')) {
@@ -77,7 +78,7 @@ if (!function_exists('site_social')) {
 if (!function_exists('site_logo')) {
     function site_logo()
     {
-        return gs('site_logo') ? asset(gs('site_logo')) : null;
+        return gs('site_logo') ? Storage::url(gs('site_logo')) : null;
     }
 }
 
@@ -91,7 +92,7 @@ if (!function_exists('site_logo_path')) {
 if (!function_exists('site_favicon')) {
     function site_favicon()
     {
-        return asset(gs('site_favicon'));
+        return Storage::url(gs('site_favicon'));
     }
 }
 
