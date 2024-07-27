@@ -40,13 +40,7 @@ class SeederListingWithApi extends Command
             $models = ['All'];
 
             if ($this->argument('qty')) {
-                if ($this->argument('make')) {
-                    if ($this->argument('model')) {
-                        $url = 'https://auto.dev/api/listings?apikey=' . config('listing.auto_dev_api') . '&make=' . $this->argument('make') . '&model=' . $this->argument('model') . '&limit=' . $this->argument('qty') . '&page=' . $this->argument('page') ?? 1;
-                    } else {
-                        $url = 'https://auto.dev/api/listings?apikey=' . config('listing.auto_dev_api') . '&make=' . $this->argument('make') . '&limit=' . $this->argument('qty') . '&page=' . $this->argument('page') ?? 1;
-                    }
-                }
+                $url = 'https://auto.dev/api/listings?apikey=' . config('listing.auto_dev_api') . '&make=' . $this->argument('make') . '&model=' . $this->argument('model') . '&limit=' . $this->argument('qty') . '&page=' . $this->argument('page') ?? 1;
             } else {
 
                 foreach ($makesOptionsData as $k => $v) {
