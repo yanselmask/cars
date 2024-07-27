@@ -1,4 +1,4 @@
-<nav class="{{$class}}" aria-label="{{__('Breadcrumb')}}">
+<nav class="{{$class ?? 'mb-4 pt-md-3'}}" aria-label="{{__('Breadcrumb')}}">
     <ol class="breadcrumb breadcrumb-light">
         @foreach ($routes as $route)
         <li class="breadcrumb-item">

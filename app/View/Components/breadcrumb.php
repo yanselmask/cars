@@ -26,10 +26,6 @@ class breadcrumb extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.breadcrumb', [
-            'class' => $this->class,
-            'routes' => $this->routes,
-            'active' => $this->active
-        ]);
+        return view('components.breadcrumb');
     }
 }
