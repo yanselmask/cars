@@ -40,8 +40,28 @@ class ListingController extends Controller
         $models = $this->listings->makemodelsJson($make);
 
         return response()->json([
-            'data' => $models
+            'data' => $models,
         ]);
+    }
+
+    public function vendors()
+    {
+        $vendors = User::when(request()->query('city'), function ($query) {
+            $query->whereLike('custom_fields->address', '%' . request()->query('city') . '%');
+        })
+            ->withCount([
+                'listings' => function ($query) {
+                    $query->approved();
+                },
+            ])
+            ->paginate(10);
+
+        $locations = User::select('custom_fields')
+            ->whereNotNull('custom_fields->address')
+            ->distinct()
+            ->get();
+
+        return view('listing.vendors', compact('vendors', 'locations'));
     }
 
     public function vendor(User $user)

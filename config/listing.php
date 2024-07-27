@@ -154,8 +154,9 @@ return [
     'path_listing' => 'listing', // Path for listings
     'path_page' => 'page', // Path for pages
     'path_blog' => 'blog', // Path for the blog
-    'path_favorites' => 'favorites', // Path for the blog
-    'path_compares' => 'compares', // Path for the blog
+    'path_favorites' => 'favorites', // Path for the favorites
+    'path_compares' => 'compares', // Path for the compares
+    'path_vendors' => 'vendors', // Path for the vendors
     'admin_path' => 'admin', // Path for the admin panel
     'vendor_path' => 'vendor', // Path for vendor sections,
     'super_admin_email' => 'super@admin.com',

@@ -88,7 +88,7 @@ class ListingResource extends Resource
                                 })
                                 ->inline()
                                 ->inlineLabel(false)
-                                ->visible(!auth()->user()->isSuperAdmin())
+                                ->visible(!auth()->user()->isSuperAdmin() && auth()->user()->canFeatureListing())
                                 ->columnSpanFull()
                         ]),
                     Forms\Components\Wizard\Step::make(__('General data'))
@@ -162,9 +162,7 @@ class ListingResource extends Resource
                                     Forms\Components\TextInput::make('charge')
                                         ->label(__('Charge'))
                                         ->numeric(),
-                                ]),
-                            Forms\Components\RichEditor::make('content')
-                                ->label(__('Content'))
+                                ])
                         ]),
                     Forms\Components\Wizard\Step::make(__('Technical data'))
                         ->schema([
@@ -218,9 +216,9 @@ class ListingResource extends Resource
                             SpatieMediaLibraryFileUpload::make('gallery')
                                 ->label(__('Gallery'))
                                 ->collection('gallery')
-                                ->multiple()
+                                ->multiple((isset(auth()->user()->sparkPlan()->options['images_limit']) && auth()->user()->sparkPlan()->options['images_limit'] > 1) ? true : false)
                                 ->reorderable()
-                                ->maxFiles(auth()->user()->sparkPlan()->options['images_limit'] ?? 10),
+                                ->maxFiles(auth()->user()->sparkPlan()->options['images_limit'] ?? 1),
                             Forms\Components\TextInput::make('video_link'),
                         ]),
                     Forms\Components\Wizard\Step::make(__('Location'))
@@ -284,6 +282,12 @@ class ListingResource extends Resource
                                         ->required(),
                                     Forms\Components\Checkbox::make('is_negotiated')
                                 ])
+                        ]),
+                    Forms\Components\Wizard\Step::make(__('Content'))
+                        ->schema([
+                            Forms\Components\Textarea::make('description')
+                                ->rows(5),
+                            Forms\Components\MarkdownEditor::make('content'),
                         ]),
                 ])->columnSpanFull(),
                 Forms\Components\Section::make([
@@ -351,6 +355,9 @@ class ListingResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('slug'),
+                Tables\Columns\TextColumn::make('user.name')
+                    ->searchable()
+                    ->badge(),
                 Tables\Columns\TextColumn::make('listedby.name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('make.name')
@@ -427,11 +434,13 @@ class ListingResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->visible(auth()->user()->isSuperAdmin()),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->visible(auth()->user()->isSuperAdmin()),
                 ]),
             ]);
     }

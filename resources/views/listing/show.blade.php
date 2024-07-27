@@ -1,5 +1,8 @@
 <x-app-layout>
     @push('seo')
+        @if(!$listing->seo->image)
+          <meta property="og:image" content="{{ $listing->media[0]->getUrl('single') }}">
+        @endif
         {!! seo()->for($listing) !!}
     @endpush
     <div class="container mt-5 mb-md-4 py-5">
@@ -13,13 +16,13 @@
                 'name' => __('Search'),
                 'link' => route('listing.index'),
             ],
-             [
+            [
                 'name' => $listing->make->name,
                 'link' => route('listing.index', ['make' => $listing->make_id]),
             ],
-              [
+            [
                 'name' => $listing->makemodel->name,
-                'link' => route('listing.index', ['make' =>$listing->make_id, 'model' => $listing->makemodel_id]),
+                'link' => route('listing.index', ['make' => $listing->make_id, 'model' => $listing->makemodel_id]),
             ],
         ]" />
         <!-- Title + Sharing-->
@@ -218,12 +221,22 @@
                 <!-- Description-->
                 <div class="pb-4 mb-3">
                     <h2 class="h4 text-light pt-4 mt-3">{{ __('Seller\'s Description') }}</h2>
-                    {!! $listing->contentRender() !!}
+                    <p class="text-light opacity-70 mb-1">
+                        {{$listing->description}}
+                    </p>
+                    <div class="collapse" id="seeMoreDescription">
+                         <x-markdown class="text-light opacity-70 mb-1" id="markdownOutput">
+                            {{$listing->content}}
+                         </x-markdown>
+                    </div>
+                    <a class="collapse-label collapsed" href="#seeMoreDescription" data-bs-toggle="collapse"
+                        data-bs-label-collapsed="{{__('Show more')}}" data-bs-label-expanded="{{__('Show less')}}" role="button"
+                        aria-expanded="false" aria-controls="seeMoreDescription"></a>
                 </div>
-                @if($listing->location)
-                <section class="container mb-5 pb-lg-5" id="map-location">
-                    <div class="interactive-map rounded-3"
-                        data-map-options="{
+                @if ($listing->location)
+                    <section class="container mb-5 pb-lg-5" id="map-location">
+                        <div class="interactive-map rounded-3"
+                            data-map-options="{
     &quot;mapLayer&quot;: &quot;https://api.maptiler.com/maps/pastel/{z}/{x}/{y}.png?key={{ config('listing.map_api_key') }}&quot;,
     &quot;coordinates&quot;: [{{ $listing->location['lat'] }}, {{ $listing->location['lng'] }}],
     &quot;zoom&quot;: 10,
@@ -235,8 +248,8 @@
         }
     ]
 }"
-                        style="height: 500px;"></div>
-                </section>
+                            style="height: 500px;"></div>
+                    </section>
                 @endif
                 <!-- Post meta-->
                 <div class="d-flex flex-wrap border-top border-light fs-sm text-light pt-4 pb-5 pb-md-2">
@@ -376,6 +389,16 @@
     @push('css-libs')
         <link rel="stylesheet" media="screen" href="{{ asset('theme/css/lightgallery-bundle.min.css') }}" />
         <link rel="stylesheet" media="screen" href="{{ asset('theme/css/leaflet.css') }}" />
+        <style>
+            #markdownOutput h1,
+            #markdownOutput h2,
+            #markdownOutput h3,
+            #markdownOutput h4,
+            #markdownOutput h5,
+            #markdownOutput h6{
+                color: #FFFFFF;
+            }
+        </style>
     @endpush
     @push('js-libs')
         <script src="{{ asset('theme/js/lightgallery.min.js') }}"></script>

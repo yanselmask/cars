@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Listing;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 
 class ListingObserver
@@ -59,6 +60,8 @@ class ListingObserver
                 ])->save();
             }
         }
+
+        Cache::flush();
     }
 
     /**

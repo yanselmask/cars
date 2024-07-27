@@ -1,5 +1,8 @@
 <x-app-layout>
         @push('seo')
+        @if(!$post->seo->image && count($post->media))
+          {{-- <meta property="og:image" content="{{ $post->media->getUrl('single') }}"> --}}
+        @endif
         {!! seo()->for($post) !!}
     @endpush
     <div class="container pt-5 pb-lg-4 my-5">

@@ -7,7 +7,20 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+
+
 Route::middleware([
+    \Illuminate\Session\Middleware\AuthenticateSession::class,
+])->group(function () {
+    Route::controller(HomeController::class)
+        ->group(function () {
+            Route::post('/add/favorite/listing', 'addFavorite')->name('add.favorite.listing');
+            Route::post('/add/compare/listing', 'addCompare')->name('add.compare.listing');
+        });
+});
+
+Route::middleware([
+    \Shipu\WebInstaller\Middleware\RedirectIfNotInstalled::class,
     \Torann\Currency\Middleware\CurrencyMiddleware::class,
     'language'
 ])->group(function () {
@@ -19,11 +32,6 @@ Route::middleware([
             Route::post('/newsletter/add', 'newsletterAdd')->name('newsletter.add');
             Route::post('/contact/submit', 'contactSubmit')->name('contact.submit');
             Route::post('/consult/submit', 'consultSubmit')->name('consult.submit');
-            Route::middleware('auth')
-                ->group(function () {
-                    Route::post('/add/favorite/listing', 'addFavorite')->name('add.favorite.listing');
-                    Route::post('/add/compare/listing', 'addCompare')->name('add.compare.listing');
-                });
         });
 
     Route::controller(BlogController::class)
@@ -43,10 +51,9 @@ Route::middleware([
         ->prefix(config('listing.path_listing'))
         ->group(function () {
             Route::get('/', 'index')->name('listing.index');
-            Route::get('/{listing}', 'show')->name('listing.show');
             Route::get('/models/{make}', 'makemodelsJson')->name('listing.modelsjson');
-            Route::get('/vendor/{user}', 'vendor')->name('listing.vendor');
+            Route::get('/' . config('listing.path_vendors'), 'vendors')->name('listing.vendors');
+            Route::get('/' . config('listing.path_vendors') . '/{user}', 'vendor')->name('listing.vendor');
+            Route::get('/{listing}', 'show')->name('listing.show');
         });
 });
-
-require __DIR__ . '/auth.php';

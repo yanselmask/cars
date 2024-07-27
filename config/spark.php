@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Middleware\Authenticate;
-use App\Models\User;
 
 return [
 
@@ -29,7 +27,11 @@ return [
     |
     */
 
-    'middleware' => ['web', Authenticate::class],
+    'middleware' => [
+        'web',
+        \Shipu\WebInstaller\Middleware\RedirectIfNotInstalled::class,
+        \Illuminate\Session\Middleware\AuthenticateSession::class,
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -92,7 +94,7 @@ return [
     'billables' => [
 
         'user' => [
-            'model' => User::class,
+            'model' => \App\Models\User::class,
 
             'trial_days' => 0,
 

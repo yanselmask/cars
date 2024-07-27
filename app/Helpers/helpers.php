@@ -12,6 +12,13 @@ if (!function_exists('setActive')) {
     }
 }
 
+if (!function_exists('site_name')) {
+    function site_name()
+    {
+        return gs('site_name') ?? config('app.name');
+    }
+}
+
 if (!function_exists('menuTitle')) {
     function menuTitle($menu)
     {

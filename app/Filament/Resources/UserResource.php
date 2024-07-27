@@ -32,7 +32,8 @@ class UserResource extends Resource
                     ->email(),
                 Forms\Components\DatePicker::make('email_verified_at'),
                 Forms\Components\Select::make('roles')->multiple()->relationship('roles', 'name'),
-                Forms\Components\FileUpload::make('profile_photo_path')
+                Forms\Components\FileUpload::make('profile_photo_path'),
+                Forms\Components\Radio::make('is_verified')->boolean()->label(__('Verified'))
             ]);
     }
 
@@ -43,8 +44,10 @@ class UserResource extends Resource
                 Tables\Columns\ImageColumn::make('profile_photo_path')
                     ->label(__('Photo'))
                     ->width(50),
-                Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('lastname'),
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('lastname')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('email'),
                 Tables\Columns\TextColumn::make('email_verified_at'),
             ])
