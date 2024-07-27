@@ -24,7 +24,11 @@ class BlogController extends Controller
 
         $featuredPost = $this->posts->featuredPost();
 
-        $features = $this->posts->getFeatureds($featuredPost->id);
+        if ($featuredPost) {
+            $features = $this->posts->getFeatureds($featuredPost->id);
+        } else {
+            $features = collect();
+        }
 
         $posts = $this->posts->getPaginated($featuredPost, $features);
 

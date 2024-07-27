@@ -198,6 +198,10 @@ class Listing extends Model implements HasMedia
 
     public function contentRender()
     {
+        if (!$this->content) {
+            return '';
+        }
+
         $dom = new DOMDocument();
         // Carga el contenido HTML
         libxml_use_internal_errors(true); // Para evitar warnings con HTML malformado
