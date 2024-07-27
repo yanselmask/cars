@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('listings', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->fulltext();
             $table->string('slug');
             $table->unsignedBigInteger('condition_id')->nullable();
             $table->unsignedBigInteger('type_id')->nullable();
@@ -32,7 +32,7 @@ return new class extends Migration
             $table->integer('year')->nullable();
             $table->integer('cylinders')->nullable();
             $table->string('vin')->nullable();
-            $table->longText('content')->nullable();
+            $table->longText('content')->nullable()->fulltext();
             $table->string('video_link')->nullable();
             $table->json('location')->nullable();
             $table->bigInteger('price')->nullable();

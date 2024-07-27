@@ -3,7 +3,7 @@
           <div class="offcanvas-header bg-transparent d-block border-bottom border-light pt-0 pt-lg-4 px-lg-0">
               <ul class="nav nav-tabs nav-tabs-light mb-0">
                   @foreach ($condition as $c)
-                      <li class="nav-item">
+                      <li class="nav-item mb-3">
                           <a class="nav-link @if (request()->query('condition') == $c->id || request()->query('condition') == $c->name) active @endif"
                               href="{{ request()->fullUrlWithQuery([
                                   'condition' => $c->id,

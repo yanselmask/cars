@@ -24,7 +24,7 @@ class CacheListing implements ListingInterface
 
     public function getFavorites()
     {
-        $key = 'listing.favorites.by.' . auth()->user()?->id ?? 1;
+        $key = 'listing.favorites.by.' . auth()->user()?->id ?? 0;
 
         return Cache::rememberForever($key, function () {
             return $this->listings->getFavorites();
@@ -33,7 +33,7 @@ class CacheListing implements ListingInterface
 
     public function getCompares()
     {
-        $key = 'listing.compares.by.' . auth()->user()?->id ?? 1;
+        $key = 'listing.compares.by.' . auth()->user()?->id ?? 0;
 
         return Cache::rememberForever($key, function () {
             return $this->listings->getCompares();

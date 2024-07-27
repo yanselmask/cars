@@ -10,6 +10,7 @@ use App\Models\Page;
 use App\Models\User;
 use App\Repositories\ListingInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Newsletter\Facades\Newsletter;
 

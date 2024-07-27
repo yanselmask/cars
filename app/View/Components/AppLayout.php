@@ -11,7 +11,7 @@ class AppLayout extends Component
 
     public function __construct($title = null)
     {
-        $this->title = $title ?? config('app.name', 'Laravel');
+        $this->title = $title ?? (gs('site_name') ?? config('app.name', 'Laravel'));
     }
     /**
      * Get the view / contents that represents the component.

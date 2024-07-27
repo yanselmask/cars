@@ -137,16 +137,25 @@ class SeederListingWithApi extends Command
                         $photos = [$listing['primaryPhotoUrl']];
                         $photos = array_merge($photos, $listing['photoUrls']);
                         foreach ($photos as $photo) {
-                            $listingCreated
-                                ->addMediaFromUrl($photo)
-                                ->preservingOriginal()
-                                ->toMediaCollection();
+                            try {
+                                $listingCreated
+                                    ->addMediaFromUrl($photo)
+                                    ->preservingOriginal()
+                                    ->toMediaCollection();
+                            } catch (\Exception $e) {
+                                $this->danger('Error getting image');
+                                continue;
+                            }
                         }
                     } else {
-                        $listingCreated
-                            ->addMediaFromUrl($listing['primaryPhotoUrl'])
-                            ->preservingOriginal()
-                            ->toMediaCollection();
+                        try {
+                            $listingCreated
+                                ->addMediaFromUrl($listing['primaryPhotoUrl'])
+                                ->preservingOriginal()
+                                ->toMediaCollection();
+                        } catch (\Exception $e) {
+                            $this->danger('Error getting image');
+                        }
                     }
                 });
             }

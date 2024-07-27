@@ -28,7 +28,6 @@
         "shetabit/visitor": "^2.0",
         "shipu/web-installer": "^1.0",
         "solution-forest/filament-tree": "^2.0",
-        "spatie/laravel-menu": "^4.2",
         "spatie/laravel-newsletter": "^5.2",
         "spatie/laravel-sluggable": "^3.6",
         "spatie/mailcoach-sdk-php": "^1.6",
