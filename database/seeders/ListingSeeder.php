@@ -88,10 +88,10 @@ class ListingSeeder extends Seeder
             'exchange_rate' => 1.00000000,
             'active' => 1,
         ]);
-
-        Models\Color::factory(10)->create();
-        Models\Feature::factory(40)->create();
-        Models\Post::factory(30)->create();
+        $features = collect('Adjustable Steering Wheel', 'Auto-Dimming Rearview Mirror', 'Driver Adjustable Lumbar', 'Driver Illuminated Vanity Mirror', 'Universal Garage Door Opener', 'Steering Wheel Audio Controls', 'Heated Front Seats', 'Leather Seats', 'Leather Steering Wheel', 'Pass-Through Rear Seat', 'Passenger Adjustable Lumbar', 'Passenger Illuminated Visor Mirror', 'Alloy Wheels', 'Sunroof / Moonroof', 'Tinged glass', 'LED Headlights', 'Foldable Roof', 'Tow Hitch', 'Multi-Zone A/C', 'Climate Control', 'Navigation System', 'Remote Start', 'Bluetooth', 'Apple CarPlay', 'Android Auto', 'Backup Camera', 'HomeLink', 'Keyless Start', 'Premium Sound System', 'Brake Assist', 'Lane Departure Warning', 'Stability Control', 'Fog Lights', 'Power Door Locks', 'Airbag: Driver', 'Airbag: Passenger', 'Adaptive Cruise Control', 'Blind Spot Monitor', 'Alarm', 'Antilock Brakes');
+        $features->map(fn ($f) => Models\Feature::create(['name' => $f, 'type' => rand(0, 2)]));
+        $colors = collect('Red', 'Blue', 'Green', 'Yellow', 'Orange', 'Purple', 'Pink', 'Brown', 'Black', 'White', 'Gray', 'Cyan', 'Magenta', 'Maroon', 'Navy', 'Teal', 'Lime', 'Olive', 'Indigo', 'Beige');
+        $colors->map(fn ($c) => Models\Color::create(['name' => $c]));
 
         // Models\Condition::factory(2)->create();
         // Models\Engine::factory(5)->create();
