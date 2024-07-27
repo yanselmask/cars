@@ -219,7 +219,8 @@ class ListingResource extends Resource
                                 ->label(__('Gallery'))
                                 ->collection('gallery')
                                 ->multiple()
-                                ->reorderable(),
+                                ->reorderable()
+                                ->maxFiles(auth()->user()->sparkPlan()->options['images_limit'] ?? 10),
                             Forms\Components\TextInput::make('video_link'),
                         ]),
                     Forms\Components\Wizard\Step::make(__('Location'))

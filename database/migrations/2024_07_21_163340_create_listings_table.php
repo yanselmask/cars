@@ -32,6 +32,7 @@ return new class extends Migration
             $table->integer('year')->nullable();
             $table->integer('cylinders')->nullable();
             $table->string('vin')->nullable();
+            $table->longText('description')->nullable()->fulltext();
             $table->longText('content')->nullable()->fulltext();
             $table->string('video_link')->nullable();
             $table->json('location')->nullable();
