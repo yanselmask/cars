@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         if (!file_exists(storage_path('./installed'))) {
             $this->call(ListingSeeder::class);
             $this->call(InstallerSeeder::class);
+            $this->call(InstallMenuDefaultSeeder::class);
         }
     }
 }

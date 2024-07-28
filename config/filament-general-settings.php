@@ -23,7 +23,6 @@ return [
                     'placeholder' => 'Copyright',
                     'rows' => 5,
                     'required' => false,
-                    // 'rules' => 'required|string|max:255',
                 ],
             ]
         ],

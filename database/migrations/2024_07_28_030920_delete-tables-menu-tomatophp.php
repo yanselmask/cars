@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::dropIfExists('menus');
         Schema::dropIfExists('menu_items');
+        Schema::dropIfExists('menus');
     }
 
 };

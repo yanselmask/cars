@@ -3,7 +3,6 @@
 namespace App\Providers\Filament;
 
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
-use App\Filament\Widgets\DashboardCardVendor;
 use App\Filament\Widgets\DashboardOverview;
 use App\Filament\Widgets\UsersOverview;
 use Filament\Forms\Components\Checkbox;
@@ -104,12 +103,7 @@ class AdminPanelProvider extends PanelProvider
                         return true;
                     }),
             ])
-            ->plugin(
-                \TomatoPHP\FilamentTranslations\FilamentTranslationsPlugin::make()
-                    ->allowClearTranslations()
-                    ->allowClearTranslations()
-            )
-            ->plugin(\TomatoPHP\FilamentTranslations\FilamentTranslationsSwitcherPlugin::make())
+            ->plugin(\Kenepa\TranslationManager\TranslationManagerPlugin::make())
             ->plugin(FilamentGeneralSettingsPlugin::make()
                 ->canAccess(fn () => auth()->user()->can('manage general setting'))
                 ->setSort(2)

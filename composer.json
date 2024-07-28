@@ -19,6 +19,7 @@
         "flowframe/laravel-trend": "^0.2.0",
         "joaopaulolndev/filament-edit-profile": "^1.0",
         "joaopaulolndev/filament-general-settings": "^1.0",
+        "kenepa/translation-manager": "^4.0",
         "laravel/breeze": "^2.1",
         "laravel/framework": "^11.9",
         "laravel/spark-paddle": "dev-main",
@@ -33,7 +34,6 @@
         "spatie/laravel-newsletter": "^5.2",
         "spatie/laravel-sluggable": "^3.6",
         "spatie/mailcoach-sdk-php": "^1.6",
-        "tomatophp/filament-translations": "^1.0",
         "torann/currency": "^1.1"
     },
     "require-dev": {

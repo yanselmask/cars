@@ -19,10 +19,32 @@ if (!function_exists('site_name')) {
     }
 }
 
+if (!function_exists('menu')) {
+    function menu($menuHandle)
+    {
+        if($menuHandle)
+        {
+            if(config('listing.menus_cached'))
+            {
+                $key = 'menu.key.' . $menuHandle;
+                $menuItems =  Cache::rememberForever($key,function() use($menuHandle){
+                return \RyanChandler\FilamentNavigation\Models\Navigation::fromHandle($menuHandle);
+                });
+            }else{
+                $menuItems = \RyanChandler\FilamentNavigation\Models\Navigation::fromHandle($menuHandle);
+            }
+
+           return $menuItems;
+        }
+
+        return [];
+    }
+}
+
 if (!function_exists('menuTitle')) {
     function menuTitle($menu)
     {
-        $key = 'menu.key.' . $menu;
+        $key = 'menu.key.' . $menu . '.name';
 
         $titleMenu = \RyanChandler\FilamentNavigation\Models\Navigation::where('handle', $menu)->first();
 

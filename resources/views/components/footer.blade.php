@@ -11,8 +11,8 @@
                     <button class="btn btn-light btn-link btn-sm dropdown-toggle fw-normal py-2" type="button"
                         data-bs-toggle="dropdown"><i class="fi-globe me-2"></i>{{language()->getName()}}</button>
                     <div class="dropdown-menu dropdown-menu-dark w-100">
-                         @foreach (language()->allowed() as $code => $name)
-                            <a class="dropdown-item" href="{{ language()->back($code) }}">{{ $name }}</a>
+                         @foreach (config('translation-manager.available_locales') as $language)
+                            <a class="dropdown-item" href="{{ language()->back($language['code']) }}">{{ $language['name'] }}</a>
                         @endforeach
                     </div>
                 </div>

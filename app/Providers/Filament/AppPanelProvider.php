@@ -71,6 +71,7 @@ class AppPanelProvider extends PanelProvider
                     ->shouldShowAvatarForm()
                     ->shouldRegisterNavigation(true)
             ])
+            ->plugin(\Kenepa\TranslationManager\TranslationManagerPlugin::make())
             ->userMenuItems([
                 'profile' => MenuItem::make()
                     ->label(fn () => auth()->user()->fullname)

@@ -22,8 +22,6 @@ class menu extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.menu',[
-            'menuItems' => Navigation::fromHandle($this->menu)
-        ]);
+        return view('components.menu');
     }
 }
