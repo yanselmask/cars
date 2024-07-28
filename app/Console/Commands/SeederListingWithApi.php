@@ -95,8 +95,8 @@ class SeederListingWithApi extends Command
                         'name' => $listing['make'] . ' ' . $listing['model'],
                         'condition_id' => Models\Condition::inRandomOrder()->first()->id,
                         'type_id' => Models\Type::inRandomOrder()->first()->id,
-                        'make_id' => Models\Make::where('name', $listing['make'])->first()->id,
-                        'makemodel_id' => Models\MakeModel::where('name', $listing['model'])->first()->id,
+                        'make_id' => Models\Make::where('name', $listing['make'])->first()?->id ?? Models\Make::inRandomOrder()->first()->id,
+                        'makemodel_id' => Models\MakeModel::where('name', $listing['model'])->first()?->id ?? Models\MakeModel::inRandomOrder()->first()->id,
                         'location' => [
                             'lat' => $listing['lat'],
                             'lng' => $listing['lon']
