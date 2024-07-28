@@ -29,7 +29,6 @@ return [
 
     'middleware' => [
         'web',
-        \Shipu\WebInstaller\Middleware\RedirectIfNotInstalled::class,
         \Illuminate\Session\Middleware\AuthenticateSession::class,
     ],
 
