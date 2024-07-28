@@ -208,11 +208,17 @@
                                 id="{{ $featureType }}" aria-labelledby="heading{{ $featureType }}"
                                 data-bs-parent="#features">
                                 <div class="accordion-body fs-sm text-light opacity-70">
-                                    <ul>
-                                        @foreach ($listing->features->where('type', \App\Enums\FeatureType::from($k)) as $item)
-                                            <li>{{ $item->name }}</li>
+                                    <div class="row">
+                                        @foreach ($listing->features->where('type', \App\Enums\FeatureType::from($k))->chunk(6) as $chunk)
+                                        <div class="col-sm-6">
+                                            <ul>
+                                                @foreach($chunk as $item)
+                                                <li>{{$item->name}}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
                                         @endforeach
-                                    </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
