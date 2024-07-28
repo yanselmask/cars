@@ -30,6 +30,6 @@
             @endauth
         @endif
         <!-- MENU -->
-        <x-filament-menu menu="header" view="menu-item" />
+            <x-menu menu="header" />
     </div>
 </header>

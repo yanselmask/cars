@@ -5,6 +5,7 @@ namespace App\View\Components;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
+use RyanChandler\FilamentNavigation\Models\Navigation;
 
 class menu extends Component
 {
@@ -21,6 +22,8 @@ class menu extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.menu');
+        return view('components.menu',[
+            'menuItems' => Navigation::fromHandle($this->menu)
+        ]);
     }
 }

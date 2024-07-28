@@ -8,7 +8,6 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 
-
 Route::middleware([
     \Illuminate\Session\Middleware\AuthenticateSession::class,
 ])->group(function () {

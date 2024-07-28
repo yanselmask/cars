@@ -6,6 +6,9 @@ use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugi
 use App\Filament\Widgets\DashboardCardVendor;
 use App\Filament\Widgets\DashboardOverview;
 use App\Filament\Widgets\UsersOverview;
+use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\Radio;
+use Filament\Forms\Components\TextInput;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -65,8 +68,24 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->plugin(FilamentSpatieRolesPermissionsPlugin::make())
-            ->plugin(\Filament\SpatieLaravelTranslatablePlugin::make()->defaultLocales(config('language.allowed')))
-            ->plugin(\TomatoPHP\FilamentMenus\FilamentMenusPlugin::make())
+            ->plugin(
+                \RyanChandler\FilamentNavigation\FilamentNavigation::make()
+                    ->withExtraFields([
+                        TextInput::make('icon')
+                            ->label(__('Icon')),
+                        Radio::make('icon_position')
+                        ->label(__('Icon Position'))
+                        ->options([
+                            'left' => __('Left'),
+                            'right' => __('Right'),
+                        ])
+                        ->inline()
+                        ->inlineLabel(),
+                        TextInput::make('classes')
+                        ->label(__('Classes')),
+                        Checkbox::make('divider'),
+                    ])
+            )
             ->plugins([
                 FilamentEditProfilePlugin::make()
                     ->setNavigationLabel('My Profile')

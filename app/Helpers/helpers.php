@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
-use TomatoPHP\FilamentMenus\Models\Menu;
 
 if (!function_exists('setActive')) {
     function setActive($routeName, $active = 'active', $none = '')
@@ -25,7 +24,7 @@ if (!function_exists('menuTitle')) {
     {
         $key = 'menu.key.' . $menu;
 
-        $titleMenu = Menu::where('key', $menu)->first();
+        $titleMenu = \RyanChandler\FilamentNavigation\Models\Navigation::where('handle', $menu)->first();
 
         if (is_null($titleMenu)) {
             return null;
@@ -33,11 +32,11 @@ if (!function_exists('menuTitle')) {
 
         if (config('listing.menus_cached', false)) {
             return Cache::rememberForever($key, function () use ($titleMenu) {
-                return $titleMenu->title;
+                return $titleMenu->name;
             });
         }
 
-        return $titleMenu->title;
+        return $titleMenu->name;
     }
 }
 
