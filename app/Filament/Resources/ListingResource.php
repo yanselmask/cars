@@ -239,35 +239,21 @@ class ListingResource extends Resource
                                 ->myLocationButtonLabel(__('My location')),
                         ]),
                     Forms\Components\Wizard\Step::make(__('Features'))
-                        ->schema([
-                            Forms\Components\Placeholder::make(__('Exterior')),
-                            Forms\Components\CheckboxList::make('exterior')
-                                ->hiddenLabel()
-                                ->relationship(
-                                    name: 'features',
-                                    titleAttribute: 'name',
-                                    modifyQueryUsing: fn (Builder $query) => $query->where('type', \App\Enums\FeatureType::EXTERIOR)
-                                )
-                                ->columns(3),
-                            Forms\Components\Placeholder::make(__('Interior')),
-                            Forms\Components\CheckboxList::make('interior')
-                                ->hiddenLabel()
-                                ->relationship(
-                                    name: 'features',
-                                    titleAttribute: 'name',
-                                    modifyQueryUsing: fn (Builder $query) => $query->where('type', \App\Enums\FeatureType::INTERIOR)
-                                )
-                                ->columns(3),
-                            Forms\Components\Placeholder::make(__('Safety')),
-                            Forms\Components\CheckboxList::make('safety')
-                                ->hiddenLabel()
-                                ->relationship(
-                                    name: 'features',
-                                    titleAttribute: 'name',
-                                    modifyQueryUsing: fn (Builder $query) => $query->where('type', \App\Enums\FeatureType::SAFETY)
-                                )
-                                ->columns(3),
-                        ]),
+                        ->schema(function (){
+                            return collect(\App\Enums\FeatureType::cases())->flatMap(function ($feature) {
+                                return [
+                                    Forms\Components\Placeholder::make(__($feature->getLabel())),
+                                    Forms\Components\CheckboxList::make($feature->name)
+                                        ->hiddenLabel()
+                                        ->relationship(
+                                            name: 'features',
+                                            titleAttribute: 'name',
+                                            modifyQueryUsing: fn (Builder $query) => $query->where('type', $feature)
+                                        )
+                                        ->columns(3),
+                                ];
+                            })->toArray();
+                        }),
                     Forms\Components\Wizard\Step::make(__('Price'))
                         ->schema([
                             Forms\Components\Grid::make(2)
