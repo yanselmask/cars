@@ -13,6 +13,8 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('language_lines');
+
         Schema::create('language_lines', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('group')->index();
