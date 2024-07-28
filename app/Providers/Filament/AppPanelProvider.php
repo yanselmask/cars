@@ -86,6 +86,8 @@ class AppPanelProvider extends PanelProvider
                     ->url('/billing')
                     ->icon('heroicon-o-credit-card')
                     ->sort(4),
-            ]);
+            ])
+            ->brandLogo(site_logo())
+            ->favicon(site_favicon());
     }
 }

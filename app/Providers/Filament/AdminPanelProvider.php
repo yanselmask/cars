@@ -111,6 +111,8 @@ class AdminPanelProvider extends PanelProvider
                 ->setNavigationGroup('Settings')
                 ->setTitle('General')
                 ->setNavigationLabel('General'))
-            ->path(config('listing.admin_path'));
+            ->path(config('listing.admin_path'))
+            ->brandLogo(site_logo())
+            ->favicon(site_favicon());
     }
 }
