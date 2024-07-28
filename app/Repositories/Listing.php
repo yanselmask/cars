@@ -132,12 +132,12 @@ class Listing implements ListingInterface
 
     public function getFavorites($limit = 6)
     {
-        return auth()->user()?->favoritedListings()->paginate($limit);
+        return auth()->user()?->favoritedListings()->paginate($limit) ?? [];
     }
 
     public function getCompares()
     {
-        return auth()->user()?->comparedListings()->limit(3)->get();
+        return auth()->user()?->comparedListings()->limit(3)->paginate() ?? [];
     }
 
     public function getRelated($id, $limit = 6)

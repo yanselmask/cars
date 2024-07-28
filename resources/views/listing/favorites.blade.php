@@ -18,8 +18,9 @@
             @empty
                 <h3 class="text-white text-center">{{ __('You don\'t have a list in favorites') }}</h3>
             @endforelse
-
+            @if($listing != [])
             {{ $listings->links() }}
+                @endif
         </div>
     </section>
 </x-app-layout>
