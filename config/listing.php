@@ -160,9 +160,9 @@ return [
     'path_blog' => 'blog', // Path for the blog
     'path_favorites' => 'favorites', // Path for the favorites
     'path_compares' => 'compares', // Path for the compares
-    'path_vendors' => 'vendors', // Path for the vendors
+    'path_vendors' => 'sellers', // Path for the vendors
     'admin_path' => 'admin', // Path for the admin panel
-    'vendor_path' => 'vendor', // Path for vendor sections,
+    'vendor_path' => 'dashboard_vendor', // Path for vendor sections,
     'super_admin_email' => 'super@admin.com',
 
     /*
