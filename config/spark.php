@@ -109,11 +109,13 @@ return [
                     'yearly_id' => env('SPARK_STANDARD_YEARLY_PLAN', 'pri_01j3874eqz5nz619twfghe14xp'),
                     'features' => [
                         'Up to 5 listings allowed',
+                        'Up to 5 photos per listing',
                         '3 Featured Listing'
                     ],
                     'options' => [
                         'listing' => 5,
                         'listing_featured' => 3,
+                        'images_limit' => 5
                     ],
                     'archived' => false,
                 ],
@@ -128,11 +130,13 @@ return [
                     'yearly_incentive' => 'Save 10%',
                     'features' => [
                         'Up to 25 listings allowed',
+                        'Up to 10 photos per listing',
                         '10 Featured Listing'
                     ],
                     'options' => [
                         'listing' => 25,
                         'listing_featured' => 10,
+                        'images_limit' => 10
                     ],
                     'archived' => false,
                 ],
@@ -146,11 +150,13 @@ return [
                     'yearly_incentive' => 'Save 35%',
                     'features' => [
                         'Up to 25 listings allowed',
+                        'Up to 15 photos per listing',
                         '35 Featured Listing',
                     ],
                     'options' => [
                         'listing' => 100,
                         'listing_featured' => 35,
+                        'images_limit' => 15
                     ],
                     'archived' => false,
                 ],
