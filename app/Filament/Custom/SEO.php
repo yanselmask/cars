@@ -11,6 +11,7 @@ use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class SEO
 {
@@ -48,6 +49,7 @@ class SEO
                         'image' => FileUpload::make('image')
                             ->translateLabel()
                             ->label(__('SEO Image'))
+                            ->dehydrated(false)
                             ->columnSpan(2),
                         'robots' => Radio::make('robots')
                             ->translateLabel()
@@ -75,10 +77,21 @@ class SEO
                     ->dehydrated(false)
                     ->saveRelationshipsUsing(function (Model $record, array $state) use ($only): void {
                         $state = collect($state)->only($only)->map(fn ($value) => $value ?: null)->all();
-
                         if ($record->seo && $record->seo->exists) {
-                            $record->seo->update($state);
+                            if($state['image'])
+                            {
+                                foreach ($state['image'] as $image) {
+                                    $state['image'] = $image;
+                                }
+                            }
+                            $record->seo()->update($state);
                         } else {
+                            if($state['image'])
+                            {
+                                foreach ($state['image'] as $image) {
+                                    $state['image'] = $image;
+                                }
+                            }
                             $record->seo()->create($state);
                         }
                     })
