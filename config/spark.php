@@ -29,6 +29,7 @@ return [
 
     'middleware' => [
         'web',
+        'auth',
         \Illuminate\Session\Middleware\AuthenticateSession::class,
     ],
 
