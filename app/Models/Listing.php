@@ -56,7 +56,7 @@ class Listing extends Model implements HasMedia
     {
         if (is_array($this->location))
         {
-            return app('geocoder')->reverse($this->lat,$this->lng)->get() ? app('geocoder')->reverse($this->lat,$this->lng)->get()[0]?->getPostalCode() : null;
+             dd(app('geocoder')->reverse($this->lat,$this->lng)->get()[0]?->getPostalCode() );
         }
 
         return null;
