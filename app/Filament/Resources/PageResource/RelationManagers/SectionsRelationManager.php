@@ -30,7 +30,7 @@ class SectionsRelationManager extends RelationManager
             ->recordTitleAttribute('name')
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('sort_order'),
+                Tables\Columns\TextColumn::make('sort_order')
             ])
             ->filters([
                 //
@@ -53,6 +53,7 @@ class SectionsRelationManager extends RelationManager
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DetachBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->reorderable('sort_order');
     }
 }
