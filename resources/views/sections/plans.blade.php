@@ -20,11 +20,11 @@
                                  @if (str_starts_with($featured,'--'))
                                      <li class="d-flex text-light opacity-50">
                                          <i class="fi-x fs-xs mt-2 me-2"></i>
-                                         <span>{{ $featured }}</span>
+                                         <span>{{ str_replace('--','',$featured )}}</span>
                                      </li>
                                  @else
                                      <li class="d-flex"><i class="fi-check text-primary fs-sm mt-1 me-2"></i>
-                                         <span class="text-light">{{ str_replace('--','',$featured) }}</span>
+                                         <span class="text-light">{{ $featured }}</span>
                                      </li>
                                  @endif
                              @endforeach
