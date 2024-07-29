@@ -2,10 +2,6 @@
     $condition = \App\Models\Condition::select('id', 'name')->get();
     $makes = \App\Models\Make::select('id', 'name')->has('listings')->get();
     $types = \App\Models\Type::select('id', 'name')->get();
-    $locations = \App\Models\Listing::select('city')
-                ->whereNotNull('city')
-                ->distinct()
-                ->get();
 @endphp
 <section class="bg-position-top-center bg-repeat-0 pt-5"
     style="
@@ -97,21 +93,11 @@
                     </div>
                 </div>
                 <hr class="hr-light d-sm-none my-2">
-                <div class="col-lg-2 col-md-3 col-sm-6">
-                    <div class="dropdown" data-bs-toggle="select">
-                        <button class="btn btn-link dropdown-toggle ps-2 ps-sm-3" type="button"
-                            data-bs-toggle="dropdown" aria-expanded="false"><i class="fi-map-pin me-2"></i><span
-                                class="dropdown-toggle-label">{{__('Location')}}</span></button>
-                        <input type="hidden" name="location">
-                        <ul class="dropdown-menu dropdown-menu-dark" style="">
-                            @foreach ($locations as $location)
-                            <li>
-                                <a class="dropdown-item" href="#">
-                                    <span class="dropdown-item-label">{{$location->city}}</span>
-                                </a>
-                            </li>
-                              @endforeach
-                        </ul>
+                <div class="col-lg-2">
+                    <div class="input-group border-end-lg border-light"><span
+                            class="input-group-text text-muted ps-2 ps-sm-3"><i class="fi-search"></i></span>
+                        <input id="autocomplete" class="form-control" type="text" name="location" placeholder="{{__('Location')}}">
+                        <div id="map"></div>
                     </div>
                 </div>
                 <hr class="hr-light d-lg-none my-2">
@@ -122,3 +108,62 @@
         </form>
     </div>
 </section>
+@push('js-libs')
+    <script async
+            src="https://maps.googleapis.com/maps/api/js?key={{config('filament-google-maps.key')}}&loading=async&libraries=places&callback=initMap">
+    </script>
+    <script>
+        var map;
+        var marker;
+
+        function initMap() {
+            // Inicializa el mapa
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: -34.397, lng: 150.644 },
+                zoom: 8
+            });
+
+            // Crear el autocompletado
+            var input = document.getElementById('autocomplete');
+            var autocomplete = new google.maps.places.Autocomplete(input);
+            autocomplete.bindTo('bounds', map);
+
+            // Infowindow para el marcador
+            var infowindow = new google.maps.InfoWindow();
+            marker = new google.maps.Marker({
+                map: map
+            });
+
+            // Evento de lugar cambiado
+            autocomplete.addListener('place_changed', function() {
+                infowindow.close();
+                var place = autocomplete.getPlace();
+
+                if (!place.geometry) {
+                    window.alert("No details available for input: '" + place.name + "'");
+                    return;
+                }
+
+                // Si el lugar tiene una geometría, entonces presenta en el mapa
+                if (place.geometry.viewport) {
+                    map.fitBounds(place.geometry.viewport);
+                } else {
+                    map.setCenter(place.geometry.location);
+                    map.setZoom(17);  // Un zoom más alto para ubicaciones detalladas
+                }
+
+                // Colocar el marcador en el lugar
+                marker.setPlace({
+                    placeId: place.place_id,
+                    location: place.geometry.location
+                });
+                marker.setVisible(true);
+
+                infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+                    'Place ID: ' + place.place_id + '<br>' +
+                    place.formatted_address);
+                infowindow.open(map, marker);
+            });
+        }
+    </script>
+@endpush

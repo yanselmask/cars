@@ -2,9 +2,9 @@
 
 namespace App\Observers;
 
+use App\Events\ListingWasCreated;
 use App\Models\Listing;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Http;
 
 class ListingObserver
 {
@@ -15,22 +15,8 @@ class ListingObserver
     {
         $user = auth()->user();
 
-        if (isset($listing->location['lat']) && isset($listing->location['lng'])) {
-            $url =
-                'https://maps.googleapis.com/maps/api/geocode/json?latlng=' . $listing->location['lat'] . ',' . $listing->location['lng'] . '&key=' . env('GMAP_API');
-            $response = Http::get($url);
-            $data = $response->json();
-            if ($data['status'] == 'OK') {
-                foreach ($data['results'][0]['address_components'] as $component) {
-                    if (in_array('locality', $component['types'])) {
-                        $listing->city = $component['long_name'];
-                    }
-                    if (in_array('postal_code', $component['types'])) {
-                        $listing->zip = $component['long_name'];
-                    }
-                }
-                $listing->save();
-            }
+        if($user && $listing->user_id == $user->id) {
+            event(new ListingWasCreated($user,$listing));
         }
 
         if (!$listing->user_id) {
@@ -72,6 +58,8 @@ class ListingObserver
         if (config('listing.billing') == 'chargePerSeat') {
             auth()->user()->removeSeat();
         }
+
+        Cache::flush();
     }
 
     /**

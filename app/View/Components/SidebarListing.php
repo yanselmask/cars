@@ -42,10 +42,6 @@ class SidebarListing extends Component
             'colors' => Color::select('id', 'name')->get(),
             'sellers' => ListedBy::select('id', 'name')->get(),
             'models' => request()->query('make') ? MakeModel::where('make_id', request()->query('make'))->get() : [],
-            'locations' => Listing::select('city')
-                ->whereNotNull('city')
-                ->distinct()
-                ->get(),
             'features' => Feature::select('id', 'name')->get()->mapWithKeys(fn ($f) => [$f->id => $f->name])
         ]);
     }

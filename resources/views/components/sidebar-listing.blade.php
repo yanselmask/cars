@@ -40,13 +40,8 @@
               @endif
               <div class="pb-4 mb-2">
                   <h3 class="h6 text-light">{{ __('Location') }}</h3>
-                  <select class="form-select form-select-light mb-2" id="location">
-                      <option value="">{{ __('Any location') }}</option>
-                      @foreach ($locations as $location)
-                          <option value="{{ $location->city }}" @selected(request()->query('location') == $location->city)>{{ $location->city }}
-                          </option>
-                      @endforeach
-                  </select>
+                  <input value="{{request()->query('location')}}" class="form-control form-control-light" id="autocomplete" placeholder="{{__('Location')}}">
+                  <div id="map"></div>
               </div>
               <div class="pb-4 mb-2">
                   <h3 class="h6 text-light">{{ __('Keywords') }}</h3>
@@ -251,7 +246,6 @@
 
   @push('js-libs')
       <script>
-          const city = document.querySelector('#location');
           const keywords = document.querySelector('#keywords');
           const transmission = document.querySelector('#transmission');
           const type = document.querySelector('#type');
@@ -353,10 +347,6 @@
 
           model.addEventListener('change', (event) => {
               addQueryMake(event, 'model');
-          });
-
-          city.addEventListener('change', (event) => {
-              addQuery(event, 'location');
           });
 
           transmission.addEventListener('change', (event) => {

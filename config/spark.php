@@ -110,12 +110,16 @@ return [
                     'features' => [
                         'Up to 5 listings allowed',
                         'Up to 5 photos per listing',
-                        '3 Featured Listing'
+                        '3 Featured Listing',
+                        '--You cannot change slug of listings',
+                        '--You cannot linked video for listings',
                     ],
                     'options' => [
                         'listing' => 5,
                         'listing_featured' => 3,
-                        'images_limit' => 5
+                        'images_limit' => 5,
+                        'can_change_slug' => false,
+                        'can_linked_video' => false
                     ],
                     'archived' => false,
                 ],
@@ -131,12 +135,16 @@ return [
                     'features' => [
                         'Up to 25 listings allowed',
                         'Up to 10 photos per listing',
-                        '10 Featured Listing'
+                        '10 Featured Listing',
+                        'You can change slug of listings',
+                        'You can linked video for listings',
                     ],
                     'options' => [
                         'listing' => 25,
                         'listing_featured' => 10,
-                        'images_limit' => 10
+                        'images_limit' => 10,
+                        'can_change_slug' => true,
+                        'can_linked_video' => true
                     ],
                     'archived' => false,
                 ],
@@ -152,11 +160,15 @@ return [
                         'Up to 25 listings allowed',
                         'Up to 15 photos per listing',
                         '35 Featured Listing',
+                        'You can change slug of listings',
+                        'You can linked video for listings',
                     ],
                     'options' => [
                         'listing' => 100,
                         'listing_featured' => 35,
-                        'images_limit' => 15
+                        'images_limit' => 15,
+                        'can_change_slug' => true,
+                        'can_linked_video' => true
                     ],
                     'archived' => false,
                 ],

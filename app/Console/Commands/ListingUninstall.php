@@ -84,5 +84,7 @@ class ListingUninstall extends Command
             '--force' => true
         ]);
         $this->info("Migration rollback successful");
+        Artisan::call('optimize:clear');
+        $this->info("Optimized successful");
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\ListingWasCreated;
+use App\Listeners\ListingWasCreatedNotifyToUserListener;
 use App\Models\User;
 use App\Repositories\CacheListing;
 use App\Repositories\CachePages;
@@ -50,6 +52,11 @@ class AppServiceProvider extends ServiceProvider
 
         NavigationResource::navigationGroup('Settings');
         NavigationResource::navigationSort(3);
+
+        Event::listen(
+            ListingWasCreated::class,
+            ListingWasCreatedNotifyToUserListener::class,
+        );
 
     }
 }

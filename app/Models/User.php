@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Althinect\FilamentSpatieRolesPermissions\Concerns\HasSuperAdmin;
 use Filament\Panel;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 use Filament\Models\Contracts\FilamentUser;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -99,27 +101,32 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         return 0;
     }
 
-    public function canPublishListing()
+    public function canPublishListing():bool
     {
-        return $this->credits > 0 ? true : false;
+        return $this->credits > 0 ?? false;
     }
 
-    public function canFeatureListing()
+    public function canFeatureListing():bool
     {
-        return $this->credits_features > 0 ? true : false;
+        return $this->credits_features > 0 ?? false;
     }
 
-    public function posts()
+    public function canLinkedVideo():bool
+    {
+        return $this->sparkPlan()->options['can_linked_video'] ?? false;
+    }
+
+    public function posts(): HasMany
     {
         return $this->hasMany(Post::class);
     }
 
-    public function pages()
+    public function pages(): HasMany
     {
         return $this->hasMany(Page::class);
     }
 
-    public function listings()
+    public function listings(): HasMany
     {
         return $this->hasMany(Listing::class);
     }
@@ -129,12 +136,12 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         return $this->listings()->where('is_certified', true);
     }
 
-    public function favoritedListings()
+    public function favoritedListings(): BelongsToMany
     {
         return $this->belongsToMany(Listing::class, 'favorite_listings', 'user_id', 'listing_id')->approved();
     }
 
-    public function hasFavorited($listingId)
+    public function hasFavorited($listingId): bool
     {
         return $this->favoritedListings()->where('listing_id', $listingId)->exists();
     }

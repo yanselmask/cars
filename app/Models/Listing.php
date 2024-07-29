@@ -6,6 +6,7 @@ use App\Observers\ListingObserver;
 use DOMDocument;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
+use Spatie\Geocoder\Geocoder;
 use Spatie\Sluggable\HasSlug;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
@@ -31,6 +32,71 @@ class Listing extends Model implements HasMedia
         'location' => 'json',
         'status' => \App\Enums\ListingStatus::class,
     ];
+
+    protected  $appends = [
+        'zip',
+        'full_address',
+        'lat',
+        'lng',
+    ];
+
+    public function getFullAddressAttribute(): ?string
+    {
+        if (is_array($this->location))
+        {
+            return app('geocoder')->reverse($this->lat,$this->lng)->get()[0]->getFormattedAddress();
+        }
+
+        return null;
+    }
+    public function getCityAttribute(): ?string
+    {
+        if (is_array($this->location))
+        {
+            return app('geocoder')->reverse($this->lat,$this->lng)->get()[0]->getLocality();
+        }
+
+        return null;
+    }
+
+    public function getZipAttribute(): ?string
+    {
+        if (is_array($this->location))
+        {
+            return app('geocoder')->reverse($this->lat,$this->lng)->get()[0]->getPostalCode();
+        }
+
+        return null;
+    }
+
+    public function getCityZipAttribute()
+    {
+        if ($this->city && $this->zip) {
+            return $this->city . ', ' . $this->zip;
+        }
+
+        return null;
+    }
+
+    public function getLatAttribute(): ?string
+    {
+        if (is_array($this->location))
+        {
+            return $this->location['lat'];
+        }
+
+        return null;
+    }
+
+    public function getLngAttribute(): ?string
+    {
+        if (is_array($this->location))
+        {
+            return $this->location['lng'];
+        }
+
+        return null;
+    }
 
     /**
      * Get the options for generating the slug.
@@ -175,15 +241,6 @@ class Listing extends Model implements HasMedia
     public function comparedBy()
     {
         return $this->belongsToMany(User::class, 'compares');
-    }
-
-    public function getCityZipAttribute()
-    {
-        if ($this->city && $this->zip) {
-            return $this->city . ', ' . $this->zip;
-        }
-
-        return null;
     }
 
     public function getViewsAttribute()

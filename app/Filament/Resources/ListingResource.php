@@ -3,11 +3,8 @@
 namespace App\Filament\Resources;
 
 use App\Enums\ListingStatus;
-use App\Filament\App\Resources\ListingResource\Widgets\CreditStat;
 use App\Filament\Resources\ListingResource\Pages;
-use App\Filament\Resources\ListingResource\RelationManagers;
 use App\Models\Listing;
-use ArberMustafa\FilamentLocationPickrField\Forms\Components\LocationPickr;
 use Filament\Forms;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Form;
@@ -22,6 +19,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\HtmlString;
 use App\Filament\Custom\SEO;
+use Illuminate\Support\Str;
 
 class ListingResource extends Resource
 {
@@ -65,9 +63,17 @@ class ListingResource extends Resource
                             Forms\Components\Grid::make(2)
                                 ->schema([
                                     Forms\Components\TextInput::make('name')
-                                        ->required(),
+                                        ->reactive()
+                                        ->lazy()
+                                        ->required()
+                                        ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
                                     Forms\Components\TextInput::make('slug')
-                                        ->prefix(config('app.url') . '/' . config('listing.path_listing') . '/'),
+                                        ->prefix(config('app.url') . '/' . config('listing.path_listing') . '/')
+                                        ->hint(new HtmlString('<a href="/billing">Premium</a>'))
+                                        ->hintIcon('heroicon-m-question-mark-circle', tooltip: __('This is a premium option'))
+                                        ->hintColor('primary')
+                                        ->rules(['alpha_dash'])
+                                        ->disabled(!auth()->user()->sparkPlan()?->options['can_change_slug'] ?? true),
                                 ]),
                             Forms\Components\Radio::make('listedby_id')
                                 ->label(__('Listed By'))
@@ -77,7 +83,7 @@ class ListingResource extends Resource
                                 ->columnSpanFull(),
                             Forms\Components\Radio::make('is_featured')
                                 ->label(__('Featured'))
-                                ->options(fn (): array => match (auth()->user()->canFeatureListing()) {
+                                ->options(fn (): array => match (auth()->user()->canFeatureListing() || auth()->user()->isSuperAdmin()) {
                                     true => [
                                         false => __('No'),
                                         true => __('Yes')
@@ -86,9 +92,12 @@ class ListingResource extends Resource
                                         false => __('No')
                                     ],
                                 })
+                                ->hint(new HtmlString('<a href="/billing">Premium</a>'))
+                                ->hintIcon('heroicon-m-question-mark-circle', tooltip: __('This is a premium option'))
+                                ->hintColor('primary')
                                 ->inline()
                                 ->inlineLabel(false)
-                                ->visible(!auth()->user()->isSuperAdmin() && auth()->user()->canFeatureListing())
+                                ->disabled(!auth()->user()->canFeatureListing() || auth()->user()->isSuperAdmin())
                                 ->columnSpanFull()
                         ]),
                     Forms\Components\Wizard\Step::make(__('General data'))
@@ -218,25 +227,73 @@ class ListingResource extends Resource
                                 ->collection('gallery')
                                 ->multiple((isset(auth()->user()->sparkPlan()->options['images_limit']) && auth()->user()->sparkPlan()->options['images_limit'] > 1) ? true : false)
                                 ->reorderable()
-                                ->maxFiles(auth()->user()->sparkPlan()->options['images_limit'] ?? 1),
-                            Forms\Components\TextInput::make('video_link'),
+                                ->maxFiles(auth()->user()->sparkPlan()->options['images_limit'] ?? 1)
+                                ->hint(new HtmlString('<a href="/billing">Premium</a>'))
+                                ->hintIcon('heroicon-m-question-mark-circle', tooltip: __('This is a premium option'))
+                                ->hintColor('primary'),
+                            Forms\Components\TextInput::make('video_link')
+                                ->hint(new HtmlString('<a href="/billing">Premium</a>'))
+                                ->hintIcon('heroicon-m-question-mark-circle', tooltip: __('This is a premium option'))
+                                ->hintColor('primary')
+                                ->disabled(!auth()->user()->canLinkedVideo())
                         ]),
                     Forms\Components\Wizard\Step::make(__('Location'))
                         ->schema([
-                            LocationPickr::make('location')
-                                ->mapControls([
-                                    'mapTypeControl'    => true,
-                                    'scaleControl'      => true,
-                                    'streetViewControl' => true,
-                                    'rotateControl'     => true,
-                                    'fullscreenControl' => true,
-                                    'zoomControl'       => false,
-                                ])
-                                ->defaultZoom(5)
-                                ->draggable()
-                                ->clickable()
+                          Forms\Components\Grid::make(2)
+                            ->schema([
+                                Forms\Components\TextInput::make('zip')
+                                    ->dehydrated(false)
+                                    ->label(__('Zip'))
+                                    ->lazy(),
+                                Forms\Components\TextInput::make('city')
+                                    ->label(__('City'))
+                                    ->lazy(),
+                            ]),
+                            Forms\Components\Grid::make(2)
+                            ->schema([
+                                Forms\Components\TextInput::make('lat')
+                                    ->label(__('Latitude'))
+                                    ->dehydrated(false)
+                                    ->reactive()
+                                    ->afterStateUpdated(function ($state, callable $get, callable $set) {
+                                        $set('location', [
+                                            'lat' => floatVal($state),
+                                            'lng' => floatVal($get('lng')),
+                                        ]);
+                                    })
+                                    ->lazy(), // important to use lazy, to avoid updates as you type
+                                Forms\Components\TextInput::make('lng')
+                                    ->label(__('Longitude'))
+                                    ->dehydrated(false)
+                                    ->reactive()
+                                    ->afterStateUpdated(function ($state, callable $get, callable $set) {
+                                        $set('location', [
+                                            'lat' => floatval($get('lat')),
+                                            'lng' => floatVal($state),
+                                        ]);
+                                    })
+                                    ->lazy(), // important to use lazy, to avoid updates as you type
+                            ]),
+                            \Cheesegrits\FilamentGoogleMaps\Fields\Geocomplete::make('full_address')
+                                ->label(__('Full Address'))
+                                ->afterStateUpdated(function ($state, callable $get, callable $set) {
+                                    $set('city',app('geocoder')->geocode($state)->get()[0]->getLocality());
+                                    $set('zip',app('geocoder')->geocode($state)->get()[0]->getPostalCode());
+                                })
+                                ->dehydrated(false)
+                                ->prefix(__('Choose:'))
+                                ->geolocate()
+                                ->geolocateIcon('heroicon-o-map'),
+                            \Cheesegrits\FilamentGoogleMaps\Fields\Map::make('location')
+                                ->label(__('Location'))
+                                ->reactive()
+                                ->afterStateUpdated(function ($state, callable $get, callable $set) {
+                                    $set('lat', $state['lat']);
+                                    $set('lng', $state['lng']);
+                                })
+                                ->autocomplete('full_address')
+                                ->autocompleteReverse(true)
                                 ->height('60vh')
-                                ->myLocationButtonLabel(__('My location')),
                         ]),
                     Forms\Components\Wizard\Step::make(__('Features'))
                         ->schema(function (){

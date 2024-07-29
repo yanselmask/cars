@@ -8,6 +8,18 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 
+Route::get('/update',function(){
+    if(auth()->user()?->isSuperAdmin())
+    {
+        Artisan::call('migrate',[
+            '--force' => true,
+        ]);
+
+        Artisan::call('optimize:clear');
+
+        return back();
+    }
+});
 Route::middleware([
     \Illuminate\Session\Middleware\AuthenticateSession::class,
 ])->group(function () {

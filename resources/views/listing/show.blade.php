@@ -52,7 +52,7 @@
                         </div>
                         <div class="text-nowrap">
                             <i class="fi-map-pin fs-lg opacity-70 me-2"></i>
-                            <span class="align-middle">Chicago, IL 60603</span>
+                            <span class="align-middle">{{ $listing->city_zip }}</span>
                         </div>
                     </div>
                 </div>

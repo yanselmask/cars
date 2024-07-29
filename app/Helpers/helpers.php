@@ -12,6 +12,13 @@ if (!function_exists('setActive')) {
     }
 }
 
+if (!function_exists('appInstalled')) {
+    function appInstalled(): bool
+    {
+        return file_exists(storage_path('installed'));
+    }
+}
+
 if (!function_exists('site_name')) {
     function site_name()
     {
@@ -63,8 +70,14 @@ if (!function_exists('menuTitle')) {
 }
 
 if (!function_exists('gs')) {
+
     function gs($key = '')
     {
+        if(!appInstalled())
+        {
+            return null;
+        }
+
         $gs = DB::table('general_settings')->first();
 
         if (!$gs) {
