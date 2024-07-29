@@ -6,7 +6,6 @@ use App\Observers\ListingObserver;
 use DOMDocument;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
-use Spatie\Geocoder\Geocoder;
 use Spatie\Sluggable\HasSlug;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
@@ -47,18 +46,6 @@ class Listing extends Model implements HasMedia
             if(app('geocoder')->reverse($this->lat,$this->lng)->get())
             {
                 return app('geocoder')->reverse($this->lat,$this->lng)->get()[0]->getFormattedAddress();
-            }
-        }
-
-        return null;
-    }
-    public function getCityAttribute(): ?string
-    {
-        if (is_array($this->location))
-        {
-            if(app('geocoder')->reverse($this->lat,$this->lng)->get())
-            {
-                return dd(app('geocoder')->reverse($this->lat,$this->lng)->get()[0]->getLocality());
             }
         }
 
