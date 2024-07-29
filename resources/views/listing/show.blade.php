@@ -110,7 +110,12 @@
                                 <li class="mb-2"><strong>{{ __('Model') }}:</strong><span
                                         class="opacity-70 ms-1">{{ $listing->makemodel->name }}</span></li>
                                 <li class="mb-2"><strong>{{ __('Mileage') }}:</strong><span
-                                        class="opacity-70 ms-1">{{ $listing->miles }}</span></li>
+                                        class="opacity-70 ms-1">{{ $listing->miles }}</span>
+                                    @if ($listing->is_mileage_verified)
+                                        <i class='fi-alert-circle fs-sm text-primary ms-2' data-bs-toggle='tooltip'
+                                           title='{{ __('Verified by seller') }}'></i>
+                                    @endif
+                                </li>
                                 <li class="mb-2"><strong>{{ __('Body Type') }}:</strong><span
                                         class="opacity-70 ms-1">{{ $listing->type->name }}</span></li>
                                 <li class="mb-2"><strong>{{ __('Drivetrain') }}:</strong><span
