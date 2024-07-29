@@ -1,5 +1,5 @@
 <x-app-layout>
-        @push('seo')
+    @push('seo')
         {!! seo()->for($page) !!}
     @endpush
     <div class="container my-5 pt-5 pb-lg-5">
