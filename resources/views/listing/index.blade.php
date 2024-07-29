@@ -78,6 +78,7 @@
 
     @push('css-libs')
         <link rel="stylesheet" media="screen" href="{{ asset('theme/vendor/nouislider/dist/nouislider.min.css') }}" />
+        @vite(['resources/js/app.js'])
     @endpush
 
     @push('js-libs')

@@ -2,6 +2,7 @@
     $condition = \App\Models\Condition::select('id', 'name')->get();
     $makes = \App\Models\Make::select('id', 'name')->has('listings')->get();
     $types = \App\Models\Type::select('id', 'name')->get();
+    $fuels = \App\Models\FuelType::select('id', 'name')->get();
 @endphp
 <section class="bg-position-top-center bg-repeat-0 pt-5"
     style="
@@ -27,9 +28,14 @@
         </div>
     </div>
     <div class="container mt-4 mt-sm-3 mt-lg-n3 pb-5 mb-md-4">
+        <ul class="nav nav-tabs nav-tabs-light mb-4">
+            @foreach($condition as $c)
+                <li class="nav-item"><a data-condition="{{$c->id}}" class="nav-link change-condition" href="javascript:;">{{$c->name}}</a></li>
+            @endforeach
+        </ul>
         <!-- Form group-->
         <form class="form-group form-group-light d-block" action="{{ route('listing.index') }}">
-            <span x-text="make"></span>
+            <input type="hidden" name="condition">
             <div class="row g-0 ms-lg-n2">
                 <div class="col-lg-2">
                     <div class="input-group border-end-lg border-light"><span
@@ -61,13 +67,13 @@
                     <div class="dropdown border-end-md border-light" data-bs-toggle="select">
                         <button class="btn btn-link dropdown-toggle ps-2 ps-sm-3" type="button"
                             data-bs-toggle="dropdown" aria-expanded="false"><i class="fi-list me-2"></i><span
-                                class="dropdown-toggle-label">{{{__('Condition')}}}</span></button>
-                        <input type="hidden" name="condition">
+                                class="dropdown-toggle-label">{{{__('Fuel Type')}}}</span></button>
+                        <input type="hidden" name="fuel">
                         <ul class="dropdown-menu dropdown-menu-dark" style="">
-                               @foreach ($condition as $c)
+                               @foreach ($fuels as $fuel)
                             <li>
                                 <a class="dropdown-item" href="#">
-                                    <span class="dropdown-item-label">{{$c->name}}</span>
+                                    <span class="dropdown-item-label">{{$fuel->name}}</span>
                                 </a>
                             </li>
                               @endforeach
@@ -95,7 +101,7 @@
                 <hr class="hr-light d-sm-none my-2">
                 <div class="col-lg-2">
                     <div class="input-group border-end-lg border-light"><span
-                            class="input-group-text text-muted ps-2 ps-sm-3"><i class="fi-search"></i></span>
+                            class="input-group-text text-muted ps-2 ps-sm-3"><i class="fi-map-pin"></i></span>
                         <input id="autocomplete" class="form-control" type="text" name="location" placeholder="{{__('Location')}}">
                         <div id="map"></div>
                     </div>
@@ -109,6 +115,16 @@
     </div>
 </section>
 @push('js-libs')
+    <script>
+        const conditions = document.querySelectorAll('.change-condition');
+        conditions.forEach((condition) => {
+            condition.addEventListener('click', (event) => {
+                conditions.forEach((cond) => cond.classList.remove('active'));
+                event.target.classList.add('active');
+                document.querySelector('[name=condition]').value = event.target.getAttribute('data-condition');
+            })
+        })
+    </script>
     <script async
             src="https://maps.googleapis.com/maps/api/js?key={{config('filament-google-maps.key')}}&loading=async&libraries=places&callback=initMap">
     </script>
@@ -138,6 +154,7 @@
             autocomplete.addListener('place_changed', function() {
                 infowindow.close();
                 var place = autocomplete.getPlace();
+                input.value = place.name;
 
                 if (!place.geometry) {
                     window.alert("No details available for input: '" + place.name + "'");
@@ -161,7 +178,7 @@
 
                 infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
                     'Place ID: ' + place.place_id + '<br>' +
-                    place.formatted_address);
+                    place.name);
                 infowindow.open(map, marker);
             });
         }

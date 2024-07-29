@@ -83,7 +83,10 @@ class Listing implements ListingInterface
             })
             ->when(request()->query('fuel'), function ($sql) {
                 $sql->where(function ($q) {
-                    $q->where('fueltype_id', request()->query('fuel'));
+                    $q->where('fueltype_id', request()->query('fuel'))
+                        ->orWhereHas('fueltype', function ($query) {
+                            $query->where('name', 'like', '%' . request()->query('fuel') . '%');
+                        });
                 });
             })
             ->when(request()->query('exterior_color'), function ($sql) {

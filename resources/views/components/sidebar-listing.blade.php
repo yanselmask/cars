@@ -18,7 +18,7 @@
               <button class="btn-close btn-close-white" type="button" data-bs-dismiss="offcanvas"
                   data-bs-target="#filters-sidebar"></button>
           </div>
-          <div class="offcanvas-body py-lg-4">
+          <div class="offcanvas-body py-lg-4" x-data="{more_filters: @js(count(request()->query()) > 5)}">
               @if (count(request()->query()) > 0)
                   <div class="pb-3 mb-4 border-bottom border-light">
                       <div class="d-flex align-items-center justify-content-between mb-3">
@@ -50,7 +50,12 @@
                       value="{{ request()->query('keywords') }}">
               </div>
               <div class="pb-4 mb-2">
-                  <h3 class="h6 text-light">{{ __('Make & Model') }}</h3>
+                  <div class="d-flex align-items-center justify-content-between mb-3">
+                  <h3 class="h6 text-light mb-0">{{ __('Make & Model') }}</h3>
+                  <button class="btn btn-link btn-light fw-normal fs-sm p-0" x-on:click="more_filters = !more_filters">
+                      {{ __('More filters') }}
+                  </button>
+                  </div>
                   <select id="make" class="form-select form-select-light mb-2" id="make">
                       <option value="">{{ __('Any make') }}</option>
                       @foreach ($makes as $make)
@@ -66,6 +71,7 @@
                       @endforeach
                   </select>
               </div>
+                  <div x-show="more_filters" x-transition.opacity>
               <div class="pb-4 mb-2">
                   <h3 class="h6 text-light">{{ __('Price') }}</h3>
                   <div class="mb-3">
@@ -240,6 +246,7 @@
                       </div>
                   </div>
               </div>
+                  </div>
           </div>
       </div>
   </div>
