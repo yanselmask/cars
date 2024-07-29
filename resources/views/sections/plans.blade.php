@@ -24,7 +24,7 @@
                                      </li>
                                  @else
                                      <li class="d-flex"><i class="fi-check text-primary fs-sm mt-1 me-2"></i>
-                                         <span class="text-light">{{ $featured }}</span>
+                                         <span class="text-light">{{ str_replace('--','',$featured) }}</span>
                                      </li>
                                  @endif
                              @endforeach
