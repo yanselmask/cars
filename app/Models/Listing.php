@@ -52,18 +52,18 @@ class Listing extends Model implements HasMedia
         return null;
     }
 
-    public function getZipAttribute(): ?string
-    {
-        if (is_array($this->location))
-        {
-            if(app('geocoder')->reverse($this->lat,$this->lng)->get())
-            {
-                return app('geocoder')->reverse($this->lat,$this->lng)->get()[0]?->getPostalCode();
-            }
-        }
-
-        return null;
-    }
+//    public function getZipAttribute(): ?string
+//    {
+//        if (is_array($this->location))
+//        {
+//            if(app('geocoder')->reverse($this->lat,$this->lng)->get())
+//            {
+//                return app('geocoder')->reverse($this->lat,$this->lng)->get()[0]?->getPostalCode();
+//            }
+//        }
+//
+//        return null;
+//    }
 
     public function getCityZipAttribute()
     {
