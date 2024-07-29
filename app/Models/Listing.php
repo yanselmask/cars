@@ -44,7 +44,10 @@ class Listing extends Model implements HasMedia
     {
         if (is_array($this->location))
         {
-            return app('geocoder')->reverse($this->lat,$this->lng)->get()[0]->getFormattedAddress();
+            if(app('geocoder')->reverse($this->lat,$this->lng)->get())
+            {
+                return app('geocoder')->reverse($this->lat,$this->lng)->get()[0]->getFormattedAddress();
+            }
         }
 
         return null;
@@ -53,7 +56,10 @@ class Listing extends Model implements HasMedia
     {
         if (is_array($this->location))
         {
-            return app('geocoder')->reverse($this->lat,$this->lng)->get()[0]->getLocality();
+            if(app('geocoder')->reverse($this->lat,$this->lng)->get())
+            {
+                return app('geocoder')->reverse($this->lat,$this->lng)->get()[0]->getLocality();
+            }
         }
 
         return null;
@@ -63,7 +69,11 @@ class Listing extends Model implements HasMedia
     {
         if (is_array($this->location))
         {
-            return app('geocoder')->reverse($this->lat,$this->lng)->get()[0]->getPostalCode();
+            if(app('geocoder')->reverse($this->lat,$this->lng)->get())
+            {
+                return app('geocoder')->reverse($this->lat,$this->lng)->get()[0]->getPostalCode();
+            }
+
         }
 
         return null;
