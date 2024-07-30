@@ -30,7 +30,8 @@ class SectionsRelationManager extends RelationManager
             ->recordTitleAttribute('name')
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('sort_order')
+                Tables\Columns\TextColumn::make('key'),
+                Tables\Columns\TextColumn::make('sort_order'),
             ])
             ->filters([
                 //
@@ -46,7 +47,6 @@ class SectionsRelationManager extends RelationManager
                     ]),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
                 Tables\Actions\DetachAction::make()
             ])
             ->bulkActions([
