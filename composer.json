@@ -36,7 +36,8 @@
         "spatie/laravel-sluggable": "^3.6",
         "spatie/mailcoach-sdk-php": "^1.6",
         "toin0u/geocoder-laravel": "^4.7",
-        "torann/currency": "^1.1"
+        "torann/currency": "^1.1",
+        "yanselmask/laravel-hooks": "dev-main"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.13",

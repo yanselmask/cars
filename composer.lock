@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8b7116d26adcb71a691aaa25bc3bc650",
+    "content-hash": "b0c64aa385e41a00a375c0475dacd50e",
     "packages": [
         {
             "name": "akaunting/laravel-language",
@@ -12629,6 +12629,72 @@
                 "source": "https://github.com/geocoder-php/php-common/tree/4.6.0"
             },
             "time": "2022-07-30T11:09:43+00:00"
+        },
+        {
+            "name": "yanselmask/laravel-hooks",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yanselmask/laravel-hooks.git",
+                "reference": "c4f87baae2db107a61f50b4df8e63cf1e944b78d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yanselmask/laravel-hooks/zipball/c4f87baae2db107a61f50b4df8e63cf1e944b78d",
+                "reference": "c4f87baae2db107a61f50b4df8e63cf1e944b78d",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^5.7|^6.0|^7.0|^8.0|^9.0|^10.0|^11.0",
+                "php": "^7.1.3|^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "~3.7|^4.0|^5.0|^6.0|^7.0",
+                "phpunit/phpunit": "^9.5"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Millat\\LaravelHooks\\LaravelHooksServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helper.php"
+                ],
+                "psr-4": {
+                    "Millat\\LaravelHooks\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Yanselmask",
+                    "email": "info@yanselmask.com"
+                }
+            ],
+            "description": "The WordPress filter, action system in Laravel",
+            "keywords": [
+                "HOOK",
+                "action",
+                "actions",
+                "filter",
+                "filters",
+                "hooks",
+                "laravel",
+                "wordpress",
+                "yanselmask"
+            ],
+            "support": {
+                "source": "https://github.com/yanselmask/laravel-hooks/tree/main"
+            },
+            "time": "2024-07-30T16:44:52+00:00"
         }
     ],
     "packages-dev": [

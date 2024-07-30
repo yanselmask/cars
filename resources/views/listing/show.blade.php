@@ -262,6 +262,7 @@
                             style="height: 500px;"></div>
                     </section>
                 @endif
+                {{apply_filters( 'the_title', null )}}
                 <!-- Post meta-->
                 <div class="d-flex flex-wrap border-top border-light fs-sm text-light pt-4 pb-5 pb-md-2">
                     <div class="border-end border-light pe-3 me-3">

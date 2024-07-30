@@ -21,7 +21,7 @@ Route::get('/update',function(){
     }
 });
 Route::middleware([
-    \Illuminate\Session\Middleware\AuthenticateSession::class,
+    'auth',
 ])->group(function () {
     Route::controller(HomeController::class)
         ->group(function () {
