@@ -195,6 +195,7 @@
                                     <div class="fs-sm pt-2 mt-1">{{ __('No Accident / Damage Reported') }}</div>
                                 </div>
                             @endif
+                                {{apply_filters( 'inside_box_badges', null )}}
                         </div>
                     </div>
                 @endif
@@ -382,6 +383,7 @@
                 </div>
             </div>
         </div>
+        {{apply_filters( 'section_before_related_listing_show', null )}}
         <!-- Related posts (Carousel)-->
         @if ($related->count() > 0)
             <h2 class="h3 text-light pt-5 pb-3 mt-md-4">{{ __('You may be interested in') }}</h2>

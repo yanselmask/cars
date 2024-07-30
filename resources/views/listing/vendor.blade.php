@@ -87,6 +87,7 @@
                             class="opacity-70">{{ $user->listings->count() }}</span></li>
                     <li><strong>{{ __('Cars certified') }}: </strong><span
                             class="opacity-70">{{ $user->listingsCertified->count() }}</span></li>
+                    {{apply_filters( 'list_vendor_show', null )}}
                 </ul>
                 @if ($user->phone_number)
                     <button id="reveal" class="btn btn-outline-light btn-lg px-4 mb-4" type="button">

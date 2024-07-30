@@ -36,7 +36,7 @@
       </div>
       <div class="tns-carousel-wrapper tns-controls-outside-xxl tns-nav-outside tns-carousel-light">
           <div class="tns-carousel-inner"
-              data-carousel-options='{"items": {{$listings->count()}}, "responsive": {"0":{"items":1, "gutter": 16},"500":{"items":2, "gutter": 18},"900":{"items":3, "gutter": 20}, "1100":{"gutter": 24}}}'>
+              data-carousel-options='{"items": 0, "responsive": {"0":{"items":1, "gutter": 16},"500":{"items":2, "gutter": 18},"900":{"items":3, "gutter": 20}, "1100":{"gutter": 24}}}'>
               @foreach ($listings as $listing)
                   <div>
                     <x-listing-grid :listing="$listing" />
