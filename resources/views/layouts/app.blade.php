@@ -105,7 +105,7 @@
                     location.reload();
                 }
             } catch (error) {
-                window.location.href = @js('/'.config('listing.vendor_path'))
+                window.location.href = @js(config('app.url') . '/' . config('listing.vendor_path'))
             }
         }
     </script>
