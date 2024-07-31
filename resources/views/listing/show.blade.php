@@ -77,7 +77,7 @@
                     <div class="tns-carousel-inner"
                         data-carousel-options="{&quot;navAsThumbnails&quot;: true, &quot;navContainer&quot;: &quot;#thumbnails&quot;, &quot;gutter&quot;: 12, &quot;responsive&quot;: {&quot;0&quot;:{&quot;controls&quot;: false},&quot;500&quot;:{&quot;controls&quot;: true}}}">
                         @foreach ($listing->media as $photo)
-                            <div><img class="rounded-3" src="{{ $photo->getUrl('single') }}"
+                            <div><img loading="lazy" class="rounded-3" src="{{ $photo->getUrl('single') }}"
                                     alt="{{ __('Image') }}">
                             </div>
                         @endforeach
@@ -162,7 +162,7 @@
                         <div class="row row-cols-2 row-cols-sm-4 gx-3 gx-xl-4 gy-4">
                             @if ($listing->is_certified)
                                 <div class="col text-light text-center">
-                                    <div class="d-table bg-dark rounded-3 mx-auto p-3"><img
+                                    <div class="d-table bg-dark rounded-3 mx-auto p-3"><img loading="lazy"
                                             src="{{ asset('theme/img/check.svg') }}" width="48" alt="Icon">
                                     </div>
                                     <div class="fs-sm pt-2 mt-1">
@@ -173,7 +173,7 @@
                             @if ($listing->is_single_owner)
                                 <div class="col text-light text-center">
                                     <div class="d-table bg-dark rounded-3 mx-auto p-3">
-                                        <img src="{{ asset('theme/img/steering-wheel.svg') }}" width="48"
+                                        <img loading="lazy" src="{{ asset('theme/img/steering-wheel.svg') }}" width="48"
                                             alt="Icon">
                                     </div>
                                     <div class="fs-sm pt-2 mt-1">{{ __('Single Owner') }}</div>
@@ -181,7 +181,7 @@
                             @endif
                             @if ($listing->is_well_equipped)
                                 <div class="col text-light text-center">
-                                    <div class="d-table bg-dark rounded-3 mx-auto p-3"><img
+                                    <div class="d-table bg-dark rounded-3 mx-auto p-3"><img loading="lazy"
                                             src="{{ asset('theme/img/driving-test.svg') }}" width="48"
                                             alt="Icon"></div>
                                     <div class="fs-sm pt-2 mt-1">{{ __('Well-Equipped') }}</div>
@@ -189,7 +189,7 @@
                             @endif
                             @if ($listing->no_accident)
                                 <div class="col text-light text-center">
-                                    <div class="d-table bg-dark rounded-3 mx-auto p-3"><img
+                                    <div class="d-table bg-dark rounded-3 mx-auto p-3"><img loading="lazy"
                                             src="{{ asset('theme/img/accident.svg') }}" width="48"
                                             alt="Icon"></div>
                                     <div class="fs-sm pt-2 mt-1">{{ __('No Accident / Damage Reported') }}</div>
@@ -305,7 +305,7 @@
                         <div class="text-light mb-2">{{ $listing->listedby->name }}</div>
                         <a class="d-flex align-items-center text-decoration-none mb-3"
                             href="{{ route('listing.vendor', $listing->user) }}">
-                            <img class="rounded-circle" src="{{ $listing->user->profile_photo_url }}" width="48"
+                            <img loading="lazy" class="rounded-circle" src="{{ $listing->user->profile_photo_url }}" width="48"
                                 alt="{{ $listing->user->name }}">
                             <div class="ps-2">
                                 <h5 class="text-light mb-0">{{ $listing->user?->fullname }}</h5>

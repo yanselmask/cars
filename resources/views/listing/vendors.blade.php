@@ -49,7 +49,7 @@
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-start mb-2">
                                         <div class="d-flex align-items-center">
-                                            <img class="me-2" src="{{ $vendor->profile_photo_url }}" width="24"
+                                            <img loading="lazy" class="me-2" src="{{ $vendor->profile_photo_url }}" width="24"
                                                 alt="{{ $vendor->fullname }}">
                                             <span class="fs-sm text-dark opacity-80 px-1">{{ $vendor->fullname }}</span>
                                             @if ($vendor->verified)

@@ -4,7 +4,7 @@
     $types = \App\Models\Type::select('id', 'name')->get();
     $fuels = \App\Models\FuelType::select('id', 'name')->get();
 @endphp
-<section class="bg-position-top-center bg-repeat-0 pt-5"
+<section loading="lazy" class="bg-position-top-center bg-repeat-0 pt-5"
     style="
           background-image: url({{ asset('theme/img/hero-bg.png') }});
           background-size: 1920px 630px;

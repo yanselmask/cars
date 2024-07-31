@@ -41,7 +41,7 @@
             <!-- Sidebar-->
             <aside class="col-lg-4 order-lg-1 pe-xl-4 mb-5">
                 <div class="d-flex align-items-start mb-4">
-                    <img class="rounded-circle" src="{{ $user->profile_photo_url }}" width="72"
+                    <img loading="lazy" class="rounded-circle" src="{{ $user->profile_photo_url }}" width="72"
                         alt="{{ $user->full_name }}">
                     <div class="ps-2">
                         <h2 class="h4 text-light mb-1">
@@ -140,7 +140,7 @@
                         <div class="d-flex align-items-start pt-2">
                             @if (config('listing.vendor_page_banner')['image'])
                                 <div class="w-100 me-1" style="max-width: 185px;">
-                                    <img src="{{ config('listing.vendor_page_banner')['image'] }}"
+                                    <img loading="lazy" src="{{ config('listing.vendor_page_banner')['image'] }}"
                                         alt="{{ config('listing.vendor_page_banner')['title'] }}">
                                 </div>
                             @endif
