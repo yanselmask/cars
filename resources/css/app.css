@@ -1,3 +1,2 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'simplebar/dist/simplebar.css';
+@import './theme.min.css';

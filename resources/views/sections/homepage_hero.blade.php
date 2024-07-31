@@ -99,8 +99,8 @@
                     </div>
                 </div>
                 <hr class="hr-light d-sm-none my-2">
-                <div class="col-lg-2">
-                    <div class="input-group border-end-lg border-light"><span
+                <div class="col-lg-2 col-md-3 col-sm-6">
+                    <div class="input-group border-light"><span
                             class="input-group-text text-muted ps-2 ps-sm-3"><i class="fi-map-pin"></i></span>
                         <input id="autocomplete" class="form-control" type="text" name="location" placeholder="{{__('Location')}}">
                         <div id="map"></div>
