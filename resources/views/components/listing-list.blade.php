@@ -7,7 +7,7 @@
         @endforeach
         <div class="tns-carousel-inner position-absolute top-0 h-100">
             @foreach ($listing->media as $photo)
-                <div class="bg-size-cover bg-position-center w-100 h-100"
+                <div loading="lazy" class="bg-size-cover bg-position-center w-100 h-100"
                     style="background-image: url({{ $photo->getUrl($thumb) }});"></div>
             @endforeach
         </div>

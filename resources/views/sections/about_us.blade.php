@@ -2,7 +2,7 @@
     <div class="row align-items-center justify-content-lg-start justify-content-center flex-lg-nowrap gy-4">
         @if(isset($data['image']))
         <div class="col-lg-9">
-            <img class="rounded-3" src="{{ Storage::url($data['image']) }}" alt="{{ $data['title'] }}">
+            <img loading="lazy" class="rounded-3" src="{{ Storage::url($data['image']) }}" alt="{{ $data['title'] }}">
         </div>
         @endif
         <div class="col-lg-4 ms-lg-n5 col-sm-9 text-lg-start text-center">

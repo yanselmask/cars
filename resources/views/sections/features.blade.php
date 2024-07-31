@@ -25,10 +25,10 @@
          <div class="col-md-2 d-none d-md-block">
              <div class="position-relative mx-auto h-100" style="max-width: 5rem; min-height: 26rem">
                  <div class="rellax content-overlay pt-5" data-rellax-percentage="0.5">
-                     <img class="pt-3 mt-5" src="{{asset('theme/img/car.svg')}}" alt="{{__('Car')}}" />
+                     <img loading="lazy" class="pt-3 mt-5" src="{{asset('theme/img/car.svg')}}" alt="{{__('Car')}}" />
                  </div>
                  <div class="position-absolute top-0 start-50 translate-middle-x h-100 overflow-hidden">
-                     <img src="{{asset('theme/img/road-line.svg')}}" width="2" alt="{{__('Road line')}}" />
+                     <img loading="lazy" src="{{asset('theme/img/road-line.svg')}}" width="2" alt="{{__('Road line')}}" />
                  </div>
              </div>
          </div>

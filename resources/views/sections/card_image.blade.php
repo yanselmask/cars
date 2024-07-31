@@ -3,7 +3,7 @@
         <div class="row gy-4 align-items-lg-center">
             @if ($img = $data['image'])
                 <div class="col-md-6">
-                    <img class="rounded-3" src="{{ Storage::url($img) }}" alt="{{ $data['title'] }}">
+                    <img loading="lazy" class="rounded-3" src="{{ Storage::url($img) }}" alt="{{ $data['title'] }}">
                 </div>
             @endif
             <div class="col-lg-5 offset-lg-1 col-md-6 text-md-start text-center">
@@ -29,7 +29,7 @@
             </div>
             @if ($img = $data['image'])
                 <div class="col-md-6 offset-lg-1 order-md-2 order-1">
-                    <img class="rounded-3" src="{{ Storage::url($img) }}" alt="{{ $data['title'] }}">
+                    <img loading="lazy" class="rounded-3" src="{{ Storage::url($img) }}" alt="{{ $data['title'] }}">
                 </div>
             @endif
         </div>

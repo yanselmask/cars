@@ -4,7 +4,7 @@
             @if ($post->created_at->diffInDays(now()) <= config('listing.badge_new_post_time'))
             <span class="badge bg-info position-absolute top-0 end-0 m-3 fs-sm">{{__('New')}}</span>
             @endif
-            <img class="rounded-3" src="{{$post->large_image}}" alt="{{$post->name}}">
+            <img loading="lazy" class="rounded-3" src="{{$post->large_image}}" alt="{{$post->name}}">
         </a>
     </div>
     <div class="col-md-5 col-lg-4">
@@ -23,7 +23,7 @@
         @endif
         <a class="d-flex align-items-center text-decoration-none" href="#">
             @if($post->user)
-            <img class="rounded-circle" src="{{$post->user->profile_photo_url}}" width="48" alt="{{$post->user->name}}">
+            <img loading="lazy" class="rounded-circle" src="{{$post->user->profile_photo_url}}" width="48" alt="{{$post->user->name}}">
             @endif
             <div class="ps-2">
                 @if($name = $post->user?->fullname)

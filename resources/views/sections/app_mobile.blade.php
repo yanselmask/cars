@@ -67,7 +67,7 @@
         </div>
         @if ($img = $data['image'])
             <div class="col-md-5 col-lg-6">
-                <img class="d-block mx-auto" src="{{ Storage::url($img) }}" width="460" alt="{{ __('Mobile App') }}">
+                <img loading="lazy" class="d-block mx-auto" src="{{ Storage::url($img) }}" width="460" alt="{{ __('Mobile App') }}">
             </div>
         @endif
     </div>

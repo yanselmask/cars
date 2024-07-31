@@ -1,6 +1,6 @@
 <article class="col pb-2 pb-md-1">
     <a class="d-block position-relative mb-3" href="{{route('blog.show', $post)}}">
-        <img class="d-block rounded-3" src="{{$post->small_image}}" alt="{{$post->name}}">
+        <img loading="lazy" class="d-block rounded-3" src="{{$post->small_image}}" alt="{{$post->name}}">
     </a>
     @if($post->category)
     <a class="fs-xs text-uppercase text-decoration-none" href="{{route('blog.index', ['category' => $post->category->id])}}">
@@ -12,7 +12,7 @@
     </h3>
     <a class="d-flex align-items-center text-decoration-none" href="#">
         @if($post->user)
-        <img class="rounded-circle" src="{{$post->user->profile_photo_url}}" width="44" alt="{{$post->user->fullname}}">
+        <img loading="lazy" class="rounded-circle" src="{{$post->user->profile_photo_url}}" width="44" alt="{{$post->user->fullname}}">
         @endif
         <div class="ps-2">
             @if($post->user)

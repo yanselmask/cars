@@ -6,7 +6,7 @@
              @foreach ($data['partners'] as $partnert)
              <div>
                  <a class="opacity-40 opacity-transition" href="{{$partnert['link']}}">
-                     <img class="swap-to" src="{{Storage::url($partnert['image'])}}" alt="Logo" width="196">
+                     <img loading="lazy" class="swap-to" src="{{Storage::url($partnert['image'])}}" alt="Logo" width="196">
                  </a>
              </div>
               @endforeach

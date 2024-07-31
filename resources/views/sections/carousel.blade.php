@@ -21,7 +21,7 @@
                                 <div class="row row-cols-2 row-cols-lg-4 gy-4 gx-3 gx-sm-4">
                                     @foreach ($grid['products'] as $product)
                                     <a class="col text-light text-decoration-none" href="{{$product['link']}}">
-                                        <img class="d-block mb-2 mx-auto" src="{{Storage::url($product['image'])}}"
+                                        <img loading="lazy" class="d-block mb-2 mx-auto" src="{{Storage::url($product['image'])}}"
                                             width="168" alt="{{$product['title']}}" />
                                         <div class="fw-bold text-center pt-1">
                                             {{$product['title']}}

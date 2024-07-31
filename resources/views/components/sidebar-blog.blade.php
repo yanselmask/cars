@@ -19,7 +19,7 @@
                 <div class="card card-flush bg-transparent border-light mb-4">
                     <div class="card-body">
                         <div class="d-flex align-items-start pt-3 pt-lg-0">
-                            <img class="rounded-circle" src="{{ $post->user->profile_photo_url }}" width="80"
+                            <img loading="lazy" class="rounded-circle" src="{{ $post->user->profile_photo_url }}" width="80"
                                 alt="{{ $post->user->full_name }}">
                             <div class="ps-3">
                                 <h3 class="h5 text-light mb-2">{{ $post->user->full_name }}</h3>
@@ -58,7 +58,7 @@
                         @foreach ($related as $rt)
                             <div class="d-flex align-items-start border-bottom border-light pb-3 mb-3">
                                 <a class="flex-shrink-0" href="#">
-                                    <img class="rounded-3" src="{{ $rt->thumb_image }}" width="80"
+                                    <img loading="lazy" class="rounded-3" src="{{ $rt->thumb_image }}" width="80"
                                         alt="{{ $rt->name }}">
                                 </a>
                                 <div class="ps-3">

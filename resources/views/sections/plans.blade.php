@@ -6,7 +6,7 @@
                  <div class="card card-light border-light">
                      <div class="card-body">
                         @isset($plan['icon'])
-                         <img class="d-block mx-auto mt-2 mb-4" src="{{asset($plan['icon'])}}" width="72" alt="{{__('Icon')}}">
+                         <img loading="lazy" class="d-block mx-auto mt-2 mb-4" src="{{asset($plan['icon'])}}" width="72" alt="{{__('Icon')}}">
                           @endisset
                          <h2 class="h5 text-light fw-normal text-center py-1 mb-0">{{ $plan['name'] }}</h2>
                          <div class="d-flex align-items-end justify-content-center mb-4">

@@ -15,7 +15,7 @@
             <!-- Item-->
             <div class="col">
                 <div class="card card-body card-light card-hover bg-transparent border-0 px-0 pt-0 text-center">
-                    <img class="d-block mx-auto mb-3" src="{{$type->icon_url}}" width="160"
+                    <img loading="lazy" class="d-block mx-auto mb-3" src="{{$type->icon_url}}" width="160"
                         alt="{{ $type->name }}" />
                     <a class="nav-link-light stretched-link fw-bold"
                         href="{{route('listing.index', ['type' => $type->id])}}">{{ $type->name }}

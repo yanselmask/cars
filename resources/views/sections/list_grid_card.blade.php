@@ -12,7 +12,7 @@
                             @if($img = $card['image'])
                              <div class="icon-box-media bg-dark text-light mx-auto mb-3 d-inline-flex align-items-center justify-content-center"
                                  style="width: 4.5rem; height: 4.5rem;">
-                                 <img src="{{Storage::url($img)}}" alt="{{ $card['title'] }}">
+                                 <img loading="lazy" src="{{Storage::url($img)}}" alt="{{ $card['title'] }}">
                              </div>
                              @endif
                              <h4 class="card-title">{{ $card['title'] }}</h4>

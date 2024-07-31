@@ -21,7 +21,7 @@
             </div>
             @if ($img = $data['image'])
                 <div class="col-lg-8 col-md-7 pt-md-5">
-                    <img class="d-block mt-4 ms-auto" src="{{ Storage::url($img) }}" width="800"
+                    <img loading="lazy" class="d-block mt-4 ms-auto" src="{{ Storage::url($img) }}" width="800"
                         alt="{{ $data['title'] }}" />
                 </div>
             @endif

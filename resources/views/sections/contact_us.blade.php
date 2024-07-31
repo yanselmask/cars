@@ -10,7 +10,7 @@
             @foreach ($data['list'] as $item)
                 <div class="d-flex align-items-start mb-4 pb-md-3">
                     @if ($icon = $item['icon'])
-                        <img class="me-3 flex-shrink-0" src="{{ Storage::url($icon) }}" width="32"
+                        <img loading="lazy" class="me-3 flex-shrink-0" src="{{ Storage::url($icon) }}" width="32"
                             alt="{{ $item['title'] }}">
                     @endif
                     <div>

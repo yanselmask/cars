@@ -11,7 +11,7 @@
                     </a>
                 </div>
                 @if ($img = $data['image'])
-                    <div class="order-md-2 order-1"><img src="{{ Storage::url($img) }}" alt="{{ $data['title'] }}">
+                    <div class="order-md-2 order-1"><img loading="lazy" src="{{ Storage::url($img) }}" alt="{{ $data['title'] }}">
                     </div>
                 @endif
             </div>

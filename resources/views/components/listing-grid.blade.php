@@ -5,7 +5,7 @@
         @include('components.listing-button-like')
         <div class="tns-carousel-inner">
             @foreach ($listing->media as $photo)
-                <img src="{{ $photo->getUrl($thumb) }}" alt="{{ __('Image') }}">
+                <img loading="lazy" src="{{ $photo->getUrl($thumb) }}" alt="{{ __('Image') }}">
             @endforeach
         </div>
     </div>
