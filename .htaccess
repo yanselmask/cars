@@ -3,21 +3,16 @@
         Options -MultiViews -Indexes
     </IfModule>
 
-    RewriteEngine On
+     RewriteEngine On
 
-    # Handle Authorization Header
-    RewriteCond %{HTTP:Authorization} .
-    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+     # Redirect Trailing Slashes If Not A Folder...
+     RewriteCond %{REQUEST_FILENAME} !-d
+     RewriteCond %{REQUEST_URI} (.+)/$
+     RewriteRule ^ %1 [L,R=301]
 
-    # Redirect Trailing Slashes If Not A Folder...
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_URI} (.+)/$
-    RewriteRule ^ %1 [L,R=301]
+     RewriteCond %{REQUEST_URI} !^public
 
-    # Send Requests To Front Controller...
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ public/index.php [L]
+     RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>
 
 <IfModule mod_expires.c>
