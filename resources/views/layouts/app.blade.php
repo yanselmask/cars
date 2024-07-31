@@ -52,12 +52,8 @@
     <script src="{{ asset('theme/js/simplebar.min.js') }}"></script>
     <script src="{{ asset('theme/js/smooth-scroll.polyfills.min.js') }}"></script>
     <script src="{{ asset('theme/js/tiny-slider.js') }}"></script>
-    <script src="{{ asset('theme/js/nouislider.min.js') }}"></script>
-    <script src="{{ asset('theme/js/jarallax.min.js') }}"></script>
-    <script src="{{ asset('theme/js/rellax.min.js') }}"></script>
     @if(config('listing.progress_bar'))
     <script src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
-    <script src="https://unpkg.com/htmx.org@2.0.1"></script>
     <script>
         if (document.readyState === "loading") {
             NProgress.start();

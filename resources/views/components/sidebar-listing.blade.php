@@ -254,6 +254,7 @@
 
   @push('js-libs')
       <script>
+          const contentRender = document.querySelector('#content-render');
           const keywords = document.querySelector('#keywords');
           const transmission = document.querySelector('#transmission');
           const type = document.querySelector('#type');
