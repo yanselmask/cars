@@ -1,6 +1,31 @@
   <div class="col-lg-3 pe-xl-4">
       <div class="offcanvas-lg offcanvas-start bg-dark" id="filters-sidebar">
-          <div class="offcanvas-header bg-transparent d-block border-bottom border-light pt-0 pt-lg-4 px-lg-0">
+          <div class="offcanvas-header bg-transparent d-flex d-lg-none align-items-center border-bottom border-light">
+              <h2 class="h5 text-light mb-0">{{ __('Filters') }}</h2>
+              <button class="btn-close btn-close-white" type="button" data-bs-dismiss="offcanvas"
+                      data-bs-target="#filters-sidebar"></button>
+          </div>
+          @if (count(request()->query()) > 0)
+          <div class="offcanvas-header bg-transparent d-lg-none">
+                 <h2 class="h5 text-light mb-0">{{ __('Selection') }}</h2>
+                 <a class="btn btn-link btn-light fw-normal fs-sm p-0" href="{{ route('listing.index') }}">
+                     {{ __('Clear all') }}
+                 </a>
+          </div>
+              <div class="offcanvas-header bg-transparent border-bottom border-light">
+                  <ul class="nav nav-pills nav-pills-light fs-sm mx-0">
+                      @foreach (request()->query() as $key => $value)
+                          <li class="nav-item mb-2 me-2">
+                              <button class="nav-link px-3 remove-param" type="button"
+                                      data-key="{{ $key }}">{{ ucfirst($key) }} <i
+                                      class="fi-x fs-xxs ms-2"></i></button>
+                          </li>
+                      @endforeach
+                  </ul>
+              </div>
+          @endif
+          <div class="offcanvas-header bg-transparent d-none d-lg-block border-bottom border-light pt-0 pt-lg-4 px-lg-0 mt-3 mt-lg-0">
+              <h2 class="h5 text-light mb-3">{{ __('Condition') }}</h2>
               <ul class="nav nav-tabs nav-tabs-light mb-0">
                   @foreach ($condition as $c)
                       <li class="nav-item mb-3">
@@ -13,31 +38,35 @@
                   @endforeach
               </ul>
           </div>
-          <div class="offcanvas-header bg-transparent d-flex d-lg-none align-items-center">
-              <h2 class="h5 text-light mb-0">{{ __('Filters') }}</h2>
-              <button class="btn-close btn-close-white" type="button" data-bs-dismiss="offcanvas"
-                  data-bs-target="#filters-sidebar"></button>
-          </div>
           <div class="offcanvas-body py-lg-4" x-data="{more_filters: @js(count(request()->query()) > 5)}">
               @if (count(request()->query()) > 0)
-                  <div class="pb-3 mb-4 border-bottom border-light">
-                      <div class="d-flex align-items-center justify-content-between mb-3">
-                          <h3 class="h6 text-light mb-0">{{ __('Selection') }}</h3>
-                          <a class="btn btn-link btn-light fw-normal fs-sm p-0" href="{{ route('listing.index') }}">
-                              {{ __('Clear all') }}
-                          </a>
-                      </div>
-                      <ul class="nav nav-pills nav-pills-light flex-row fs-sm mx-0">
+                  <div class="pb-4 mb-2 d-none d-lg-block border-bottom border-light">
+                      <h3 class="h6 text-light">{{ __('Selection') }}</h3>
+                      <ul class="nav nav-tabs nav-tabs-light mb-0 d-flex flex-row ms-0">
                           @foreach (request()->query() as $key => $value)
                               <li class="nav-item mb-2 me-2">
                                   <button class="nav-link px-3 remove-param" type="button"
-                                      data-key="{{ $key }}">{{ ucfirst($key) }} <i
+                                          data-key="{{ $key }}">{{ ucfirst($key) }} <i
                                           class="fi-x fs-xxs ms-2"></i></button>
                               </li>
                           @endforeach
                       </ul>
                   </div>
               @endif
+              <div class="pb-4 mb-2 d-lg-none">
+                  <h3 class="h6 text-light">{{ __('Condition') }}</h3>
+                  <ul class="nav nav-tabs nav-tabs-light mb-0 d-flex flex-row ms-0">
+                      @foreach ($condition as $c)
+                          <li class="nav-item mb-3">
+                              <a class="nav-link @if (request()->query('condition') == $c->id || request()->query('condition') == $c->name) active @endif"
+                                 href="{{ request()->fullUrlWithQuery([
+                                  'condition' => $c->id,
+                              ]) }}">{{  $c->name }}
+                              </a>
+                          </li>
+                      @endforeach
+                  </ul>
+              </div>
               <div class="pb-4 mb-2">
                   <h3 class="h6 text-light">{{ __('Location') }}</h3>
                   <input value="{{request()->query('location')}}" class="form-control form-control-light" id="autocomplete" placeholder="{{__('Location')}}">
@@ -246,7 +275,6 @@
 
   @push('js-libs')
       <script>
-          const contentRender = document.querySelector('#content-render');
           const keywords = document.querySelector('#keywords');
           const transmission = document.querySelector('#transmission');
           const type = document.querySelector('#type');
@@ -271,7 +299,6 @@
           const features = document.querySelectorAll('.feature');
           const pathFeatures = 'features[]';
           let executed = false;
-
 
           features.forEach((feature) => {
               feature.addEventListener('change', (event) => {
@@ -332,11 +359,9 @@
 
           btnsremoveparams.forEach((btn) => {
               btn.addEventListener('click', (event) => {
-
                   if (event.target.getAttribute('data-key') != 'make') {
                       return removeQuery(event.target.getAttribute('data-key'));
                   }
-
                   const url = new URL(window.location);
                   url.searchParams.delete('model');
                   url.searchParams.delete('make');

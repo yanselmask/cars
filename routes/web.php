@@ -30,8 +30,6 @@ Route::middleware([
 });
 
 Route::middleware([
-    \Shipu\WebInstaller\Middleware\RedirectIfNotInstalled::class,
-    \Torann\Currency\Middleware\CurrencyMiddleware::class,
     'language'
 ])->group(function () {
 

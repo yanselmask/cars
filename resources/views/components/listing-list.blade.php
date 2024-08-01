@@ -15,7 +15,7 @@
     <div class="card-body">
         <div class="d-flex align-items-center justify-content-between pb-1"><span
                 class="fs-sm text-light me-3">{{ $listing->year }}</span>
-                <div class="form-check form-check-light">
+                <div class="form-check form-check-light compare-check d-none">
                     <input data-listing="{{ $listing->id }}" class="form-check-input btn-compare" type="checkbox"
                         id="compare-{{ $listing->id }}" @auth
 @checked(auth()->user()->hasCompared($listing->id)) @endauth>

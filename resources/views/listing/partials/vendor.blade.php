@@ -22,8 +22,20 @@
             src="https://maps.googleapis.com/maps/api/js?key={{config('filament-google-maps.key')}}&loading=async&libraries=places&callback=initMap">
     </script>
     <script>
+        let comparebtn = document.getElementById('to-compare');
+        let compares = document.querySelectorAll('.compare-check');
         var map;
         var marker;
+
+        if(compares.length == 0) comparebtn.style.cursor = 'auto';
+
+        comparebtn.addEventListener('click',(event) => {
+            if(compares.length == 0) return;
+            event.target.classList.toggle('text-primary');
+            compares?.forEach((item) => {
+                item.classList.toggle('d-none');
+            })
+        })
 
         function initMap() {
             // Inicializa el mapa

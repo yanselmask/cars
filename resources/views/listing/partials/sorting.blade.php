@@ -14,7 +14,7 @@
         </select>
         <div class="d-none d-md-block border-end border-light" style="height: 1.25rem;"></div>
         <div class="d-none d-sm-block fw-bold text-light opacity-70 text-nowrap ps-md-4">
-            <i class="fi-switch-horizontal me-2"></i>
+            <i class="fi-switch-horizontal me-2" style="cursor: pointer;" id="to-compare"></i>
             <span class="align-middle">{{ __('Compare (:qty)', ['qty' => auth()?->user()?->comparedListings()->count() ?? 0 ]) }}</span>
         </div>
     </div>

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Listing;
-use App\Models\MakeModel;
 use App\Models\User;
 use App\Repositories\ListingInterface;
 use Illuminate\Http\Request;

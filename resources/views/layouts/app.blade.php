@@ -53,13 +53,14 @@
     @if(config('listing.progress_bar'))
     <script src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
     <script>
-        if (document.readyState === "loading") {
-            NProgress.start();
-            // Loading hasn't finished yet
-            document.addEventListener("DOMContentLoaded", () => {
-                NProgress.done();
-            });
-        }
+        // Alternative to DOMContentLoaded event
+        document.addEventListener("readystatechange", (event) => {
+            if (event.target.readyState === "interactive") {
+                NProgress.start()
+            } else if (event.target.readyState === "complete") {
+                NProgress.done()
+            }
+        });
     </script>
     @endif
     @stack('js-libs')

@@ -15646,7 +15646,8 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "laravel/spark-paddle": 20,
-        "ryangjchandler/filament-navigation": 10
+        "ryangjchandler/filament-navigation": 10,
+        "yanselmask/laravel-hooks": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
