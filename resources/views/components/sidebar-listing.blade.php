@@ -7,7 +7,7 @@
                           <a class="nav-link @if (request()->query('condition') == $c->id || request()->query('condition') == $c->name) active @endif"
                               href="{{ request()->fullUrlWithQuery([
                                   'condition' => $c->id,
-                              ]) }}">{{ __('Search :c', ['c' => $c->name]) }}
+                              ]) }}">{{  $c->name }}
                           </a>
                       </li>
                   @endforeach
@@ -66,6 +66,62 @@
                       @endforeach
                   </select>
               </div>
+
+                      <div class="pb-4 mb-2">
+                          <h3 class="h6 text-light">{{__('Price')}}</h3>
+                          <div class="range-slider range-slider-price range-slider-light mb-3"
+                               data-start-min="{{request()->query('min_price', config('listing.min_price'))}}"
+                               data-start-max="{{request()->query('max_price', config('listing.max_price'))}}"
+                               data-min="{{config('listing.min_price')}}"
+                               data-max="{{config('listing.max_price')}}"
+                               data-step="{{config('listing.step_price')}}">
+                              <div class="range-slider-ui"></div>
+                              <div class="d-flex align-items-center">
+                                  <div class="w-50 pe-2">
+                                      <div class="input-group">
+                                          <span class="input-group-text fs-base form-control-light">{{currency()->find(config('currency.default'))?->symbol}}</span>
+                                          <input id="minPrice" class="form-control form-control-light range-slider-value-min" type="text">
+                                      </div>
+                                  </div>
+                                  <div class="text-muted">&mdash;</div>
+                                  <div class="w-50 ps-2">
+                                      <div class="input-group">
+                                          <span class="input-group-text fs-base form-control-light">{{currency()->find(config('currency.default'))?->symbol}}</span>
+                                          <input id="maxPrice" class="form-control form-control-light range-slider-value-max" type="text">
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-check form-switch form-switch-light">
+                              <input id="is_negotiated" name="is_negotiated" @checked(request()->query('is_negotiated'))
+                              class="form-check-input" type="checkbox"
+                                     value="{{ request()->query('is_negotiated') ? '' : true }}">
+                              <label class="form-check-label fs-sm" for="is_negotiated">{{ __('Negotiated price') }}</label>
+                          </div>
+                      </div>
+              <div class="pb-4 mb-2">
+                  <h3 class="h6 text-light pt-1">{{ __('Year') }}</h3>
+                  <div class="range-slider range-slider-year range-slider-light mb-3"
+                       data-start-min="{{request()->query('from_year', config('listing.years_from'))}}"
+                       data-start-max="{{request()->query('to_year', config('listing.years_to'))}}"
+                       data-min="{{config('listing.years_from')}}"
+                       data-max="{{config('listing.years_to')}}"
+                       data-step="{{config('listing.years_step')}}"
+                       >
+                      <div class="range-slider-ui"></div>
+                      <div class="d-flex align-items-center">
+                          <div class="w-50 pe-2">
+                              <input id="from-year" class="form-control form-control-light range-slider-value-min" type="text">
+                          </div>
+                          <div class="text-muted">&mdash;</div>
+                          <div class="w-50 ps-2">
+                              <div class="input-group">
+                                  <input id="to-year" class="form-control form-control-light range-slider-value-max" type="text">
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
                   <div class="pb-4 mb-2 text-center">
                       <button class="btn btn-link btn-light fw-normal fs-sm p-0" x-on:click="more_filters = !more_filters">
                           <span x-show="!more_filters">{{__('More Filters')}}</span>
@@ -73,48 +129,6 @@
                       </button>
                   </div>
                   <div x-show="more_filters" x-transition>
-              <div class="pb-4 mb-2">
-                  <h3 class="h6 text-light">{{ __('Price') }}</h3>
-                  <div class="mb-3">
-                      <div class="d-flex align-items-center">
-                          <div class="w-50 pe-2">
-                              <input id="minPrice" value="{{ request()->query('min_price') }}"
-                                  placeholder="{{ __('Min Price') }}" class="form-control form-control-light"
-                                  type="text">
-                          </div>
-                          <div class="text-muted">—</div>
-                          <div class="w-50 ps-2">
-                              <input id="maxPrice" value="{{ request()->query('max_price') }}"
-                                  placeholder="{{ __('Max Price') }}" class="form-control form-control-light"
-                                  type="text">
-                          </div>
-                      </div>
-                  </div>
-                  <div class="form-check form-switch form-switch-light">
-                      <input id="is_negotiated" name="is_negotiated" @checked(request()->query('is_negotiated'))
-                          class="form-check-input" type="checkbox"
-                          value="{{ request()->query('is_negotiated') ? '' : true }}">
-                      <label class="form-check-label fs-sm" for="is_negotiated">{{ __('Negotiated price') }}</label>
-                  </div>
-              </div>
-              <div class="pb-4 mb-2">
-                  <h3 class="h6 text-light pt-1">{{ __('Year') }}</h3>
-                  <div class="mb-3">
-                      <div class="d-flex align-items-center">
-                          <div class="w-50 pe-2">
-                              <input id="from-year" value="{{ request()->query('from_year') }}"
-                                  placeholder="{{ __('Min Year') }}" class="form-control form-control-light"
-                                  type="text">
-                          </div>
-                          <div class="text-muted">—</div>
-                          <div class="w-50 ps-2">
-                              <input id="to-year" value="{{ request()->query('to_year') }}"
-                                  placeholder="{{ __('Max Year') }}" class="form-control form-control-light"
-                                  type="text">
-                          </div>
-                      </div>
-                  </div>
-              </div>
               <div class="pb-4 mb-2">
                   <h3 class="h6 text-light">{{ __('Transmission') }}</h3>
                   <select id="transmission" class="form-select form-select-light mb-2">
@@ -167,28 +181,29 @@
                       @endforeach
                   </select>
               </div>
-              <div class="pb-4 mb-2">
-                  <h3 class="h6 text-light">{{ __('Exterior color') }}</h3>
-                  <select id="exterior_color" class="form-select form-select-light mb-2">
-                      <option value="">{{ __('Select exterior color') }}</option>
-                      @foreach ($colors as $exterior)
-                          <option value="{{ $exterior->id }}" @selected(request()->query('exterior_color') == $exterior->id)>
-                              {{ $exterior->name }}
-                          </option>
-                      @endforeach
-                  </select>
-              </div>
-              <div class="pb-4 mb-2">
-                  <h3 class="h6 text-light">{{ __('Interior color') }}</h3>
-                  <select id="interior_color" class="form-select form-select-light mb-2">
-                      <option value="">{{ __('Select interior color') }}</option>
-                      @foreach ($colors as $interior)
-                          <option value="{{ $interior->id }}" @selected(request()->query('interior_color') == $interior->id)>
-                              {{ $interior->name }}
-                          </option>
-                      @endforeach
-                  </select>
-              </div>
+                      <div class="pb-4 mb-2">
+                          <h3 class="h6 text-light pt-1">{{__('Color')}}</h3>
+                          <div class="d-flex align-items-center">
+                              <select id="exterior_color" class="form-select form-select-light w-100">
+                                  <option value="">{{ __('Exterior') }}</option>
+                                  @foreach ($colors as $exterior)
+                                      <option value="{{ $exterior->id }}" @selected(request()->query('exterior_color') == $exterior->id)>
+                                          {{ $exterior->name }}
+                                      </option>
+                                  @endforeach
+                              </select>
+                              <div class="mx-2">&mdash;</div>
+                              <select id="interior_color" class="form-select form-select-light w-100">
+                                  <option value="">{{ __('Interior') }}</option>
+                                  @foreach ($colors as $interior)
+                                      <option value="{{ $interior->id }}" @selected(request()->query('interior_color') == $interior->id)>
+                                          {{ $interior->name }}
+                                      </option>
+                                  @endforeach
+                              </select>
+                          </div>
+                      </div>
+
               <div class="pb-4 mb-2">
                   <h3 class="h6 text-light">{{ __('Seller') }}</h3>
                   <select id="seller" class="form-select form-select-light mb-2">
@@ -210,43 +225,20 @@
                           for="only_ad_video">{{ __('Show only ad with video') }}</label>
                   </div>
               </div>
-              <div class="pb-4 mb-2">
-                  <h3 class="h6 text-light">{{ __('Features') }}</h3>
-                  <div class="overflow-auto" data-simplebar="init" data-simplebar-auto-hide="false"
-                      data-simplebar-inverse="" style="height: 11rem;">
-                      <div class="simplebar-wrapper" style="margin: 0px;">
-                          <div class="simplebar-height-auto-observer-wrapper">
-                              <div class="simplebar-height-auto-observer"></div>
-                          </div>
-                          <div class="simplebar-mask">
-                              <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
-                                  <div class="simplebar-content-wrapper" tabindex="0" role="region"
-                                      aria-label="scrollable content" style="height: 100%; overflow: hidden scroll;">
-                                      <div class="simplebar-content" style="padding: 0px;">
-                                          @foreach ($features as $k => $v)
-                                              <div class="form-check form-check-light">
-                                                  <input value="{{ $k }}" @checked(collect(request()->query('features', []))->contains($k))
-                                                      class="form-check-input feature" type="checkbox"
-                                                      id="{{ $k }}">
-                                                  <label class="form-check-label fs-sm"
-                                                      for="{{ $k }}">{{ $v }}</label>
-                                              </div>
-                                          @endforeach
-                                      </div>
+                      <div class="pb-4 mb-2">
+                          <h3 class="h6 text-light">{{ __('Features') }}</h3>
+                          <div class="overflow-auto" data-simplebar data-simplebar-auto-hide="false" data-simplebar-inverse style="height: 11rem;">
+                              @foreach ($features as $k => $v)
+                                  <div class="form-check form-check-light">
+                                      <input value="{{ $k }}" @checked(collect(request()->query('features', []))->contains($k))
+                                      class="form-check-input feature" type="checkbox"
+                                             id="{{ $k }}">
+                                      <label class="form-check-label fs-sm"
+                                             for="{{ $k }}">{{ $v }}</label>
                                   </div>
-                              </div>
+                              @endforeach
                           </div>
-                          <div class="simplebar-placeholder" style="width: auto; height: 450px;"></div>
                       </div>
-                      <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
-                          <div class="simplebar-scrollbar simplebar-visible" style="width: 0px; display: none;"></div>
-                      </div>
-                      <div class="simplebar-track simplebar-vertical" style="visibility: visible;">
-                          <div class="simplebar-scrollbar simplebar-visible"
-                              style="height: 68px; transform: translate3d(0px, 0px, 0px); display: block;"></div>
-                      </div>
-                  </div>
-              </div>
                   </div>
           </div>
       </div>
@@ -266,16 +258,19 @@
           const seller = document.querySelector('#seller');
           const is_negotiated = document.querySelector('#is_negotiated');
           const only_ad_video = document.querySelector('#only_ad_video');
+          const rangeYear = document.querySelector('.range-slider-year');
           const from_year = document.querySelector('#from-year');
           const to_year = document.querySelector('#to-year');
           const make = document.querySelector('#make');
           const model = document.querySelector('#model');
+          const rangePrice = document.querySelector('.range-slider-price');
           const minPrice = document.querySelector('#minPrice');
           const maxPrice = document.querySelector('#maxPrice');
           const sort = document.querySelector('#sort');
           const btnsremoveparams = document.querySelectorAll('.remove-param');
           const features = document.querySelectorAll('.feature');
           const pathFeatures = 'features[]';
+          let executed = false;
 
 
           features.forEach((feature) => {
@@ -308,32 +303,32 @@
                   window.location.href = url.toString();
               });
           });
-
-          minPrice.addEventListener('keyup', (event) => {
-              setTimeout(() => {
-                  addQuery(event, 'min_price');
-              }, 2000);
+          rangePrice.addEventListener('change',() => {
+              console.log('cambio');
           });
-          maxPrice.addEventListener('keyup', (event) => {
-              setTimeout(() => {
-                  addQuery(event, 'max_price');
-              }, 2000);
-          });
-          from_year.addEventListener('keyup', (event) => {
-              setTimeout(() => {
-                  addQuery(event, 'from_year');
-              }, 2000);
-          });
-          to_year.addEventListener('keyup', (event) => {
-              setTimeout(() => {
-                  addQuery(event, 'to_year');
-              }, 2000);
-          });
-          keywords.addEventListener('keyup', (event) => {
-              setTimeout(() => {
-                  addQuery(event, 'keywords');
-              }, 2000);
+          rangePrice.addEventListener('click',()=>{
+                  const url = new URL(window.location);
+                  url.searchParams.set('min_price', minPrice.value);
+                  url.searchParams.set('max_price', maxPrice.value);
+                  url.searchParams.delete('page');
+                  window.location.href = url.toString();
           })
+          rangeYear.addEventListener('click',()=>{
+              const url = new URL(window.location);
+              url.searchParams.set('from_year', from_year.value);
+              url.searchParams.set('to_year', to_year.value);
+              url.searchParams.delete('page');
+              window.location.href = url.toString();
+          })
+
+          keywords.addEventListener('keyup', (event) => {
+              if (!executed) {
+                  executed = true;
+                  setTimeout(() => {
+                      addQuery(event, 'keywords');
+                  }, 1500);
+              }
+          });
 
           btnsremoveparams.forEach((btn) => {
               btn.addEventListener('click', (event) => {

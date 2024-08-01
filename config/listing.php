@@ -32,8 +32,12 @@ return [
     'passengers_qty' => env('PASSENGERS_QTY', 50), // Default number of passengers
     'doors_qty' => env('DOORS_QTY', 10), // Default number of doors
     'cylinders_qty' => env('CYLYNDER_QTY', 16), // Default number of cylinders
-    'years_from' => env('YEARS_FROM', 1950), // Start year for filters
+    'years_from' => env('YEARS_FROM', 1970), // Start year for filters
     'years_to' => env('YEARS_TO', now()->year + 1), // End year for filters; defaults to the next year
+    'years_step' => env('YEARS_STEP', 1),
+    'min_price' => env('MIN_PRICE', 0),
+    'max_price' => env('MAX_PRICE', 250000),
+    'step_price' => env('STEP_PRICE', 1000),
 
     /*
     |--------------------------------------------------------------------------

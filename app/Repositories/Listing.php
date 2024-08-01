@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Currency;
 use App\Models\Listing as ModelsListing;
 use App\Models\MakeModel;
 use Illuminate\Support\Facades\Cache;
@@ -36,9 +37,23 @@ class Listing implements ListingInterface
                 });
             })
             ->when(request()->query('min_price') || request()->query('max_price'), function ($sql) {
-                $sql->where(function ($q) {
-                    $q->whereBetween('price', [request()->query('min_price', 0), request()->query('max_price', \App\Models\Listing::max('price'))]);
-                });
+              $sql->where(function ($query) {
+                  $minPrice = request()->query('min_price', config('listing.min_price'));
+                  $maxPrice = request()->query('max_price', config('listing.max_price'));
+
+                  if (!is_numeric($minPrice) || !is_numeric($maxPrice)) {
+                      $minPrice = config('listing.min_price');
+                      $maxPrice = config('listing.max_price');
+                  }
+
+                  $defaultCode =  config('currency.default');
+                  $query
+                      ->whereHas('currency', function ($subQuery) use ($defaultCode,$minPrice,$maxPrice) {
+                          $subQuery->where(function ($q) use ($defaultCode, $minPrice, $maxPrice) {
+                              $q->whereRaw('(listings.price * IF(currencies.code = ?, 1, currencies.exchange_rate)) BETWEEN ? AND ?', [$defaultCode, $minPrice, $maxPrice]);
+                          });
+                      });
+              });
             })
             ->when(request()->query('is_negotiated'), function ($sql) {
                 $sql->where(function ($q) {
@@ -47,7 +62,7 @@ class Listing implements ListingInterface
             })
             ->when(request()->query('from_year') || request()->query('to_year'), function ($sql) {
                 $sql->where(function ($q) {
-                    $q->whereBetween('year', [request()->query('from_year', 1950), request()->query('to_year', now()->year + 1)]);
+                    $q->whereBetween('year', [request()->query('from_year', config('listing.years_from')), request()->query('to_year', config('listing.years_to'))]);
                 });
             })
             ->when(request()->query('condition'), function ($sql) {
@@ -128,7 +143,8 @@ class Listing implements ListingInterface
     }
     public function getPaginated($limit = 8)
     {
-        return $this->getQuery()
+        return $this
+            ->getQuery()
             ->sorting()
             ->paginate($limit);
     }

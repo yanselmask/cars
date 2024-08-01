@@ -34,6 +34,7 @@ Route::middleware([
     \Torann\Currency\Middleware\CurrencyMiddleware::class,
     'language'
 ])->group(function () {
+
     Route::controller(HomeController::class)
         ->group(function () {
             Route::get('/', 'home')->name('home');

@@ -200,7 +200,7 @@ class Listing extends Model implements HasMedia
 
     public function getPricingAttribute()
     {
-        return $this->currency->symbol  . number_format($this->price);
+        return currency_format($this->price, $this->currency->code ?? config('currency.default'));
     }
 
     public function getMilesAttribute()

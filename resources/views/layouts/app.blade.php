@@ -6,17 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-{{--    @notifyCss--}}
+    @notifyCss
 
     <!-- Vendor Styles-->
     <link rel="stylesheet" media="screen" href="{{ asset('theme/css/simplebar.min.css') }}" />
     <link rel="stylesheet" media="screen" href="{{ asset('theme/css/tiny-slider.css') }}" />
     <link rel="stylesheet" media="screen" href="https://unpkg.com/nprogress@0.2.0/nprogress.css" />
-
+    @stack('css-libs')
     <!-- Main Theme Styles + Bootstrap-->
     <link rel="stylesheet" media="screen" href="{{ asset('theme/css/theme.min.css') }}">
-
-    @stack('css-libs')
 
     <!-- Favicon and Touch Icons-->
     <link rel="apple-touch-icon" sizes="180x180" href="{{ site_favicon() }}">

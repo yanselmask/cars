@@ -10,4 +10,9 @@ class Currency extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function listings()
+    {
+        return $this->hasMany(Listing::class);
+    }
 }

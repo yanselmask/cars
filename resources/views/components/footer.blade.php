@@ -9,9 +9,9 @@
             <div class="d-flex pt-3 pt-sm-0">
                 <div class="dropdown ms-n3">
                     <button class="btn btn-light btn-link btn-sm dropdown-toggle fw-normal py-2" type="button"
-                        data-bs-toggle="dropdown"><i class="fi-globe me-2"></i>{{language()->getName()}}</button>
+                            data-bs-toggle="dropdown"><i class="fi-globe me-2"></i>{{language()->getName()}}</button>
                     <div class="dropdown-menu dropdown-menu-dark w-100">
-                         @foreach (config('translation-manager.available_locales') as $language)
+                        @foreach (config('translation-manager.available_locales') as $language)
                             <a class="dropdown-item" href="{{ language()->back($language['code']) }}">{{ $language['name'] }}</a>
                         @endforeach
                     </div>
