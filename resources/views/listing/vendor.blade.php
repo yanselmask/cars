@@ -227,11 +227,16 @@
         <script>
             const reveal = document.getElementById('reveal');
             const sorting = document.getElementById('sorting');
+            let revelated = false;
 
             reveal?.addEventListener('click', (event) => {
-                event.target.innerHTML = `
+              if(!revelated)
+              {
+                  revelated = true;
+                  event.target.innerHTML = `
                 <i class="fi-phone me-2"></i> {{ $user->phone_number }}
-                `;
+                  `;
+              }
             })
 
             sorting.addEventListener('change', (event) => {

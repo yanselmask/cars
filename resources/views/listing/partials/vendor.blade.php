@@ -1,8 +1,8 @@
 @push('css-libs')
     <link rel="stylesheet" media="screen" href="{{ asset('theme/css/nouislider.min.css') }}" />
-    @vite(['resources/js/app.js'])
 @endpush
 @push('js-libs')
+    @vite('resources/js/app.js')
     <script>
         const listings = document.querySelectorAll('.listing');
         if (document.readyState === "loading") {

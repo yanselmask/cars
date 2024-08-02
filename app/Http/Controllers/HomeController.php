@@ -41,7 +41,9 @@ class HomeController extends Controller
 
         Contact::create($validated);
 
-        return back()->with(['flash' => __('Submitted form')]);
+        nt('success', __('Submitted form'));
+
+        return back();
     }
 
     public function favorites()
@@ -153,7 +155,7 @@ class HomeController extends Controller
         ]);
 
         if ($validated['receiver'] == auth()->id()) {
-            emotify('error', __('No need to send a consult to yourself'));
+            nt('error', __('No need to send a consult to yourself'));
             return back();
         }
 
@@ -173,7 +175,7 @@ class HomeController extends Controller
         }
         $consult->save();
 
-        emotify('success', __('Messaged submitted'));
+        nt('success', __('Messaged submitted'));
 
         return back();
     }

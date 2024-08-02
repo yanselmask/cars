@@ -423,10 +423,15 @@
             const btn = document.getElementById('newsletterltbtnst');
             const successaddedlt = document.getElementById('successaddedlt');
             const reveal = document.getElementById('reveal');
+            let revelated = false;
             reveal?.addEventListener('click', (event) => {
-                event.target.innerHTML = `
+                if(!revelated)
+                {
+                    revelated = true;
+                    event.target.innerHTML = `
                 <i class="fi-phone me-2"></i> {{ $listing->user->phone_number }}
-                `;
+                    `;
+                }
             })
             btn.addEventListener('click', () => {
                 if (email.value != '') {

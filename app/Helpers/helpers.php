@@ -12,6 +12,13 @@ if (!function_exists('setActive')) {
     }
 }
 
+if (!function_exists('nt')) {
+    function nt(String $type, String $title, String $message = '')
+    {
+        request()->session()->flash('notify', [$type ?? 'success', $title, $message]);
+    }
+}
+
 if (!function_exists('appInstalled')) {
     function appInstalled(): bool
     {

@@ -6,7 +6,7 @@
                       data-bs-target="#filters-sidebar"></button>
           </div>
           @if (count(request()->query()) > 0)
-          <div class="offcanvas-header bg-transparent d-lg-none">
+          <div class="offcanvas-header bg-transparent d-lg-none pb-0">
                  <h2 class="h5 text-light mb-0">{{ __('Selection') }}</h2>
                  <a class="btn btn-link btn-light fw-normal fs-sm p-0" href="{{ route('listing.index') }}">
                      {{ __('Clear all') }}
@@ -40,18 +40,21 @@
           </div>
           <div class="offcanvas-body py-lg-4" x-data="{more_filters: @js(count(request()->query()) > 5)}">
               @if (count(request()->query()) > 0)
-                  <div class="pb-4 mb-2 d-none d-lg-block border-bottom border-light">
-                      <h3 class="h6 text-light">{{ __('Selection') }}</h3>
-                      <ul class="nav nav-tabs nav-tabs-light mb-0 d-flex flex-row ms-0">
-                          @foreach (request()->query() as $key => $value)
-                              <li class="nav-item mb-2 me-2">
-                                  <button class="nav-link px-3 remove-param" type="button"
-                                          data-key="{{ $key }}">{{ ucfirst($key) }} <i
-                                          class="fi-x fs-xxs ms-2"></i></button>
-                              </li>
-                          @endforeach
-                      </ul>
+              <div class="pb-3 mb-4 border-bottom border-light d-none d-lg-block">
+                  <div class="d-flex align-items-center justify-content-between mb-3">
+                      <h3 class="h6 text-light mb-0">{{ __('Selection') }}</h3>
+                      <a class="btn btn-link btn-light fw-normal fs-sm p-0" href="{{ route('listing.index') }}">{{ __('Clear all') }}</a>
                   </div>
+                  <ul class="nav nav-pills nav-pills-light flex-row fs-sm mx-0">
+                      @foreach (request()->query() as $key => $value)
+                          <li class="nav-item mb-2 me-2">
+                              <button class="nav-link px-3 remove-param" type="button"
+                                      data-key="{{ $key }}">{{ ucfirst($key) }} <i
+                                      class="fi-x fs-xxs ms-2"></i></button>
+                          </li>
+                      @endforeach
+                  </ul>
+              </div>
               @endif
               <div class="pb-4 mb-2 d-lg-none">
                   <h3 class="h6 text-light">{{ __('Condition') }}</h3>
@@ -330,22 +333,21 @@
                   window.location.href = url.toString();
               });
           });
-          rangePrice.addEventListener('change',() => {
-              console.log('cambio');
-          });
           rangePrice.addEventListener('click',()=>{
                   const url = new URL(window.location);
                   url.searchParams.set('min_price', minPrice.value);
                   url.searchParams.set('max_price', maxPrice.value);
                   url.searchParams.delete('page');
-                  window.location.href = url.toString();
+              history.pushState({},null,url);
+              history.go(0);
           })
           rangeYear.addEventListener('click',()=>{
               const url = new URL(window.location);
               url.searchParams.set('from_year', from_year.value);
               url.searchParams.set('to_year', to_year.value);
               url.searchParams.delete('page');
-              window.location.href = url.toString();
+              history.pushState({},null,url);
+              history.go(0);
           })
 
           keywords.addEventListener('keyup', (event) => {
@@ -365,7 +367,8 @@
                   const url = new URL(window.location);
                   url.searchParams.delete('model');
                   url.searchParams.delete('make');
-                  window.location.href = url.toString();
+                  history.pushState({},null,url);
+                  history.go(0);
               })
           })
 
@@ -427,7 +430,8 @@
               const url = new URL(window.location);
               url.searchParams.set(path, selectedValue);
               url.searchParams.delete('page');
-              window.location.href = url.toString();
+              history.pushState({},null,url);
+              history.go(0);
           }
 
           const removeQuery = (path) => {
@@ -441,7 +445,8 @@
                  url.searchParams.delete(path);
               }
 
-             window.location.href = url.toString();
+              history.pushState({},null,url);
+              history.go(0);
           }
 
           const addQueryMake = (event, path) => {
@@ -450,7 +455,8 @@
               url.searchParams.delete('model');
               url.searchParams.delete('page');
               url.searchParams.set(path, selectedValue);
-              window.location.href = url.toString();
+              history.pushState({},null,url);
+              history.go(0);
           }
       </script>
   @endpush
