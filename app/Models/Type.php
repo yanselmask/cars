@@ -18,7 +18,6 @@ class Type extends Model
         'description',
         'icon'
     ];
-
     /**
      * Get the options for generating the slug.
      */

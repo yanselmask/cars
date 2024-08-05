@@ -27,11 +27,7 @@ return [
     |
     */
 
-    'middleware' => [
-        'web',
-        'auth',
-        \Illuminate\Session\Middleware\AuthenticateSession::class,
-    ],
+    'middleware' => ['web', 'auth'],
 
     /*
     |--------------------------------------------------------------------------
@@ -75,6 +71,8 @@ return [
     */
 
     'date_format' => 'F j, Y',
+
+    'dashboard_url' => config('listing.vendor_path'),
 
     /*
     |--------------------------------------------------------------------------

@@ -36,13 +36,13 @@
                 <div class="col me-sm-1">
                     <div class="bg-dark rounded text-center w-100 h-100 p-2"><i
                             class="fi-gearbox d-block h4 text-light mb-0 mx-center"></i><span
-                            class="fs-xs text-light">{{ $listing->transmission->name }}</span>
+                            class="fs-xs text-light">{{ $listing->transmission?->name }}</span>
                     </div>
                 </div>
                 <div class="col">
                     <div class="bg-dark rounded text-center w-100 h-100 p-2"><i
                             class="fi-petrol d-block h4 text-light mb-0 mx-center"></i><span
-                            class="fs-xs text-light">{{ $listing->fueltype->name }}</span>
+                            class="fs-xs text-light">{{ $listing->fueltype?->name }}</span>
                     </div>
                 </div>
             </div>

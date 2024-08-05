@@ -107,7 +107,7 @@ return [
     */
 
     'dont_register_navigation_on_panel_ids' => [
-        'vendor'
+        config('listing.vendor_path')
     ],
 
     /*

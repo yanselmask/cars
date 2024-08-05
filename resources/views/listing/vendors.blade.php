@@ -45,13 +45,13 @@
                         <!-- Complex options via external local .json file -->
                         <div class="col-md-6 mb-3">
                             <!-- No image + Contextual dropdown menu -->
-                            <div class="card bg-secondary card-hover">
+                            <div class="card card-light card-hover">
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-start mb-2">
                                         <div class="d-flex align-items-center">
                                             <img loading="lazy" class="me-2" src="{{ $vendor->profile_photo_url }}" width="24"
                                                 alt="{{ $vendor->fullname }}">
-                                            <span class="fs-sm text-dark opacity-80 px-1">{{ $vendor->fullname }}</span>
+                                            <span class="fs-sm text-light px-1">{{ $vendor->fullname }}</span>
                                             @if ($vendor->verified)
                                                 <span
                                                     class="badge bg-faded-success rounded-pill fs-sm ms-2">{{ __('Verified') }}</span>
@@ -60,7 +60,7 @@
                                     </div>
                                     <h3 class="h6 card-title pt-1 mb-3">
                                         <a href="{{ route('listing.vendor', $vendor) }}"
-                                            class="text-nav stretched-link text-decoration-none">{{ $vendor->fullname }}</a>
+                                            class="text-nav text-light stretched-link text-decoration-none">{{ $vendor->fullname }}</a>
                                     </h3>
                                     @if ($vendor->address || $vendor->listings_count)
                                         <div class="fs-sm">

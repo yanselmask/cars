@@ -17,11 +17,11 @@
                 'link' => route('listing.index'),
             ],
             [
-                'name' => $listing->make->name,
+                'name' => $listing->make?->name,
                 'link' => route('listing.index', ['make' => $listing->make_id]),
             ],
             [
-                'name' => $listing->makemodel->name,
+                'name' => $listing->makemodel?->name,
                 'link' => route('listing.index', ['make' => $listing->make_id, 'model' => $listing->makemodel_id]),
             ],
         ]" />
@@ -34,7 +34,7 @@
                     <div class="d-flex align-items-center mb-3">
                         <div class="h3 mb-0 text-light">{{ $listing->pricing }}</div>
                         <div class="text-nowrap ps-3">
-                            <span class="badge bg-info fs-base me-2">{{ $listing->condition->name }}</span>
+                            <span class="badge bg-info fs-base me-2">{{ $listing->condition?->name }}</span>
                             @if ($listing->is_certified)
                                 <span class="badge bg-success fs-base me-2" data-bs-toggle="popover"
                                     data-bs-placement="bottom" data-bs-trigger="hover" data-bs-html="true"
@@ -106,9 +106,9 @@
                         <div class="col-sm-6 col-md-12 col-lg-6">
                             <ul class="list-unstyled">
                                 <li class="mb-2"><strong>{{ __('Make') }}:</strong><span
-                                        class="opacity-70 ms-1">{{ $listing->make->name }}</span></li>
+                                        class="opacity-70 ms-1">{{ $listing->make?->name }}</span></li>
                                 <li class="mb-2"><strong>{{ __('Model') }}:</strong><span
-                                        class="opacity-70 ms-1">{{ $listing->makemodel->name }}</span></li>
+                                        class="opacity-70 ms-1">{{ $listing->makemodel?->name }}</span></li>
                                 <li class="mb-2"><strong>{{ __('Mileage') }}:</strong><span
                                         class="opacity-70 ms-1">{{ $listing->miles }}</span>
                                     @if ($listing->is_mileage_verified)
@@ -117,13 +117,13 @@
                                     @endif
                                 </li>
                                 <li class="mb-2"><strong>{{ __('Body Type') }}:</strong><span
-                                        class="opacity-70 ms-1">{{ $listing->type->name }}</span></li>
+                                        class="opacity-70 ms-1">{{ $listing->type?->name }}</span></li>
                                 <li class="mb-2"><strong>{{ __('Drivetrain') }}:</strong><span
-                                        class="opacity-70 ms-1">{{ $listing->drivetype->name }}</span></li>
+                                        class="opacity-70 ms-1">{{ $listing->drivetype?->name }}</span></li>
                                 <li class="mb-2"><strong>{{ __('Engine') }}:</strong><span
                                         class="opacity-70 ms-1">{{ $listing->engine_label }}</span></li>
                                 <li class="mb-2"><strong>{{ __('Transmission') }}:</strong><span
-                                        class="opacity-70 ms-1">{{ $listing->transmission->name }}</span></li>
+                                        class="opacity-70 ms-1">{{ $listing->transmission?->name }}</span></li>
                             </ul>
                         </div>
                         <div class="col-sm-6 col-md-12 col-lg-6">
@@ -131,7 +131,7 @@
                                 <li class="mb-2"><strong>{{ __('Manufacturing Year') }}:</strong><span
                                         class="opacity-70 ms-1">{{ $listing->year }}</span></li>
                                 <li class="mb-2"><strong>{{ __('Fuel Type') }}:</strong><span
-                                        class="opacity-70 ms-1">{{ $listing->fueltype->name }}</span></li>
+                                        class="opacity-70 ms-1">{{ $listing->fueltype?->name }}</span></li>
                                 <li class="mb-2"><strong>{{ __('City MPG') }}:</strong>
                                     <span class="opacity-70 ms-1">{{ number_format($listing->city_mpg) }}</span>
                                     @if ($listing->is_city_mpg_verified)
@@ -147,9 +147,9 @@
                                     @endif
                                 </li>
                                 <li class="mb-2"><strong>{{ __('Exterior Color') }}:</strong><span
-                                        class="opacity-70 ms-1">{{ $listing->exteriorcolor->name }}</span></li>
+                                        class="opacity-70 ms-1">{{ $listing->exteriorcolor?->name }}</span></li>
                                 <li class="mb-2"><strong>{{ __('Interior Color') }}:</strong><span
-                                        class="opacity-70 ms-1">{{ $listing->interiorcolor->name }}</span></li>
+                                        class="opacity-70 ms-1">{{ $listing->interiorcolor?->name }}</span></li>
                                 <li class="mb-2"><strong>{{ __('VIN') }}:</strong><span
                                         class="opacity-70 ms-1">{{ $listing->vin }}</span></li>
                             </ul>
@@ -281,7 +281,7 @@
                 <div class="sticky-top pt-5">
                     <div class="d-none d-md-block pt-5">
                         <div class="d-flex mb-4">
-                            <span class="badge bg-info fs-base me-2">{{ $listing->condition->name }}</span>
+                            <span class="badge bg-info fs-base me-2">{{ $listing->condition?->name }}</span>
                             @if ($listing->is_certified)
                                 <span class="badge bg-success fs-base me-2" data-bs-toggle="popover"
                                     data-bs-placement="top" data-bs-trigger="hover" data-bs-html="true"
@@ -302,7 +302,7 @@
                         </div>
                     </div>
                     <div class="card card-light card-body mb-4">
-                        <div class="text-light mb-2">{{ $listing->listedby->name }}</div>
+                        <div class="text-light mb-2">{{ $listing->listedby?->name }}</div>
                         <a class="d-flex align-items-center text-decoration-none mb-3"
                             href="{{ route('listing.vendor', $listing->user) }}">
                             <img loading="lazy" class="rounded-circle" src="{{ $listing->user->profile_photo_url }}" width="48"

@@ -16,7 +16,6 @@ class ListedBy extends Model
         'slug',
         'description'
     ];
-
     /**
      * Get the options for generating the slug.
      */
@@ -30,6 +29,6 @@ class ListedBy extends Model
 
     public function listings()
     {
-        return $this->hasMany(Listing::class);
+        return $this->hasMany(Listing::class,'listedby_id');
     }
 }
