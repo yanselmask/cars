@@ -29,6 +29,7 @@ class ListListings extends ListRecords
 
         return [
             __('All') => Tab::make()
+                ->icon('heroicon-m-square-3-stack-3d')
                 ->badge(function(){
                     if(auth()->user()->isSuperAdmin())
                     {
@@ -38,6 +39,7 @@ class ListListings extends ListRecords
                 })
                 ->badgeColor('info'),
             __('Approved') => Tab::make()
+                ->icon('heroicon-m-check-circle')
                 ->badge(function(){
                     if(auth()->user()->isSuperAdmin())
                     {
@@ -48,6 +50,7 @@ class ListListings extends ListRecords
                 ->badgeColor('success')
                 ->modifyQueryUsing(fn (Builder $query) => $query->Approved()),
             __('Pending') => Tab::make()
+                ->icon('heroicon-m-question-mark-circle')
                 ->badge(function(){
                     if(auth()->user()->isSuperAdmin())
                     {
@@ -58,6 +61,7 @@ class ListListings extends ListRecords
                 ->badgeColor('warning')
                 ->modifyQueryUsing(fn (Builder $query) => $query->Pending()),
             __('Rejects') => Tab::make()
+                ->icon('heroicon-m-x-circle')
                 ->badge(function(){
                     if(auth()->user()->isSuperAdmin())
                     {
