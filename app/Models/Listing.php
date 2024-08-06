@@ -88,6 +88,11 @@ class Listing extends Model implements HasMedia
         return null;
     }
 
+    public function getPrimaryImageAttribute()
+    {
+        return $this->media[0]?->getUrl('default');
+    }
+
     /**
      * Get the options for generating the slug.
      */
@@ -103,27 +108,36 @@ class Listing extends Model implements HasMedia
     {
         $this
             ->addMediaConversion('default')
+            ->pixelate(2)
             ->fit(Fit::Crop, 942, 482)
+            ->format('webp')
             ->nonQueued();
 
         $this
             ->addMediaConversion('thumb')
+            ->pixelate(4)
             ->fit(Fit::Crop, 204, 150)
+            ->format('webp')
             ->nonQueued();
 
         $this
             ->addMediaConversion('small')
+            ->pixelate(3)
             ->fit(Fit::Crop, 760, 478)
+            ->format('webp')
             ->nonQueued();
 
         $this
             ->addMediaConversion('featured')
+            ->pixelate(2)
             ->fit(Fit::Crop, 1268, 526)
+            ->format('webp')
             ->nonQueued();
 
         $this
             ->addMediaConversion('single')
             ->fit(Fit::Crop, 1120, 630)
+            ->format('webp')
             ->nonQueued();
     }
 
@@ -205,12 +219,12 @@ class Listing extends Model implements HasMedia
 
     public function getMilesAttribute()
     {
-        return number_format($this->mileage) . ' ' . \App\Enums\MileageType::getLabel($this->mileage_type);
+        return \Number::abbreviate($this->mileage) . ' ' . \App\Enums\MileageType::getLabel($this->mileage_type);
     }
 
     public function getEngineLabelAttribute()
     {
-        return $this->engine->name;
+        return $this->engine?->name;
     }
 
     public function getDateAttribute()

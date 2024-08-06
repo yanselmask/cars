@@ -1,19 +1,32 @@
 @push('css-libs')
     <link rel="stylesheet" media="screen" href="{{ asset('theme/css/nouislider.min.css') }}" />
+    @if(request()->query('view') == 'map' || !request()->query('view') && config('listing.listing_result_view') == 'map')
+        <link rel="stylesheet" href="{{asset('theme/css/leaflet.css')}}">
+    @endif
 @endpush
 @push('js-libs')
+    @if(request()->query('view') == 'map' || !request()->query('view') && config('listing.listing_result_view') == 'map')
+        <script src="{{asset('theme/js/leaflet.js')}}"></script>
+        @endif
     @vite('resources/js/app.js')
     <script>
         const listings = document.querySelectorAll('.listing');
+        const placeholders = document.querySelectorAll('.placeholder-loading');
         if (document.readyState === "loading") {
             listings?.forEach((listing) => {
-                listing.style.opacity = 0.4;
-            })
+                listing.classList.add('d-none');
+            });
+            placeholders?.forEach((placeholder) => {
+                placeholder.classList.remove('d-none');
+            });
             // Loading hasn't finished yet
             document.addEventListener("DOMContentLoaded", () => {
                 listings?.forEach((listing) => {
-                    listing.style.opacity = 1;
-                })
+                    listing.classList.remove('d-none');
+                });
+                placeholders?.forEach((placeholder) => {
+                    placeholder.classList.add('d-none');
+                });
             });
         }
     </script>

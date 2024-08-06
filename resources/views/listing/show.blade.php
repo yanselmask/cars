@@ -45,16 +45,22 @@
                             @endif
                         </div>
                     </div>
+                    @if($listing->miles || $listing->city_zip)
                     <div class="d-flex flex-wrap align-items-center text-light mb-2">
-                        <div class="text-nowrap border-end border-light pe-3 me-3">
+                        @if($listing->miles)
+                        <div class="text-nowrap @if($listing->city_zip) border-end border-light @endif pe-3 me-3">
                             <i class="fi-dashboard fs-lg opacity-70 me-2"></i>
                             <span class="align-middle">{{ $listing->miles }}</span>
                         </div>
+                        @endif
+                        @if($listing->city_zip)
                         <div class="text-nowrap">
                             <i class="fi-map-pin fs-lg opacity-70 me-2"></i>
                             <span class="align-middle">{{ $listing->city_zip }}</span>
                         </div>
+                            @endif
                     </div>
+                        @endif
                 </div>
             </div>
             <div class="text-nowrap pt-3 pt-sm-0">
@@ -133,14 +139,14 @@
                                 <li class="mb-2"><strong>{{ __('Fuel Type') }}:</strong><span
                                         class="opacity-70 ms-1">{{ $listing->fueltype?->name }}</span></li>
                                 <li class="mb-2"><strong>{{ __('City MPG') }}:</strong>
-                                    <span class="opacity-70 ms-1">{{ number_format($listing->city_mpg) }}</span>
+                                    <span class="opacity-70 ms-1">{{ Number::abbreviate($listing->city_mpg) }}</span>
                                     @if ($listing->is_city_mpg_verified)
                                         <i class='fi-alert-circle fs-sm text-primary ms-2' data-bs-toggle='tooltip'
                                             title='{{ __('Verified by seller') }}'></i>
                                     @endif
                                 </li>
                                 <li class="mb-2"><strong>{{ __('Highway MPG') }}:</strong><span
-                                        class="opacity-70 ms-1">{{ number_format($listing->highway_mpg) }}</span>
+                                        class="opacity-70 ms-1">{{ Number::abbreviate($listing->highway_mpg) }}</span>
                                     @if ($listing->is_highway_mpg_verified)
                                         <i class='fi-alert-circle fs-sm text-primary ms-2' data-bs-toggle='tooltip'
                                             title='{{ __('Verified by seller') }}'></i>
@@ -292,14 +298,22 @@
                             @endif
                         </div>
                         <div class="h3 text-light">{{ $listing->pricing }}</div>
+                        @if($listing->miles || $listing->city_zip)
                         <div class="d-flex align-items-center text-light pb-4 mb-2">
-                            <div class="text-nowrap border-end border-light pe-3 me-3">
+                            @if($listing->miles)
+                            <div class="text-nowrap  @if($listing->city_zip) border-end border-light @endif pe-3 me-3">
                                 <i class="fi-dashboard fs-lg opacity-70 me-2"></i>
                                 <span class="align-middle">{{ $listing->miles }}</span>
                             </div>
-                            <div class="text-nowrap"><i class="fi-map-pin fs-lg opacity-70 me-2"></i><span
-                                    class="align-middle">{{ $listing->city_zip }}</span></div>
+                            @endif
+                            @if($listing->city_zip)
+                            <div class="text-nowrap">
+                                <i class="fi-map-pin fs-lg opacity-70 me-2"></i>
+                                <span class="align-middle">{{ $listing->city_zip }}</span>
+                            </div>
+                                @endif
                         </div>
+                            @endif
                     </div>
                     <div class="card card-light card-body mb-4">
                         <div class="text-light mb-2">{{ $listing->listedby?->name }}</div>

@@ -51,3 +51,4 @@
         </div>
     </div>
 </div>
+<x-listing-placeholder-loading view="list" />

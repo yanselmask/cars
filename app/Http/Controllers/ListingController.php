@@ -18,7 +18,33 @@ class ListingController extends Controller
 
     public function index()
     {
-        $listings = $this->listings->getPaginated();
+        if(request()->query('view') == 'map')
+        {
+            $listings = $this->listings->getPaginated(config('listing.items_paginate_for_view_map'));
+        }else{
+            $listings = $this->listings->getPaginated();
+        }
+
+        if(request()->has('markers'))
+        {
+            $coordinates =  config('listing.coordinates_default');
+            $markers =  $listings->map(function (Listing $listing) {
+                $route = route('listing.show', $listing);
+                return [
+                    'coordinates' => [(float) $listing->lat, (float) $listing->lng],
+                    'iconUrl' => asset('theme/img/marker-car.png'),
+                    'className' => 'custom-marker-icon',
+                    'popup' => "<div class='card border-0'><a href='{$route}' class='d-block'><img src='{$listing->primary_image}' alt='{$listing->name}'></a><div class='card-body'><h5 class='card-title fs-base'><a href='{$route}' class='nav-link'>{$listing->name}</a></h5><div class='d-flex align-items-center mb-2'><div class='star-rating mt-n1 me-2'></div></div><div class='mb-2'><i class='fi-map-pin text-muted fs-sm mt-n1 me-1'></i>{$listing->city}</div><div><i class='fi-credit-card text-muted fs-sm mt-n1 me-1'></i>{$listing->pricing}</div></div></div>"
+                ];
+            });
+
+            return response()->json([
+                'mapLayer' => 'https://api.maptiler.com/maps/pastel/{z}/{x}/{y}.png?key=' . config('listing.map_api_key'),
+                'coordinates' => $coordinates,
+                'zoom' => config('listing.zoom_map_items'),
+                'markers' => $markers
+            ]);
+        }
 
         return view('listing.index', compact('listings'));
     }

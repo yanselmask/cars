@@ -29,5 +29,10 @@
            data-bs-toggle="tooltip" title="{{ __('Grid view') }}">
             <i class="fi-grid"></i>
         </a>
+        <a class="nav-link nav-link-light px-2 {{ request()->query('view') == 'map' || !request()->query('map') && config('listing.listing_result_view') == 'map' ? 'active' : '' }}"
+           href="{{ route('listing.index', array_merge(request()->query(), ['view' => 'map'])) }}"
+           data-bs-toggle="tooltip" title="{{ __('Map view') }}">
+            <i class="fi-map"></i>
+        </a>
     </div>
 </div>

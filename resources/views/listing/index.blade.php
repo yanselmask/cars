@@ -16,8 +16,7 @@
             </div>
         </div>
     </div>
-
-        <!-- Filters sidebar toggle button (mobile)-->
-        @include('listing.partials.filters')
-        @include('listing.partials.vendor')
+    <!-- Filters sidebar toggle button (mobile)-->
+    @include('listing.partials.filters')
+    @include('listing.partials.vendor')
 </x-app-layout>

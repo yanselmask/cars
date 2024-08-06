@@ -124,6 +124,9 @@ return [
     | footer widgets. API keys should be securely stored and managed.
     |
     */
+    'coordinates_default' => [34.092232, -117.435051],
+    'items_paginate_for_view_map' => 20,
+    'zoom_map_items' => 2,
     'map_api_key' => env('MAP_API_KEY', 'MmtDOmoFbdFVkOnG4QTJ'), // API key for map services
     'show_signin_button' => true, // Whether to show the sign-in button
     'show_sell_car_button' => true, // Whether to show the button to sell a car
