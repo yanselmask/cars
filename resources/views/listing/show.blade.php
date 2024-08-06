@@ -139,14 +139,14 @@
                                 <li class="mb-2"><strong>{{ __('Fuel Type') }}:</strong><span
                                         class="opacity-70 ms-1">{{ $listing->fueltype?->name }}</span></li>
                                 <li class="mb-2"><strong>{{ __('City MPG') }}:</strong>
-                                    <span class="opacity-70 ms-1">{{ Number::abbreviate($listing->city_mpg) }}</span>
+                                    <span class="opacity-70 ms-1">{{ Number::abbreviate($listing->city_mpg ?? 0) }}</span>
                                     @if ($listing->is_city_mpg_verified)
                                         <i class='fi-alert-circle fs-sm text-primary ms-2' data-bs-toggle='tooltip'
                                             title='{{ __('Verified by seller') }}'></i>
                                     @endif
                                 </li>
                                 <li class="mb-2"><strong>{{ __('Highway MPG') }}:</strong><span
-                                        class="opacity-70 ms-1">{{ Number::abbreviate($listing->highway_mpg) }}</span>
+                                        class="opacity-70 ms-1">{{ Number::abbreviate($listing->highway_mpg ?? 0) }}</span>
                                     @if ($listing->is_highway_mpg_verified)
                                         <i class='fi-alert-circle fs-sm text-primary ms-2' data-bs-toggle='tooltip'
                                             title='{{ __('Verified by seller') }}'></i>

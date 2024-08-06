@@ -219,7 +219,7 @@ class Listing extends Model implements HasMedia
 
     public function getMilesAttribute()
     {
-        return \Number::abbreviate($this->mileage) . ' ' . \App\Enums\MileageType::getLabel($this->mileage_type);
+        return \Number::abbreviate($this->mileage ?? 0) . ' ' . \App\Enums\MileageType::getLabel($this->mileage_type);
     }
 
     public function getEngineLabelAttribute()
