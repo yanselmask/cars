@@ -106,6 +106,7 @@
                     @endif
                 </ul>
                 <!-- Specs-->
+                {{apply_filters( 'section_before_specifications_listing_show', null )}}
                 <div class="py-3 mb-3">
                     <h2 class="h4 text-light mb-4">{{ __('Specifications') }}</h2>
                     <div class="row text-light">
@@ -162,6 +163,7 @@
                         </div>
                     </div>
                 </div>
+                {{apply_filters( 'section_after_specifications_listing_show', null )}}
                 @if ($listing->is_certified || $listing->is_single_owner || $listing->is_well_equipped || $listing->no_accident)
                     <!-- Card with icon boxes-->
                     <div class="card card-body p-4 card-light mb-4">
@@ -254,18 +256,9 @@
                 @if ($listing->location)
                     <section class="container mb-5 pb-lg-5" id="map-location">
                         <div class="interactive-map rounded-3"
-                            data-map-options="{
-    &quot;mapLayer&quot;: &quot;https://api.maptiler.com/maps/pastel/{z}/{x}/{y}.png?key={{ config('listing.map_api_key') }}&quot;,
-    &quot;coordinates&quot;: [{{ $listing->location['lat'] }}, {{ $listing->location['lng'] }}],
-    &quot;zoom&quot;: 10,
-    &quot;markers&quot;: [
-        {
-            &quot;coordinates&quot;: [{{ $listing->location['lat'] }}, {{ $listing->location['lng'] }}],
-            &quot;popup&quot;: &quot;&lt;div class='p-3'&gt;&lt;h6&gt;{{ $listing->name }}&lt;/h6&gt;&lt;p class='fs-sm pt-1 mt-n3 mb-0'&gt;{{ $listing->user->full_name }}&lt;/p&gt;&lt;/div&gt;&quot;,
-            &quot;iconUrl&quot;: &quot;{{ asset('theme/img/marker-icon.png') }}&quot;
-        }
-    ]
-}"
+                             data-map-options-json="{{request()->fullUrlWithQuery([
+                             'marker' => true
+                             ])}}"
                             style="height: 500px;"></div>
                     </section>
                 @endif
@@ -315,6 +308,7 @@
                         </div>
                             @endif
                     </div>
+                    {{apply_filters( 'section_before_vendor_listing_show', null )}}
                     <div class="card card-light card-body mb-4">
                         <div class="text-light mb-2">{{ $listing->listedby?->name }}</div>
                         <a class="d-flex align-items-center text-decoration-none mb-3"
@@ -338,6 +332,7 @@
                                 aria-expanded="false">
                                 <i class="fi-chat-left me-2"></i>{{ __('Send message') }}
                             </a>
+                                {{apply_filters( 'section_after_vendor_listing_show', null )}}
                             <div class="collapse" id="send-mail" style="">
                                 <form class="needs-validation pt-2 pb-4 mb-3" action="{{ route('consult.submit') }}"
                                     method="POST">
@@ -412,8 +407,9 @@
                 </div>
             </div>
         @endif
+        {{apply_filters( 'section_after_related_listing_show', null )}}
     </div>
-
+        @once
     @push('css-libs')
         <link rel="stylesheet" media="screen" href="{{ asset('theme/css/lightgallery-bundle.min.css') }}" />
         <link rel="stylesheet" media="screen" href="{{ asset('theme/css/leaflet.css') }}" />
@@ -494,4 +490,5 @@
             }
         </script>
     @endpush
+        @endonce
 </x-app-layout>

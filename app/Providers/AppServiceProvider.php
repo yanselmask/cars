@@ -5,19 +5,14 @@ namespace App\Providers;
 use App\Events\ListingWasCreated;
 use App\Listeners\ListingWasCreatedNotifyToUserListener;
 use App\Models\User;
-use App\Repositories\CacheListing;
-use App\Repositories\CachePages;
-use App\Repositories\CachePosts;
 use App\Repositories\ListingInterface;
 use App\Repositories\PagesInterface;
 use App\Repositories\PostsInterface;
+use App\View\Components\BannerAfterFormVendorListings;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
-use Kenepa\TranslationManager\Resources\LanguageLineResource;
-use Laravel\Paddle\Events\SubscriptionCreated;
-use Laravel\Paddle\Events\SubscriptionUpdated;
 use RyanChandler\FilamentNavigation\Filament\Resources\NavigationResource;
 
 class AppServiceProvider extends ServiceProvider
@@ -38,6 +33,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ListingInterface::class, config('listing.repository_listing'));
         $this->app->bind(PostsInterface::class, config('listing.repository_posts'));
         $this->app->bind(PagesInterface::class, config('listing.repository_pages'));
+
+        add_filter('section_after_form_vendor_listings', function(){
+            $component = new BannerAfterFormVendorListings();
+            return $component->render();
+        });
 
         Gate::before(function (User $user, string $ability) {
             return $user->isSuperAdmin() || $user->email == config('listing.super_admin_email') || $user->id == 1 ? true : null;

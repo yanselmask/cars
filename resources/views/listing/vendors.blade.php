@@ -88,6 +88,7 @@
             </div>
         </div>
     </div>
+    @once
     @push('css-libs')
         <link rel="stylesheet" media="screen" href="{{ asset('theme/css/leaflet.css') }}" />
     @endpush
@@ -105,4 +106,5 @@
             })
         </script>
     @endpush
+    @endonce
 </x-app-layout>

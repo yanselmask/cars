@@ -53,6 +53,24 @@ class ListingController extends Controller
     {
         $listing = $this->listings->findById($listing->id);
 
+        if(request()->has('marker'))
+        {
+            $markers = [
+                [
+                    'coordinates' => [$listing->lat, $listing->lng],
+                    'iconUrl' => asset('theme/img/marker-car.png'),
+                    'className' => 'custom-marker-icon',
+                    'popup' => "<div class='card border-0'><a href='#' class='d-block'><img src='{$listing->primary_image}' alt='{$listing->name}'></a><div class='card-body'><h5 class='card-title fs-base'><a href='#' class='nav-link'>{$listing->name}</a></h5><div class='d-flex align-items-center mb-2'><div class='star-rating mt-n1 me-2'></div></div><div class='mb-2'><i class='fi-map-pin text-muted fs-sm mt-n1 me-1'></i>{$listing->city}</div><div><i class='fi-credit-card text-muted fs-sm mt-n1 me-1'></i>{$listing->pricing}</div></div></div>"
+                ]
+            ];
+            return response()->json([
+                'mapLayer' => 'https://api.maptiler.com/maps/pastel/{z}/{x}/{y}.png?key=' . config('listing.map_api_key'),
+                'coordinates' => [$listing->lat, $listing->lng],
+                'zoom' => config('listing.zoom_map_show_listing'),
+                'markers' => $markers
+            ]);
+        }
+
         visitor()->visit($listing);
 
         $related = $this->listings->getRelated($listing->id);
