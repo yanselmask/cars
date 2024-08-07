@@ -65,6 +65,11 @@ class Listing implements ListingInterface
                     $q->whereBetween('year', [request()->query('from_year', config('listing.years_from')), request()->query('to_year', config('listing.years_to'))]);
                 });
             })
+            ->when(request()->query('mileage_min') || request()->query('mileage_max'), function ($sql) {
+                $sql->where(function ($q) {
+                    $q->whereBetween('mileage', [request()->query('mileage_min', config('listing.mileage_min')), request()->query('mileage_max', config('listing.mileage_max'))]);
+                });
+            })
             ->when(request()->query('condition'), function ($sql) {
                 $sql->where(function ($q) {
                     $q->where('condition_id', request()->query('condition'))
@@ -219,9 +224,23 @@ class Listing implements ListingInterface
 
     public function findById($id)
     {
-        return $this->listingWithResourcers()
+        $listing = $this->listingWithResourcers()
             ->whereId($id)
             ->first();
+
+        visitor()->visit($listing);
+
+        if($listing->make)
+        {
+            visitor()->visit($listing->make);
+        }
+
+        if($listing->makemodel)
+        {
+            visitor()->visit($listing->makemodel);
+        }
+
+        return $listing;
     }
 
     public function listingWithResourcers()

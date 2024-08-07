@@ -5,10 +5,12 @@
             <img class="d-block" src="{{ site_logo() }}" width="116" alt="{{ config('app.name') }}">
         </a>
         @endif
-        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            @if (!menu('mobile-menu'))
+        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+            @endif
         @if (config('listing.show_signin_button'))
             @guest
                 <a class="btn btn-link btn-light btn-sm d-none d-lg-block order-lg-3"

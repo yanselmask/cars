@@ -98,16 +98,15 @@
                       @endforeach
                   </select>
               </div>
-
-                      <div class="pb-4 mb-2">
+                  <div class="pb-4 mb-2">
                           <h3 class="h6 text-light">{{__('Price')}}</h3>
-                          <div class="range-slider range-slider-price range-slider-light mb-3"
+                          <div class="range-slider range-slider-light mb-3"
                                data-start-min="{{request()->query('min_price', config('listing.min_price'))}}"
                                data-start-max="{{request()->query('max_price', config('listing.max_price'))}}"
                                data-min="{{config('listing.min_price')}}"
                                data-max="{{config('listing.max_price')}}"
                                data-step="{{config('listing.step_price')}}">
-                              <div class="range-slider-ui"></div>
+                              <div class="range-slider-ui range-slider-price"></div>
                               <div class="d-flex align-items-center">
                                   <div class="w-50 pe-2">
                                       <div class="input-group">
@@ -130,17 +129,17 @@
                                      value="{{ request()->query('is_negotiated') ? '' : true }}">
                               <label class="form-check-label fs-sm" for="is_negotiated">{{ __('Negotiated price') }}</label>
                           </div>
-                      </div>
+                  </div>
               <div class="pb-4 mb-2">
                   <h3 class="h6 text-light pt-1">{{ __('Year') }}</h3>
-                  <div class="range-slider range-slider-year range-slider-light mb-3"
+                  <div class="range-slider range-slider-light mb-3"
                        data-start-min="{{request()->query('from_year', config('listing.years_from'))}}"
                        data-start-max="{{request()->query('to_year', config('listing.years_to'))}}"
                        data-min="{{config('listing.years_from')}}"
                        data-max="{{config('listing.years_to')}}"
                        data-step="{{config('listing.years_step')}}"
                        >
-                      <div class="range-slider-ui"></div>
+                      <div class="range-slider-ui range-slider-year"></div>
                       <div class="d-flex align-items-center">
                           <div class="w-50 pe-2">
                               <input id="from-year" class="form-control form-control-light range-slider-value-min" type="text">
@@ -154,6 +153,28 @@
                       </div>
                   </div>
               </div>
+                  <div class="pb-4 mb-2">
+                      <h3 class="h6 text-light pt-1">{{ __('Mileage') }}</h3>
+                      <div class="range-slider range-slider-light mb-3"
+                           data-start-min="{{request()->query('mileage_min', config('listing.mileage_min'))}}"
+                           data-start-max="{{request()->query('mileage_max', config('listing.mileage_max'))}}"
+                           data-min="{{config('listing.mileage_min')}}"
+                           data-max="{{config('listing.mileage_max')}}"
+                           data-step="{{config('listing.mileage_step')}}">
+                          <div class="range-slider-ui range-slider-mileage"></div>
+                          <div class="d-flex align-items-center">
+                              <div class="w-50 pe-2">
+                                  <input id="mileage-min" class="form-control form-control-light range-slider-value-min" type="text">
+                              </div>
+                              <div class="text-muted">&mdash;</div>
+                              <div class="w-50 ps-2">
+                                  <div class="input-group">
+                                      <input id="mileage-max" class="form-control form-control-light range-slider-value-max" type="text">
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
                   <div class="pb-4 mb-2 text-center">
                       <button class="btn btn-link btn-light fw-normal fs-sm p-0" x-on:click="more_filters = !more_filters">
                           <span x-show="!more_filters">{{__('More Filters')}}</span>
@@ -276,7 +297,7 @@
       </div>
   </div>
 
-  @push('js-libs')
+  @push('js-end')
       <script>
           const keywords = document.querySelector('#keywords');
           const transmission = document.querySelector('#transmission');
@@ -297,6 +318,9 @@
           const rangePrice = document.querySelector('.range-slider-price');
           const minPrice = document.querySelector('#minPrice');
           const maxPrice = document.querySelector('#maxPrice');
+          const rangeMileage = document.querySelector('.range-slider-mileage');
+          const mileageMin = document.querySelector('#mileage-min');
+          const mileageMax = document.querySelector('#mileage-max');
           const sort = document.querySelector('#sort');
           const btnsremoveparams = document.querySelectorAll('.remove-param');
           const features = document.querySelectorAll('.feature');
@@ -333,23 +357,30 @@
                   window.location.href = url.toString();
               });
           });
-          rangePrice.addEventListener('click',()=>{
-                  const url = new URL(window.location);
-                  url.searchParams.set('min_price', minPrice.value);
-                  url.searchParams.set('max_price', maxPrice.value);
-                  url.searchParams.delete('page');
+          rangePrice.noUiSlider.on('set',()=>{
+              const url = new URL(window.location);
+              url.searchParams.set('min_price', minPrice.value);
+              url.searchParams.set('max_price', maxPrice.value);
+              url.searchParams.delete('page');
               history.pushState({},null,url);
               history.go(0);
-          })
-          rangeYear.addEventListener('click',()=>{
+          });
+          rangeYear.noUiSlider.on('set',()=>{
               const url = new URL(window.location);
               url.searchParams.set('from_year', from_year.value);
               url.searchParams.set('to_year', to_year.value);
               url.searchParams.delete('page');
               history.pushState({},null,url);
               history.go(0);
-          })
-
+          });
+        rangeMileage.noUiSlider.on('set', () => {
+            const url = new URL(window.location);
+            url.searchParams.set('mileage_min', mileageMin.value);
+            url.searchParams.set('mileage_max', mileageMax.value);
+            url.searchParams.delete('page');
+            history.pushState({},null,url);
+            history.go(0);
+        });
           keywords.addEventListener('keyup', (event) => {
               if (!executed) {
                   executed = true;

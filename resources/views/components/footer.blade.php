@@ -1,3 +1,4 @@
+@include('components.tabs-mobile')
 <footer class="footer bg-faded-light">
     <div class="border-bottom border-light py-4">
         <div class="container d-sm-flex align-items-center justify-content-between">

@@ -85,4 +85,5 @@
 </script>
 <!-- Main theme script-->
 <script src="{{ asset('theme/js/theme.min.js') }}"></script>
+@stack('js-end')
 @endonce

@@ -1,27 +1,17 @@
 @if(menu($menu))
 @if ($menu == 'header')
-<div class="collapse navbar-collapse order-lg-2" id="navbarNav">
-    <ul class="navbar-nav navbar-nav-scroll" style="max-height: 35rem;">
-        <!-- Menu items-->
-        @foreach(menu($menu)->items as $item)
-        <li class="nav-item @if($item['children']) dropdown @endif">
-            <a class="nav-link @if(strlen($item['data']['url']) == 1 && request()->routeIs('home')) active @endif @if(request()->path() == substr($item['data']['url'], 1)) active @endif @if($item['children']) dropdown-toggle @endif @isset($item['data']['classes']) {{$item['data']['classes']}} @endisset" href="{{$item['data']['url']}}" target="{{$item['data']['target']}}">
-               @if(isset($item['data']['icon']) && (isset($item['data']['icon_position']) && $item['data']['icon_position'] == 'left') ) <i class="{{$item['data']['icon']}} me-2"></i>@endif {{ $item['label'] }} @if(isset($item['data']['icon']) && (isset($item['data']['icon_position']) && $item['data']['icon_position'] == 'right') ) <i class="{{$item['data']['icon']}} me-2"></i> @endif
-                   @if(isset($item['data']['divider']) && $item['data']['divider'])
-                       <span class="d-none d-lg-block position-absolute top-50 end-0 translate-middle-y border-end border-light" style="width: 1px; height: 30px;"></span>
-                   @endif
-            </a>
-            @if($item['children'])
-                <ul class="dropdown-menu dropdown-menu-dark">
-                    @foreach($item['children'] as $subItem)
-                    <li><a class="dropdown-item" target="{{$subItem['data']['target']}}" href="{{$subItem['data']['url']}}" @isset($subItem['data']['classes']) class="{{$subItem['data']['classes']}}" @endisset>{{$subItem['label']}}</a></li>
-                    @endforeach
-                </ul>
-            @endif
-        </li>
-        @endforeach
-    </ul>
-</div>
+    <div class="offcanvas offcanvas-end bg-light" id="navbarNav" tabindex="-1">
+        <div class="offcanvas-header border-light border-bottom">
+            <h5 class="offcanvas-title text-dark">{{menu($menu)->name}}</h5>
+            <button class="btn-close" type="button" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body bg-dark" data-simplebar>
+            <ul class="navbar-nav navbar-nav-scroll" style="max-height: 35rem;">
+                <!-- Menu items-->
+                @each('components.link', menu($menu)->items, 'item')
+            </ul>
+        </div>
+    </div>
 @elseif ($menu == 'footer_bottom')
     <ul class="d-flex flex-wrap justify-content-center order-lg-2 mb-3 list-unstyled">
         @foreach (menu($menu)->items as $item)

@@ -7,6 +7,7 @@
 @stack('css-libs')
 <!-- Main Theme Styles + Bootstrap-->
 <link rel="stylesheet" media="screen" href="{{ asset('theme/css/theme.min.css') }}">
+@stack('css-end')
 <!-- Favicon and Touch Icons-->
 <link rel="apple-touch-icon" sizes="180x180" href="{{ site_favicon() }}">
 <link rel="icon" type="image/png" sizes="16x16" href="{{ site_favicon() }}">

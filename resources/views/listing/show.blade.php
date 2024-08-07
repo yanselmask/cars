@@ -56,7 +56,7 @@
                         @if($listing->city_zip)
                         <div class="text-nowrap">
                             <i class="fi-map-pin fs-lg opacity-70 me-2"></i>
-                            <a href="{{route('listing.index', ['location' => $listing->city])}}"><span class="align-middle">{{ $listing->city_zip }}</span></a>
+                            <a href="{{route('listing.index', ['location' => $listing->city])}}" class="text-decoration-none text-light"><span class="align-middle">{{ $listing->city_zip }}</span></a>
                         </div>
                             @endif
                     </div>
@@ -211,6 +211,7 @@
                 <h2 class="h4 text-light pt-3 mb-4">{{ __('Features') }}</h2>
                 <div class="accordion accordion-light" id="features">
                     @foreach (\App\Enums\FeatureType::cases() as $k => $featureType)
+                        @if($listing->features->where('type', $featureType)->count())
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="heading-{{ $k }}">
                                 <button class="accordion-button @if (config('listing.listing_feature_type_showed') !== $featureType) collapsed @endif"
@@ -236,6 +237,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
                     @endforeach
                 </div>
                 <!-- Description-->
@@ -256,9 +258,7 @@
                 @if ($listing->location)
                     <section class="container mb-5 pb-lg-5" id="map-location">
                         <div class="interactive-map rounded-3"
-                             data-map-options-json="{{request()->fullUrlWithQuery([
-                             'marker' => true
-                             ])}}"
+                             data-map-options-json="{{request()->fullUrlWithQuery(['marker' => true])}}"
                             style="height: 500px;"></div>
                     </section>
                 @endif
@@ -407,7 +407,7 @@
             <h2 class="h3 text-light pt-5 pb-3 mt-md-4">{{ __('You may be interested in') }}</h2>
             <div class="tns-carousel-wrapper tns-controls-outside-xxl tns-nav-outside tns-carousel-light">
                 <div class="tns-carousel-inner"
-                    data-carousel-options="{&quot;items&quot;: 3, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1, &quot;gutter&quot;: 16},&quot;500&quot;:{&quot;items&quot;:2, &quot;gutter&quot;: 18},&quot;900&quot;:{&quot;items&quot;:3, &quot;gutter&quot;: 20}, &quot;1100&quot;:{&quot;gutter&quot;: 24}}}">
+                    data-carousel-options="{&quot;loop&quot;: false,&quot;items&quot;: 3, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1, &quot;gutter&quot;: 16},&quot;500&quot;:{&quot;items&quot;:2, &quot;gutter&quot;: 18},&quot;900&quot;:{&quot;items&quot;:3, &quot;gutter&quot;: 20}, &quot;1100&quot;:{&quot;gutter&quot;: 24}}}">
                     @foreach ($related as $listing)
                         <div>
                             <x-listing-grid :listing="$listing" />

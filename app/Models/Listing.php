@@ -90,7 +90,7 @@ class Listing extends Model implements HasMedia
 
     public function getPrimaryImageAttribute()
     {
-        return $this->media[0]?->getUrl('default');
+        return $this->media->count() ? $this->media[0]?->getUrl('default') : 'https://placehold.co/942x482';
     }
 
     /**
@@ -232,6 +232,11 @@ class Listing extends Model implements HasMedia
         return $this->created_at->format(config('listing.date_format'));
     }
 
+    public function getIsFeaturedAttribute()
+    {
+        return $this->where('id',$this->id)->featured()->count();
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -300,23 +305,26 @@ class Listing extends Model implements HasMedia
 
     public function scopeExpirated($sql)
     {
-        return $sql->whereDate('listing_expirate', '>=', now());
+        return $sql->whereDate('listing_expirate', '<=', now());
     }
 
     public function scopeNotExpirated($sql)
     {
-        return $sql->whereDate('listing_expirate', '<', now());
+        return $sql->whereDate('listing_expirate', '>', now())
+                    ->orWhereNull('listing_expirate');
     }
 
     public function scopeFeatured($sql)
     {
-        return $sql->where('is_featured', true);
+        return $sql->WhereDate('featured_expirate', '>', now())
+                    ->orWhere('is_featured', true);
     }
 
     public function scopeSorting($sql)
     {
         return $sql
             ->approved()
+            ->NotExpirated()
             ->withCount('visitLogs')
             ->orderByDesc('visit_logs_count')
             ->orderByDesc('is_featured')

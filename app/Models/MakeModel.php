@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Shetabit\Visitor\Traits\Visitable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 class MakeModel extends Model
 {
-    use HasSlug, HasFactory;
+    use HasSlug, HasFactory, Visitable;
 
     protected $fillable = [
         'name',

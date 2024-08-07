@@ -38,6 +38,9 @@ return [
     'min_price' => env('MIN_PRICE', 0),
     'max_price' => env('MAX_PRICE', 250000),
     'step_price' => env('STEP_PRICE', 1000),
+    'mileage_min' => env('MILEAGE_MIN', 0),
+    'mileage_max' => env('MILEAGE_MAX', 900000),
+    'mileage_step' => env('MILEAGE_STEP', 1000),
 
     /*
     |--------------------------------------------------------------------------
