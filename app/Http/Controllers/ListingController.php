@@ -18,12 +18,11 @@ class ListingController extends Controller
 
     public function index()
     {
-        if(request()->query('view') == 'map')
-        {
-            $listings = $this->listings->getPaginated(config('listing.items_paginate_for_view_map'));
-        }else{
-            $listings = $this->listings->getPaginated();
-        }
+       $listings = match(request()->query('view')){
+           'map' => $this->listings->getPaginated(config('listing.items_paginate_for_view_map')),
+           'short' => $this->listings->getShortsPaginated(config('listing.items_paginate_for_short_view')),
+           default => $this->listings->getPaginated()
+       };
 
         if(request()->has('markers'))
         {

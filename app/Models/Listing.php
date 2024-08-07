@@ -333,6 +333,11 @@ class Listing extends Model implements HasMedia
             ->orderByDesc('created_at');
     }
 
+    public function scopeWithVideo($query)
+    {
+        return $query->whereNotNull('video_link');
+    }
+
     /**
      * Get the route key for the model.
      *

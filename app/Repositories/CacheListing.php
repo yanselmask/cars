@@ -22,6 +22,15 @@ class CacheListing implements ListingInterface
         });
     }
 
+    public function getShortsPaginated($limit = 12)
+    {
+        $key = 'listing.shorts.hash.' . md5(http_build_query(request()->query()));
+
+        return Cache::rememberForever($key, function () use ($limit) {
+            return $this->listings->getShortsPaginated($limit);
+        });
+    }
+
     public function getFavorites($limit = 6)
     {
         $key = 'listing.favorites.by.' . auth()->user()?->id ?? 0;

@@ -29,10 +29,15 @@
            data-bs-toggle="tooltip" title="{{ __('Grid view') }}">
             <i class="fi-grid"></i>
         </a>
-        <a class="nav-link nav-link-light px-2 {{ request()->query('view') == 'map' || !request()->query('map') && config('listing.listing_result_view') == 'map' ? 'active' : '' }}"
+        <a class="nav-link nav-link-light px-2 {{ request()->query('view') == 'map' || !request()->query('view') && config('listing.listing_result_view') == 'map' ? 'active' : '' }}"
            href="{{ route('listing.index', array_merge(request()->query(), ['view' => 'map'])) }}"
            data-bs-toggle="tooltip" title="{{ __('Map view') }}">
             <i class="fi-map"></i>
+        </a>
+        <a class="nav-link nav-link-light px-2 {{ request()->query('view') == 'short' || !request()->query('view') && config('listing.listing_result_view') == 'short' ? 'active' : '' }}"
+           href="{{ route('listing.index', array_merge(request()->query(), ['view' => 'short'])) }}"
+           data-bs-toggle="tooltip" title="{{ __('Short view') }}">
+            <i class="fi-video"></i>
         </a>
     </div>
 </div>

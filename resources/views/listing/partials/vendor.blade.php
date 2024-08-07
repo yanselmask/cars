@@ -1,11 +1,21 @@
 @push('css-libs')
     <link rel="stylesheet" media="screen" href="{{ asset('theme/css/nouislider.min.css') }}" />
-    @if(request()->query('view') == 'map' || !request()->query('view') && config('listing.listing_result_view') == 'map')
+    @if(viewActive('map'))
         <link rel="stylesheet" href="{{asset('theme/css/leaflet.css')}}">
+    @endif
+    @if(viewActive('short'))
+        <link rel="stylesheet" href="{{asset('theme/css/lightgallery-bundle.min.css')}}">
     @endif
 @endpush
 @push('js-libs')
-    @if(request()->query('view') == 'map' || !request()->query('view') && config('listing.listing_result_view') == 'map')
+    @if(viewActive('short'))
+        <script src="{{asset('theme/js/lightgallery.min.js')}}"></script>
+        <script src="{{asset('theme/js/lg-fullscreen.min.js')}}"></script>
+        <script src="{{asset('theme/js/lg-zoom.min.js')}}"></script>
+        <script src="{{asset('theme/js/lg-video.min.js')}}"></script>
+        <script src="{{asset('theme/js/lg-thumbnail.min.js')}}"></script>
+    @endif
+    @if(viewActive('map'))
         <script src="{{asset('theme/js/leaflet.js')}}"></script>
         @endif
     @vite('resources/js/app.js')

@@ -12,6 +12,18 @@ if (!function_exists('setActive')) {
     }
 }
 
+if (!function_exists('viewActive')) {
+    function viewActive($view = '')
+    {
+        if(empty($view))
+        {
+            return config('listing.listing_result_view');
+        }
+
+        return (request()->query('view') == $view || !request()->query('view') && config('listing.listing_result_view') == $view) ? true : false;
+    }
+}
+
 if (!function_exists('nt')) {
     function nt(String $type, String $title, String $message = '')
     {

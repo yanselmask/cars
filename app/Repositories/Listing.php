@@ -149,6 +149,15 @@ class Listing implements ListingInterface
             ->paginate($limit);
     }
 
+    public function getShortsPaginated($limit = 12)
+    {
+        return $this
+            ->getQuery()
+            ->withVideo()
+            ->sorting()
+            ->paginate($limit);
+    }
+
     public function getFavorites($limit = 6)
     {
         return auth()->user()?->favoritedListings()->paginate($limit) ?? [];

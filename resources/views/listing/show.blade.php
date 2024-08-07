@@ -56,7 +56,7 @@
                         @if($listing->city_zip)
                         <div class="text-nowrap">
                             <i class="fi-map-pin fs-lg opacity-70 me-2"></i>
-                            <span class="align-middle">{{ $listing->city_zip }}</span>
+                            <a href="{{route('listing.index', ['location' => $listing->city])}}"><span class="align-middle">{{ $listing->city_zip }}</span></a>
                         </div>
                             @endif
                     </div>
@@ -91,8 +91,8 @@
                 </div>
                 <ul class="tns-thumbnails" id="thumbnails">
                     @foreach ($listing->media as $photo)
-                        <li class="tns-thumbnail"><img src="{{ $photo->getUrl('thumb') }}"
-                                alt="{{ __('Thumbnail') }}">
+                        <li class="tns-thumbnail">
+                            <img src="{{ $photo->getUrl('thumb') }}"  alt="{{ __('Thumbnail') }}" />
                         </li>
                     @endforeach
                     @if ($listing->video_link)
@@ -302,7 +302,7 @@
                             @if($listing->city_zip)
                             <div class="text-nowrap">
                                 <i class="fi-map-pin fs-lg opacity-70 me-2"></i>
-                                <span class="align-middle">{{ $listing->city_zip }}</span>
+                                <a href="{{route('listing.index',['location' => $listing->city])}}" class="text-decoration-none text-light" ><span class="align-middle">{{ $listing->city_zip }}</span></a>
                             </div>
                                 @endif
                         </div>

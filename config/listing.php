@@ -124,6 +124,7 @@ return [
     | footer widgets. API keys should be securely stored and managed.
     |
     */
+    'items_paginate_for_short_view' => 27,
     'coordinates_default' => [34.092232, -117.435051],
     'items_paginate_for_view_map' => 20,
     'zoom_map_items' => 2,

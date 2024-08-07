@@ -1,28 +1,24 @@
-@if(request()->query('view') == 'grid' || request()->query('view') == '')
+@if(viewActive('grid'))
 <div class="row">
     @endif
-    @if((request()->query('view') == 'grid' || !request()->query('view') && config('listing.listing_result_view') == 'grid') || request()->query('view') == 'list' || !request()->query('view') && config('listing.listing_result_view') == 'list')
+    @if(viewActive('grid') || viewActive('list'))
     @forelse ($listings as $listing)
-        @if (request()->query('view') == 'grid' || !request()->query('view') && config('listing.listing_result_view') == 'grid')
+        @if (viewActive('grid'))
             <div class="col-lg-6 mb-4">
                 <x-listing-grid :listing="$listing" />
             </div>
             @else
-            <x-listing-list :listing="$listing" />
+                <x-listing-list :listing="$listing" />
         @endif
     @empty
         @include('listing.partials.no-listings')
     @endforelse
+        @elseif(viewActive('short'))
+        <x-listing-short :listings="$listings" />
     @else
-        <!-- Complex options via external local .json file -->
-        <div class="interactive-map rounded-3"
-             data-map-options-json="{{request()->fullUrlWithQuery([
-            'markers' => true
-                 ])}}"
-             style="height: 600px;"></div>
-        <!-- Examples of .json files with map options you can find in dist/json folder -->
+        @include('listing.partials.map')
     @endif
-    @if(request()->query('view') == 'grid' || request()->query('view') == '')
+    @if(viewActive('grid'))
 </div>
 @endif
 {{$listings->withQueryString()->links()}}

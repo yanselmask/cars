@@ -24,44 +24,44 @@
             <div class="col-sm-4 col-md-3">
                 <div class="list-group">
                     <a href="javascript:;"
-                        class="list-group-item list-group-item-action list-group-item-light">{{ __('Title') }}</a>
+                        class="list-group-item list-group-item-action list-group-item-secondary">{{ __('Title') }}</a>
                     <a href="javascript:;"
-                        class="list-group-item list-group-item-action list-group-item-light">{{ __('Price') }}</a>
+                        class="list-group-item list-group-item-action list-group-item-secondary">{{ __('Price') }}</a>
                     <a href="javascript:;"
-                        class="list-group-item list-group-item-action list-group-item-light">{{ __('Condition') }}</a>
+                        class="list-group-item list-group-item-action list-group-item-secondary">{{ __('Condition') }}</a>
                     <a href="javascript:;"
-                        class="list-group-item list-group-item-action list-group-item-light">{{ __('Type') }}</a>
+                        class="list-group-item list-group-item-action list-group-item-secondary">{{ __('Type') }}</a>
                     <a href="javascript:;"
-                        class="list-group-item list-group-item-action list-group-item-light">{{ __('Make') }}</a>
+                        class="list-group-item list-group-item-action list-group-item-secondary">{{ __('Make') }}</a>
                     <a href="javascript:;"
-                        class="list-group-item list-group-item-action list-group-item-light">{{ __('Model') }}</a>
+                        class="list-group-item list-group-item-action list-group-item-secondary">{{ __('Model') }}</a>
                     <a href="javascript:;"
-                        class="list-group-item list-group-item-action list-group-item-light">{{ __('Year') }}</a>
+                        class="list-group-item list-group-item-action list-group-item-secondary">{{ __('Year') }}</a>
                     <a href="javascript:;"
-                        class="list-group-item list-group-item-action list-group-item-light">{{ __('Drive Type') }}</a>
+                        class="list-group-item list-group-item-action list-group-item-secondary">{{ __('Drive Type') }}</a>
                     <a href="javascript:;"
-                        class="list-group-item list-group-item-action list-group-item-light">{{ __('Transmission') }}</a>
+                        class="list-group-item list-group-item-action list-group-item-secondary">{{ __('Transmission') }}</a>
                     <a href="javascript:;"
-                        class="list-group-item list-group-item-action list-group-item-light">{{ __('Fuel Type') }}</a>
+                        class="list-group-item list-group-item-action list-group-item-secondary">{{ __('Fuel Type') }}</a>
                     <a href="javascript:;"
-                        class="list-group-item list-group-item-action list-group-item-light">{{ __('Mileage') }}</a>
+                        class="list-group-item list-group-item-action list-group-item-secondary">{{ __('Mileage') }}</a>
                     <a href="javascript:;"
-                        class="list-group-item list-group-item-action list-group-item-light">{{ __('Engine Size') }}</a>
+                        class="list-group-item list-group-item-action list-group-item-secondary">{{ __('Engine Size') }}</a>
                     <a href="javascript:;"
-                        class="list-group-item list-group-item-action list-group-item-light">{{ __('Cylinders') }}</a>
+                        class="list-group-item list-group-item-action list-group-item-secondary">{{ __('Cylinders') }}</a>
                     <a href="javascript:;"
-                        class="list-group-item list-group-item-action list-group-item-light">{{ __('Interior Color') }}</a>
+                        class="list-group-item list-group-item-action list-group-item-secondary">{{ __('Interior Color') }}</a>
                     <a href="javascript:;"
-                        class="list-group-item list-group-item-action list-group-item-light">{{ __('Exterior Color') }}</a>
+                        class="list-group-item list-group-item-action list-group-item-secondary">{{ __('Exterior Color') }}</a>
                     <a href="javascript:;"
-                        class="list-group-item list-group-item-action list-group-item-light">{{ __('Doors') }}</a>
+                        class="list-group-item list-group-item-action list-group-item-secondary">{{ __('Doors') }}</a>
                     <a href="javascript:;"
-                        class="list-group-item list-group-item-action list-group-item-light">{{ __('VIN') }}</a>
+                        class="list-group-item list-group-item-action list-group-item-secondary">{{ __('VIN') }}</a>
                     <a href="javascript:;"
-                        class="list-group-item list-group-item-action list-group-item-light">{{ __('Location') }}</a>
+                        class="list-group-item list-group-item-action list-group-item-secondary">{{ __('Location') }}</a>
                     @foreach ($features as $feature)
                         <a href="javascript:;"
-                            class="list-group-item list-group-item-action list-group-item-light">{{ $feature->name }}</a>
+                            class="list-group-item list-group-item-action list-group-item-secondary">{{ $feature->name }}</a>
                     @endforeach
                 </div>
             </div>
@@ -73,21 +73,21 @@
                         <a href="javascript:;"
                             class="list-group-item list-group-item-action list-group-item-dark">{{ $listing->pricing }}</a>
                         <a href="javascript:;"
-                            class="list-group-item list-group-item-action list-group-item-dark">{{ $listing->condition->name }}</a>
+                            class="list-group-item list-group-item-action list-group-item-dark">{{ $listing->condition?->name }}</a>
                         <a href="javascript:;"
-                            class="list-group-item list-group-item-action list-group-item-dark">{{ $listing->type->name }}</a>
+                            class="list-group-item list-group-item-action list-group-item-dark">{{ $listing->type?->name }}</a>
                         <a href="javascript:;"
-                            class="list-group-item list-group-item-action list-group-item-dark">{{ $listing->make->name }}</a>
+                            class="list-group-item list-group-item-action list-group-item-dark">{{ $listing->make?->name }}</a>
                         <a href="javascript:;"
-                            class="list-group-item list-group-item-action list-group-item-dark">{{ $listing->makemodel->name }}</a>
+                            class="list-group-item list-group-item-action list-group-item-dark">{{ $listing->makemodel?->name }}</a>
                         <a href="javascript:;"
                             class="list-group-item list-group-item-action list-group-item-dark">{{ $listing->year }}</a>
                         <a href="javascript:;"
-                            class="list-group-item list-group-item-action list-group-item-dark">{{ $listing->drivetype->name }}</a>
+                            class="list-group-item list-group-item-action list-group-item-dark">{{ $listing->drivetype?->name }}</a>
                         <a href="javascript:;"
-                            class="list-group-item list-group-item-action list-group-item-dark">{{ $listing->transmission->name }}</a>
+                            class="list-group-item list-group-item-action list-group-item-dark">{{ $listing->transmission?->name }}</a>
                         <a href="javascript:;"
-                            class="list-group-item list-group-item-action list-group-item-dark">{{ $listing->fueltype->name }}</a>
+                            class="list-group-item list-group-item-action list-group-item-dark">{{ $listing->fueltype?->name }}</a>
                         <a href="javascript:;"
                             class="list-group-item list-group-item-action list-group-item-dark">{{ $listing->mileage }}</a>
                         <a href="javascript:;"
@@ -95,9 +95,9 @@
                         <a href="javascript:;"
                             class="list-group-item list-group-item-action list-group-item-dark">{{ $listing->cylinders }}</a>
                         <a href="javascript:;"
-                            class="list-group-item list-group-item-action list-group-item-dark">{{ $listing->interiorcolor->name }}</a>
+                            class="list-group-item list-group-item-action list-group-item-dark">{{ $listing->interiorcolor?->name }}</a>
                         <a href="javascript:;"
-                            class="list-group-item list-group-item-action list-group-item-dark">{{ $listing->exteriorcolor->name }}</a>
+                            class="list-group-item list-group-item-action list-group-item-dark">{{ $listing->exteriorcolor?->name }}</a>
                         <a href="javascript:;"
                             class="list-group-item list-group-item-action list-group-item-dark">{{ $listing->doors }}</a>
                         <a href="javascript:;"
@@ -106,7 +106,7 @@
                             class="list-group-item list-group-item-action list-group-item-dark">{{ $listing->city }}</a>
                         @foreach ($features as $feature)
                             <a href="javascript:;"
-                                class="list-group-item list-group-item-action bg-dark {{ $listing->features->contains($feature->id) ? 'text-success' : 'text-danger' }}">{{ $listing->features->contains($feature->id) ? __('Yes') : __('No') }}</a>
+                               class="list-group-item list-group-item-action list-group-item-dark"><span class="{{  $listing->features->contains($feature->id) ? 'text-success' : 'text-muted' }}">{{ $listing->features->contains($feature->id) ? __('Yes') : __('No') }}</span></a>
                         @endforeach
                     </div>
                 </div>
