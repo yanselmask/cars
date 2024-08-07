@@ -339,6 +339,7 @@
                                     @csrf
                                     <input type="hidden" name="receiver" value="{{ $listing->user->id }}">
                                     <input type="hidden" name="listing" value="{{ $listing->id }}">
+                                    @guest
                                     <div class="mb-3">
                                         <input name="fullname"
                                             class="form-control form-control-light @error('fullname') is-invalid @enderror"
@@ -363,6 +364,14 @@
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
+                                    @endguest
+                                    <div class="input-group mb-3">
+                                        <input name="booking_date" class="form-control form-control-light date-picker rounded pe-5 @error('booking_date') is-invalid @enderror" type="text" placeholder="{{__('Choose date and time')}}" data-datepicker-options='{"enableTime": true, "altInput": true, "altFormat": "F j, Y H:i", "dateFormat": "Y-m-d H:i"}'>
+                                        @error('booking_date')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                        <i class="fi-calendar position-absolute top-50 end-0 translate-middle-y me-3"></i>
+                                    </div>
                                     <div class="mb-3">
                                         <textarea name="message" class="form-control form-control-light @error('message') is-invalid @enderror"
                                             rows="4" placeholder="{{ __('Message*') }}" required=""></textarea>
@@ -370,8 +379,8 @@
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <button class="btn btn-primary btn-lg" type="submit"><i
-                                            class="fi-send me-2"></i>{{ __('Send message') }}</button>
+                                    <button class="btn btn-outline-primary" type="submit"><i
+                                            class="fi-send me-2"></i>{{ __('Send') }}</button>
                                 </form>
                             </div>
                         </div>
@@ -413,6 +422,7 @@
     @push('css-libs')
         <link rel="stylesheet" media="screen" href="{{ asset('theme/css/lightgallery-bundle.min.css') }}" />
         <link rel="stylesheet" media="screen" href="{{ asset('theme/css/leaflet.css') }}" />
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css" integrity="sha512-MQXduO8IQnJVq1qmySpN87QQkiR1bZHtorbJBD0tzy7/0U9+YIC93QWHeGTEoojMVHWWNkoCp8V6OzVSYrX0oQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <style>
             #markdownOutput h1,
             #markdownOutput h2,
@@ -428,6 +438,7 @@
         <script src="{{ asset('theme/js/lightgallery.min.js') }}"></script>
         <script src="{{ asset('theme/js/lg-video.min.js') }}"></script>
         <script src="{{ asset('theme/js/leaflet.js') }}"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
         <script>
             const email = document.getElementById('newsletterltemail');
             const btn = document.getElementById('newsletterltbtnst');

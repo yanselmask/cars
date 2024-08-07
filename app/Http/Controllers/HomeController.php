@@ -32,6 +32,7 @@ class HomeController extends Controller
 
     public function contactSubmit(Request $request)
     {
+
         $validated = $request->validate([
             'fullname' => 'required',
             'email' => 'required|email',
@@ -146,9 +147,10 @@ class HomeController extends Controller
     public function consultSubmit(Request $request)
     {
         $validated = $request->validate([
-            'fullname' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
+            'fullname' => auth()->user() ? 'nullable' : 'required|string|max:255',
+            'email' => auth()->user() ? 'nullable' : 'required|email|max:255',
             'phone' => 'nullable|string|max:255',
+            'booking_date' => 'nullable|date',
             'message' => 'required',
             'receiver' => 'required',
             'listing' => 'nullable'
@@ -160,9 +162,10 @@ class HomeController extends Controller
         }
 
         $consult = new \App\Models\Consult();
-        $consult->fullname = $validated['fullname'];
-        $consult->email = $validated['email'];
-        $consult->phone = $validated['phone'];
+        $consult->fullname = auth()->user()?->full_name ?? $validated['fullname'];
+        $consult->email = auth()->user()?->email ?? $validated['email'];
+        $consult->phone = auth()->user()?->phone ?? ($validated['phone'] ?? '');
+        $consult->booking_date = $validated['booking_date'] ?? null;
         $consult->message = $validated['message'];
         $consult->sender_id = auth()->user()?->id ?? null;
 

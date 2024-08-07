@@ -20,4 +20,14 @@ class Consult extends Model
     {
         return $this->belongsTo(User::class, 'id', 'receiver_id');
     }
+
+    public function scopeWithDate()
+    {
+        return $this->whereNotNull('booking_date');
+    }
+
+    public function scopeWithoutDate()
+    {
+        return $this->whereNull('booking_date');
+    }
 }

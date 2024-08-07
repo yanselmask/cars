@@ -43,6 +43,9 @@ class ConsultResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('phone')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('booking_date')
+                    ->label(__('Booking Date'))
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at'),
             ])
             ->filters([])
@@ -50,6 +53,7 @@ class ConsultResource extends Resource
                 if (!auth()->user()->isSuperAdmin()) {
                     $query->where('receiver_id', auth()->id());
                 }
+                return $query->orderByDesc('created_at');
             })
             ->actions([
                 Tables\Actions\ViewAction::make(),
@@ -91,9 +95,14 @@ class ConsultResource extends Resource
                 Infolists\Components\Grid::make(2)
                     ->schema([
                         Infolists\Components\TextEntry::make('phone'),
-                        Infolists\Components\TextEntry::make('message')
+                        Infolists\Components\TextEntry::make('booking_date')
                     ])
                     ->columnSpanFull(),
+                 Infolists\Components\Grid::make(1)
+                     ->schema([
+                         Infolists\Components\TextEntry::make('message')
+                     ])
+                     ->columnSpanFull(),
             ]);
     }
 }
