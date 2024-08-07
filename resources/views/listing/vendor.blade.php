@@ -97,6 +97,7 @@
                 <form class="needs-validation pt-2 pb-4 mb-3" action="{{ route('consult.submit') }}" method="POST">
                     @csrf
                     <input type="hidden" name="receiver" value="{{ $user->id }}">
+                    @guest
                     <div class="mb-3">
                         <input name="fullname"
                             class="form-control form-control-light @error('fullname') is-invalid @enderror"
@@ -121,6 +122,14 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+                    @endguest
+                    <div class="input-group mb-3">
+                        <input name="booking_date" class="form-control form-control-light date-picker rounded pe-5 @error('booking_date') is-invalid @enderror" type="text" placeholder="{{__('Choose date and time')}}" data-datepicker-options='{"enableTime": true, "altInput": true, "altFormat": "F j, Y H:i", "dateFormat": "Y-m-d H:i"}'>
+                        @error('booking_date')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                        <i class="fi-calendar position-absolute top-50 end-0 translate-middle-y me-3"></i>
+                    </div>
                     <div class="mb-3">
                         <textarea name="message" class="form-control form-control-light @error('message') is-invalid @enderror" rows="4"
                             placeholder="{{ __('Message*') }}" required=""></textarea>
@@ -136,7 +145,11 @@
         </div>
     </div>
     @once
+        @push('css-libs')
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css" integrity="sha512-MQXduO8IQnJVq1qmySpN87QQkiR1bZHtorbJBD0tzy7/0U9+YIC93QWHeGTEoojMVHWWNkoCp8V6OzVSYrX0oQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        @endpush
     @push('js-libs')
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
         <script>
             const reveal = document.getElementById('reveal');
             const sorting = document.getElementById('sorting');

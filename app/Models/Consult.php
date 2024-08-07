@@ -21,6 +21,11 @@ class Consult extends Model
         return $this->belongsTo(User::class, 'id', 'receiver_id');
     }
 
+    public function listing()
+    {
+        return $this->hasOne(Listing::class, 'id', 'listing_id');
+    }
+
     public function scopeWithDate()
     {
         return $this->whereNotNull('booking_date');

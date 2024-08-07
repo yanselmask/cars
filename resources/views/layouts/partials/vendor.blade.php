@@ -1,3 +1,4 @@
+@once
 <x-notify />
 <!-- Back to top button--><a class="btn-scroll-top" href="#top" data-scroll><span
         class="btn-scroll-top-tooltip text-muted fs-sm me-2">{{ __('Top') }}</span><i
@@ -7,6 +8,27 @@
 <script src="{{ asset('theme/js/simplebar.min.js') }}"></script>
 <script src="{{ asset('theme/js/smooth-scroll.polyfills.min.js') }}"></script>
 <script src="{{ asset('theme/js/tiny-slider.js') }}"></script>
+<script>
+    const listings = document.querySelectorAll('.listing');
+    const placeholders = document.querySelectorAll('.placeholder-loading');
+    if (document.readyState === "loading") {
+        listings?.forEach((listing) => {
+            listing.classList.add('d-none');
+        });
+        placeholders?.forEach((placeholder) => {
+            placeholder.classList.remove('d-none');
+        });
+        // Loading hasn't finished yet
+        document.addEventListener("DOMContentLoaded", () => {
+            listings?.forEach((listing) => {
+                listing.classList.remove('d-none');
+            });
+            placeholders?.forEach((placeholder) => {
+                placeholder.classList.add('d-none');
+            });
+        });
+    }
+</script>
 @if(config('listing.progress_bar'))
     <script src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
     <script>
@@ -63,3 +85,4 @@
 </script>
 <!-- Main theme script-->
 <script src="{{ asset('theme/js/theme.min.js') }}"></script>
+@endonce

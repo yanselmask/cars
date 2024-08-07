@@ -9,27 +9,6 @@
         <script src="{{asset('theme/js/leaflet.js')}}"></script>
         @endif
     @vite('resources/js/app.js')
-    <script>
-        const listings = document.querySelectorAll('.listing');
-        const placeholders = document.querySelectorAll('.placeholder-loading');
-        if (document.readyState === "loading") {
-            listings?.forEach((listing) => {
-                listing.classList.add('d-none');
-            });
-            placeholders?.forEach((placeholder) => {
-                placeholder.classList.remove('d-none');
-            });
-            // Loading hasn't finished yet
-            document.addEventListener("DOMContentLoaded", () => {
-                listings?.forEach((listing) => {
-                    listing.classList.remove('d-none');
-                });
-                placeholders?.forEach((placeholder) => {
-                    placeholder.classList.add('d-none');
-                });
-            });
-        }
-    </script>
     <script src="{{ asset('theme/js/nouislider.min.js') }}"></script>
     <script async
             src="https://maps.googleapis.com/maps/api/js?key={{config('filament-google-maps.key')}}&loading=async&libraries=places&callback=initMap">

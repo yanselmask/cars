@@ -50,7 +50,7 @@ class ListListings extends ListRecords
                 ->badgeColor('success')
                 ->modifyQueryUsing(fn (Builder $query) => $query->Approved()),
             __('Pending') => Tab::make()
-                ->icon('heroicon-m-question-mark-circle')
+                ->icon('heroicon-m-calendar-days')
                 ->badge(function(){
                     if(auth()->user()->isSuperAdmin())
                     {
