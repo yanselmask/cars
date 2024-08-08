@@ -12,6 +12,8 @@
     <title>{{ $title ?? gs('site_name') }}</title>
 </head>
 <body class="bg-dark">
+    <!-- Modal -->
+    @include('layouts.partials.modals.modal')
     <!-- Page Content -->
     <main class="page-wrapper">
         <!-- HEADER -->

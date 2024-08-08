@@ -1,4 +1,3 @@
-@include('layouts.partials.modals.modal')
 @if(menu($menu))
 @if ($menu == 'header')
     <div class="offcanvas offcanvas-end bg-dark" id="navbarNav" tabindex="-1">
