@@ -12,6 +12,39 @@ if (!function_exists('setActive')) {
     }
 }
 
+if (!function_exists('getPath')) {
+    function getPath($key, $withUrl = false)
+    {
+        return match($key){
+            'vendor' => ($withUrl ? \Illuminate\Support\Str::of(config('listing.vendor_path'))
+                        ->start(config('app.url') . '/')
+                        ->append('/')
+                        : config('listing.vendor_path')),
+            'admin' =>  ($withUrl ? \Illuminate\Support\Str::of(config('listing.admin_path'))
+                        ->start(config('app.url') . '/')
+                        ->append('/')
+                        : config('listing.admin_path')),
+            'blog' => ($withUrl ? \Illuminate\Support\Str::of(config('listing.path_blog'))
+                        ->start(config('app.url') . '/')
+                        ->append('/')
+                        : config('listing.path_blog')),
+            'favorite' => ($withUrl ? \Illuminate\Support\Str::of(config('listing.path_favorites'))
+                        ->start(config('app.url') . '/')
+                        ->append('/')
+                        : config('listing.path_favorites')),
+            'compares' => ($withUrl ? \Illuminate\Support\Str::of(config('listing.path_compares'))
+                        ->start(config('app.url') . '/')
+                        ->append('/')
+                        : config('listing.path_compares')),
+            'listings' => ($withUrl ? \Illuminate\Support\Str::of(config('listing.path_listing'))
+                    ->start(config('app.url') . '/')
+                    ->append('/')
+                    : config('listing.path_listing')),
+            default => null,
+        };
+    }
+}
+
 if (!function_exists('notificationFilament')) {
     function notificationFilament()
     {

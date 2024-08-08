@@ -23,7 +23,8 @@ class Post extends Model implements HasMedia
     protected $guarded = [];
 
     protected $casts = [
-        'status' => \App\Enums\Status::class
+        'status' => \App\Enums\Status::class,
+        'content' => 'array'
     ];
 
     /**

@@ -225,6 +225,7 @@ class ListingResource extends Resource
                             SpatieMediaLibraryFileUpload::make('gallery')
                                 ->label(__('Gallery'))
                                 ->collection('gallery')
+                                ->getPanelLayout('grid')
                                 ->multiple((isset(auth()->user()->sparkPlan()->options['images_limit']) && auth()->user()->sparkPlan()->options['images_limit'] > 1) ? true : false)
                                 ->reorderable()
                                 ->maxFiles(auth()->user()->sparkPlan()->options['images_limit'] ?? 1)

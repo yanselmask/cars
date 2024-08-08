@@ -6,7 +6,7 @@
         <!-- Post meta-->
         @include('blog.partials.show.meta')
         <!-- Post Content-->
-        {!! $post->contentRender() !!}
+        @include('partials.blocks.renderBlock',['data' => $post->content])
         <!-- Tags + Sharing-->
         @include('blog.partials.show.tags')
     </div>

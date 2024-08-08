@@ -110,34 +110,34 @@ class Listing extends Model implements HasMedia
             ->pixelate(2)
             ->fit(Fit::Crop, 942, 482)
             ->format('webp')
-            ->nonQueued();
+            ->queued();
 
         $this
             ->addMediaConversion('thumb')
             ->pixelate(4)
             ->fit(Fit::Crop, 204, 150)
             ->format('webp')
-            ->nonQueued();
+            ->queued();
 
         $this
             ->addMediaConversion('small')
             ->pixelate(3)
             ->fit(Fit::Crop, 760, 478)
             ->format('webp')
-            ->nonQueued();
+            ->queued();
 
         $this
             ->addMediaConversion('featured')
             ->pixelate(2)
             ->fit(Fit::Crop, 1268, 526)
             ->format('webp')
-            ->nonQueued();
+            ->queued();
 
         $this
             ->addMediaConversion('single')
             ->fit(Fit::Crop, 1120, 630)
             ->format('webp')
-            ->nonQueued();
+            ->queued();
     }
 
     public function condition()

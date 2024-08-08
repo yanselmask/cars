@@ -7,6 +7,7 @@ use App\Filament\Resources\TagResource\RelationManagers;
 use App\Models\Tag;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Resources\Concerns\Translatable;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -24,16 +25,21 @@ class TagResource extends Resource
 
     protected static ?int $navigationSort = 3;
 
+    use Translatable;
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required(),
-                Forms\Components\TextInput::make('slug'),
-                Forms\Components\TextInput::make('type'),
-                Forms\Components\TextInput::make('order_column')
-                    ->numeric()
+               Forms\Components\Section::make([
+                   Forms\Components\TextInput::make('name')
+                       ->label(__('Name'))
+                       ->required(),
+                   Forms\Components\TextInput::make('slug')
+                   ->label(__('Slug')),
+                   Forms\Components\TextInput::make('type'),
+                   Forms\Components\TextInput::make('order_column')
+                       ->numeric()
+               ])
             ]);
     }
 
@@ -58,7 +64,8 @@ class TagResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->reorderable('order_column');
     }
 
     public static function getRelations(): array

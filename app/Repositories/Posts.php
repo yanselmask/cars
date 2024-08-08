@@ -18,7 +18,9 @@ class Posts implements PostsInterface
                 return $sql->where('category_id', request()->query('category'));
             })
             ->when(request()->query('tag'), function ($sql) {
-                return $sql->withAnyTags(request()->query('tag'));
+                return $sql->whereHas('tags', function ($sql) {
+                   $sql->where('name->' . config('app.locale'), request()->query('tag'));
+                });
             })
             ->when(request()->query('q'), function ($sql) {
                 $sql->where(function ($query) {

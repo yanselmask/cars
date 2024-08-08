@@ -28,25 +28,30 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required(),
-                Forms\Components\TextInput::make('slug'),
-                Forms\Components\Textarea::make('description'),
-                Forms\Components\Select::make('parent_id')
-                    ->label(__('Parent Category'))
-                    ->options(
-                        fn ($get) => \App\Models\Category::select('name', 'id')
-                            ->whereNull('parent_id')
-                            ->where('id', '!=', $get('id')) // Excluir el ID del registro actual
-                            ->get()
-                            ->mapWithKeys(
-                                fn ($cat) => [$cat->id => $cat->name]
+                Forms\Components\Section::make([
+                    Forms\Components\TextInput::make('name')
+                        ->required(),
+                    Forms\Components\TextInput::make('slug'),
+                    Forms\Components\Textarea::make('description'),
+                    Forms\Components\Grid::make(2)
+                    ->schema([
+                        Forms\Components\Select::make('parent_id')
+                            ->label(__('Parent Category'))
+                            ->options(
+                                fn ($get) => \App\Models\Category::select('name', 'id')
+                                    ->whereNull('parent_id')
+                                    ->where('id', '!=', $get('id')) // Excluir el ID del registro actual
+                                    ->get()
+                                    ->mapWithKeys(
+                                        fn ($cat) => [$cat->id => $cat->name]
+                                    )
                             )
-                    )
-                    ->different('id'),
-                Forms\Components\Select::make('status')
-                    ->options(Status::getLabels())
-                    ->default(Status::PUBLISHED),
+                            ->different('id'),
+                        Forms\Components\Select::make('status')
+                            ->options(Status::getLabels())
+                            ->default(Status::PUBLISHED)
+                    ]),
+                ]),
             ]);
     }
 

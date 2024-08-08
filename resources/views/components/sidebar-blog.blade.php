@@ -98,7 +98,7 @@
                         <button id="newsletterbgbtnst" class="btn btn-primary btn-sm"
                             type="button">{{ __('Subscribe') }}</button>
                     </form>
-                    <span id="successaddedbg" class="text-success d-none"></span>
+                    <span id="successaddedsrbg" class="text-success d-none"></span>
                 </div>
             </div>
         </div>
@@ -109,14 +109,14 @@
     <script>
         const email = document.getElementById('newsletterbgemail');
         const btn = document.getElementById('newsletterbgbtnst');
-        const successadded = document.getElementById('successaddedbg');
+        const successaddedsr = document.getElementById('successaddedsrbg');
         btn.addEventListener('click', () => {
             if (email.value != '') {
-                subscribe();
+                subscribesr();
             }
         });
 
-        const subscribe = async () => {
+        const subscribesr = async () => {
             try {
                 const request = await fetch(@js(route('newsletter.add')), {
                     method: 'POST',
@@ -132,22 +132,22 @@
 
                 if (response.success) {
                     email.value = '';
-                    successadded.classList.remove('d-none')
-                    successadded.classList.remove('text-danger')
-                    successadded.classList.add('text-success');
-                    successadded.textContent = response.success;
+                    successaddedsr.classList.remove('d-none')
+                    successaddedsr.classList.remove('text-danger')
+                    successaddedsr.classList.add('text-success');
+                    successaddedsr.textContent = response.success;
 
                     setTimeout(() => {
-                        successadded.classList.add('d-none')
+                        successaddedsr.classList.add('d-none')
                     }, 5000);
                 } else {
-                    successadded.classList.remove('d-none')
-                    successadded.classList.remove('text-success');
-                    successadded.classList.add('text-danger');
-                    successadded.textContent = 'Error';
+                    successaddedsr.classList.remove('d-none')
+                    successaddedsr.classList.remove('text-success');
+                    successaddedsr.classList.add('text-danger');
+                    successaddedsr.textContent = 'Error';
 
                     setTimeout(() => {
-                        successadded.classList.add('d-none')
+                        successaddedsr.classList.add('d-none')
                     }, 3000);
 
                 }
