@@ -27,7 +27,7 @@ return [
     |
     */
 
-    'middleware' => ['web', 'auth'],
+    'middleware' => ['web', 'auth','role:Super Admin|' . config('listing.seller_role')],
 
     /*
     |--------------------------------------------------------------------------

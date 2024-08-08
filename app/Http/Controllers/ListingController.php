@@ -107,6 +107,7 @@ class ListingController extends Controller
                           ->featured();
                 },
             ])
+            ->seller()
             ->withAvg('listings', 'price')
             ->orderByDesc('certified_count')
             ->orderByDesc('featured_count')

@@ -14,6 +14,7 @@ use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Widgets;
+use App\Filament\Pages\Auth\Register;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -32,15 +33,15 @@ class AppPanelProvider extends PanelProvider
             ->id(config('listing.vendor_path'))
             ->path(config('listing.vendor_path'))
             ->login()
-            ->registration()
+            ->registration(\App\Filament\App\Pages\Auth\Register::class)
             ->passwordReset()
             ->colors([
-                'primary' => Color::Emerald,
+                'primary' => Color::Emerald
             ])
             ->discoverResources(in: app_path('Filament/App/Resources'), for: 'App\\Filament\\App\\Resources')
             ->discoverPages(in: app_path('Filament/App/Pages'), for: 'App\\Filament\\App\\Pages')
             ->pages([
-                Pages\Dashboard::class,
+                \App\Filament\Custom\Dashboard::class
             ])
             ->discoverWidgets(in: app_path('Filament/App/Widgets'), for: 'App\\Filament\\App\\Widgets')
             ->widgets([
@@ -79,13 +80,14 @@ class AppPanelProvider extends PanelProvider
                     ->icon('heroicon-m-user-circle')
                     ->visible(function (): bool {
                         return true;
-                    }),
+                    })
             ])
             ->navigationItems([
                 NavigationItem::make('Billing')
                     ->url('/billing')
                     ->icon('heroicon-o-credit-card')
-                    ->sort(4),
+                    ->sort(4)
+                    ->visible(fn(): bool => auth()->user()->isSuperAdmin() || auth()->user()->isSeller()),
             ])
             ->brandLogo(site_logo())
             ->favicon(site_favicon())

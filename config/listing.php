@@ -54,6 +54,7 @@ return [
     */
     'date_format' => 'F j, Y', // Date format used in the UI
     'badge_new_post_time' => env('BADGE_NEW_POST_TIME', 7), // Time in days to consider a post as 'new'
+    'seller_role' => env('SELLER_ROLE', 'Seller'),
 
     /*
     |--------------------------------------------------------------------------

@@ -60,10 +60,9 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         ];
     }
 
-
     public function canAccessPanel(Panel $panel): bool
     {
-        if ($panel->getId() === 'admin') {
+        if ($panel->getId() === config('listing.admin_path')) {
             return $this->isSuperAdmin() || $this->email == config('listing.super_admin_email') || $this->id == 1;
         }
 
@@ -105,7 +104,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
 
     public function canPublishListing():bool
     {
-        return $this->credits > 0 ?? false;
+        return $this->isSeller() && $this->credits > 0 ? $this->credits  : false;
     }
 
     public function canFeatureListing():bool
@@ -196,5 +195,18 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
     public function getFacebookLinkAttribute()
     {
         return $this->custom_fields_json?->facebook;
+    }
+
+    public function scopeSeller($query)
+    {
+        return $query->whereHas('roles', function ($query) {
+           $query->where('name', config('listing.seller_role'))
+                ->orWhere('name', 'Super Admin');
+        });
+    }
+
+    public function isSeller(): bool
+    {
+        return $this->hasRole(config('listing.seller_role'));
     }
 }

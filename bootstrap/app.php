@@ -17,6 +17,10 @@ return Application::configure(basePath: dirname(__DIR__))
             return config('listing.vendor_path');
         });
 
+        $middleware->alias([
+            'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
+        ]);
+
         $middleware->web([
 //            \App\Http\Middleware\CheckIfAppIsInstalled::class,
 //            \Torann\Currency\Middleware\CurrencyMiddleware::class,

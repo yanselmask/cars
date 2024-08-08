@@ -6,26 +6,29 @@
         </a>
         @endif
             @if (!menu('mobile-menu'))
-        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+                <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarDarkNav" aria-controls="navbarDarkNav" aria-expanded="false" aria-label="{{__('Toggle navigation')}}"><span class="navbar-toggler-icon"></span></button>
             @endif
         @if (config('listing.show_signin_button'))
             @guest
                 <a class="btn btn-link btn-light btn-sm d-none d-lg-block order-lg-3"
-                    href="{{ config('app.url') . '/' . config('listing.vendor_path') }}">
+                    href="{{ getPath('vendor',true) }}">
                     <i class="fi-user me-2"></i>{{ __('Sign in') }}</a>
             @endguest
         @endif
         @if (config('listing.show_sell_car_button'))
             @auth
-            <a class="btn btn-link btn-light btn-sm d-none d-lg-block order-lg-3"
-                    href="{{ config('app.url') . '/' . config('listing.vendor_path') }}">
-                    <i class="fi-user me-2"></i>{{ __('Dashboard') }}</a>
+                @role('Super Admin')
+                    <a class="btn btn-link btn-light btn-sm d-none d-lg-block order-lg-3"
+                       href="{{ getPath('admin') }}">
+                        <i class="fi-user me-2"></i>{{ __('Dashboard') }}</a>
+                @else
+                    <a class="btn btn-link btn-light btn-sm d-none d-lg-block order-lg-3"
+                       href="{{ auth()->user()->isSeller() ? getPath('vendor', true) : getPath('vendor', true) . 'edit-profile' }}">
+                        <i class="fi-user me-2"></i>{{ __('Dashboard') }}</a>
+                @endrole
             @if (auth()->user()->canPublishListing())
                 <a class="btn btn-primary btn-sm ms-2 order-lg-3"
-                    href="{{ config('app.url') . '/' . config('listing.vendor_path') . '/listings/create' }}">
+                    href="{{ getPath('vendor', true) . 'listings/create' }}">
                     <i class="fi-plus me-2"></i>{{ __('Sell car') }}
                 </a>
             @endif

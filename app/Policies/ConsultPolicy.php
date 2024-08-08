@@ -3,12 +3,11 @@
 namespace App\Policies;
 
 use Illuminate\Auth\Access\Response;
-use App\Models\Listing;
+use App\Models\Consult;
 use App\Models\User;
 
-class ListingPolicy
+class ConsultPolicy
 {
-
     /**
      * Determine whether the user can view any models.
      */
@@ -20,9 +19,9 @@ class ListingPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Listing $listing): bool
+    public function view(User $user, Consult $consult): bool
     {
-        return $user->isSeller() && $listing->user_id === $user->id;
+        return $user->isSeller() && $consult->receiver_id === $user->id;
     }
 
     /**
@@ -30,38 +29,38 @@ class ListingPolicy
      */
     public function create(User $user): bool
     {
-        return $user->canPublishListing();
+        return false;
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Listing $listing): bool
+    public function update(User $user, Consult $consult): bool
     {
-        return $user->isSeller() && $listing->user_id === $user->id;
+        return false;
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Listing $listing): bool
+    public function delete(User $user, Consult $consult): bool
     {
-        return $user->isSeller() && $listing->user_id === $user->id;
+        return $user->isSeller() && $consult->receiver_id === $user->id;
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Listing $listing): bool
+    public function restore(User $user, Consult $consult): bool
     {
-        return $user->isSeller() && $listing->user_id === $user->id;
+        return $user->isSeller() && $consult->receiver_id === $user->id;
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Listing $listing): bool
+    public function forceDelete(User $user, Consult $consult): bool
     {
-        return $user->isSeller() && $listing->user_id === $user->id;
+        return $user->isSeller() && $consult->receiver_id === $user->id;
     }
 }

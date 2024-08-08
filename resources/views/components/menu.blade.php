@@ -1,16 +1,10 @@
 @if(menu($menu))
 @if ($menu == 'header')
-    <div class="offcanvas offcanvas-end bg-dark" id="navbarNav" tabindex="-1">
-        <div class="offcanvas-header bg-transparent border-light border-bottom">
-            <h5 class="offcanvas-title text-light">{{menu($menu)->name}}</h5>
-            <button class="btn-close btn-close-white" type="button" data-bs-dismiss="offcanvas"></button>
-        </div>
-        <div class="offcanvas-body bg-dark" data-simplebar>
-            <ul class="navbar-nav navbar-nav-scroll" style="max-height: 35rem;">
-                <!-- Menu items-->
-                @each('components.link', menu($menu)->items, 'item')
-            </ul>
-        </div>
+    <div class="collapse navbar-collapse order-lg-2" id="navbarDarkNav">
+        <ul class="navbar-nav">
+            <!-- Menu items-->
+            @each('components.link', menu($menu)->items, 'item')
+        </ul>
     </div>
 @elseif ($menu == 'footer_bottom')
     <ul class="d-flex flex-wrap justify-content-center order-lg-2 mb-3 list-unstyled">
