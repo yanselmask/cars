@@ -9,7 +9,7 @@
 </button>
     @endif
 @else
-    <button type="button" class="btn btn-lg btn-info" data-bs-toggle="modal" data-bs-target="#modalNoLoggin">
+    <button type="button" class="btn {{$class}} btn-info" data-bs-toggle="modal" data-bs-target="#modalNoLoggin">
         {{__('Follow')}}
     </button>
 @endauth

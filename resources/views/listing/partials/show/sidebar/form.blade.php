@@ -17,7 +17,7 @@
             </button>
             <br>
         @endif
-        <x-follow-button class="ms-3" :user="$listing->user" />
+        <x-follow-button :user="$listing->user" />
         <a class="btn btn-primary btn-lg collapsed" href="#send-mail" data-bs-toggle="collapse"
            aria-expanded="false">
             <i class="fi-chat-left me-2"></i>{{ __('Send message') }}

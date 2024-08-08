@@ -52,7 +52,7 @@
             <i class="fi-map-pin"></i>
         </a>
         <a class="nav-link nav-link-light px-2 {{ request()->query('view') == 'short' || !request()->query('view') && config('listing.listing_result_view') == 'short' ? 'active' : '' }}"
-           onclick="addLinkQuery('map', 'view')" href="javascript:;"
+           onclick="addLinkQuery('short', 'view')" href="javascript:;"
            data-bs-toggle="tooltip" title="{{ __('Short view') }}">
             <i class="fi-play-circle"></i>
         </a>
