@@ -61,7 +61,7 @@
                                 <p class="mb-2 fs-sm text-muted">{{$vendor->address ?? __('It has no location')}}</p>
                                 <div class="fw-bold">
                                     <i class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>
-                                    {{currency_format($vendor->listings->avg('price'))}} ({{__('Average')}})
+                                    {{currency_format($vendor->listings->avg('price') ?? 0)}} ({{__('Average')}})
                                 </div>
                             </div>
                             <div class="card-footer d-flex align-items-center justify-content-center mx-3 pt-3 text-nowrap">
@@ -80,45 +80,6 @@
                             </div>
                         </div>
                     </div>
-{{--                        <div class="col-md-6 mb-3">--}}
-{{--                            <!-- No image + Contextual dropdown menu -->--}}
-{{--                            <div class="card card-light card-hover">--}}
-{{--                                <div class="card-body">--}}
-{{--                                    <div class="d-flex justify-content-between align-items-start mb-2">--}}
-{{--                                        <div class="d-flex align-items-center">--}}
-{{--                                            <img loading="lazy" class="me-2" src="{{ $vendor->profile_photo_url }}" width="24"--}}
-{{--                                                alt="{{ $vendor->fullname }}">--}}
-{{--                                            <span class="fs-sm text-light px-1">{{ $vendor->fullname }}</span>--}}
-{{--                                            @if ($vendor->verified)--}}
-{{--                                                <span--}}
-{{--                                                    class="badge bg-faded-success rounded-pill fs-sm ms-2">{{ __('Verified') }}</span>--}}
-{{--                                            @endif--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                    <h3 class="h6 card-title pt-1 mb-3">--}}
-{{--                                        <a href="{{ route('listing.vendor', $vendor) }}"--}}
-{{--                                            class="text-nav text-light stretched-link text-decoration-none">{{ $vendor->fullname }}</a>--}}
-{{--                                    </h3>--}}
-{{--                                    @if ($vendor->address || $vendor->listings_count)--}}
-{{--                                        <div class="fs-sm">--}}
-{{--                                            @if ($vendor->address)--}}
-{{--                                                <span class="text-nowrap me-3">--}}
-{{--                                                    <i class="fi-map-pin text-muted me-1"> </i>--}}
-{{--                                                    {{ $vendor->address }}--}}
-{{--                                                </span>--}}
-{{--                                            @endif--}}
-{{--                                            @if ($vendor->listings_count)--}}
-{{--                                                <span class="text-nowrap me-3">--}}
-{{--                                                    <i class="fi-car fs-base text-muted me-1"></i>--}}
-{{--                                                    {{ $vendor->listings_count }}--}}
-{{--                                                </span>--}}
-{{--                                            @endif--}}
-{{--                                        </div>--}}
-{{--                                    @endif--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-                        <!-- Examples of .json files with map options you can find in dist/json folder -->
                     @endforeach
                     {{ $vendors->withQueryString()->links() }}
                 </div>
