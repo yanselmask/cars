@@ -48,21 +48,21 @@
     const btnscompare = document.querySelectorAll('.btn-compare');
     if (btns) {
         btns.forEach((btn) => {
-            btn.addEventListener('click', () => {
-                togglePath(btn.getAttribute('data-listing'), @js(route('add.favorite.listing')))
+            btn.addEventListener('click', (event) => {
+                togglePath(btn.getAttribute('data-listing'), @js(route('add.favorite.listing')),event,true)
             })
         })
     }
 
     if (btnscompare) {
         btnscompare.forEach((btn) => {
-            btn.addEventListener('click', () => {
-                togglePath(btn.getAttribute('data-listing'), @js(route('add.compare.listing')))
+            btn.addEventListener('click', (event) => {
+                togglePath(btn.getAttribute('data-listing'), @js(route('add.compare.listing')), event)
             })
         })
     }
 
-    const togglePath = async (id, url) => {
+    const togglePath = async (id, url,event, refresh = false) => {
         try {
             const request = await fetch(url, {
                 method: 'POST',
@@ -75,13 +75,63 @@
                 })
             });
             const response = await request.json();
-            if (response.message) {
-                location.reload();
+
+            if(response.type == 'compare' && response.code != 'limit')
+            {
+                document.querySelector('.compareCount')
+                        .textContent =`Compare (${response.count})`;
             }
+            if(response.type == 'compare' && response.code == 'limit' && event.target.checked)
+            {
+                event.target.checked = false;
+                alert(@js(__('You reached the comparison limit, delete one.')));
+            }
+
+            if(refresh)
+            {
+                history.go(0);
+            }
+
         } catch (error) {
             window.location.href = @js(config('app.url') . '/' . config('listing.vendor_path'))
         }
     }
+</script>
+<script>
+    let btnsFollow = document.querySelectorAll('.follow-user');
+    const follow = async (user, event) => {
+        try {
+            const req = await fetch(@js(route('toggleFollowUser')),{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': @js(csrf_token())
+                },
+                body: JSON.stringify({user: user})
+            });
+            const res = await req.json();
+            if(req.status == 200 && res.type == 'follow')
+            {
+                event.target.innerText = @js(__('Following'));
+                event.target.classList.remove('btn-info');
+                event.target.classList.add('btn-success');
+            }
+
+            if(req.status == 200 && res.type == 'unfollow')
+            {
+                event.target.innerText = @js(__('Follow'));
+                event.target.classList.remove('btn-success');
+                event.target.classList.add('btn-info');
+            }
+        }catch(err){
+            console.log(err);
+        }
+    }
+    btnsFollow.forEach((btn) => {
+        btn.addEventListener('click',(event) => {
+            follow(event.target.getAttribute('data-user'),event)
+        })
+    })
 </script>
 <!-- Main theme script-->
 <script src="{{ asset('theme/js/theme.min.js') }}"></script>

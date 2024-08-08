@@ -25,18 +25,52 @@ class ListConsults extends ListRecords
         return [
             __('All') => Tab::make()
                 ->icon('heroicon-m-envelope')
-                ->badge(fn() => Consult::where('receiver_id', auth()->id())->count())
+                ->badge(function(){
+                    if(auth()->user()->isSuperAdmin())
+                    {
+                        return Consult::count();
+                    }
+
+                    return Consult::where('receiver_id', auth()->id())->count();
+                })
                 ->badgeColor('info'),
             __('With Booking Date') => Tab::make()
                 ->icon('heroicon-m-calendar-days')
-                ->badge(fn() => Consult::where('receiver_id', auth()->id())->withDate()->count())
+                ->badge(function(){
+                    if(auth()->user()->isSuperAdmin())
+                    {
+                        return Consult::withDate()->count();
+                    }
+
+                    return Consult::withDate()->where('receiver_id',auth()->id())->count();
+                })
                 ->badgeColor('success')
-                ->modifyQueryUsing(fn (Builder $query) => $query->withDate()),
+                ->modifyQueryUsing(function(Builder $query){
+                    if(auth()->user()->isSuperAdmin())
+                    {
+                        return $query->withDate();
+                    }
+                    return $query->withDate()->where('receiver_id', auth()->id());
+                }),
             __('Without Booking Date') => Tab::make()
                 ->icon('heroicon-m-calendar')
-                ->badge(fn() => Consult::where('receiver_id', auth()->id())->withoutDate()->count())
+                ->badge(function(){
+                    if(auth()->user()->isSuperAdmin())
+                    {
+                        return Consult::withoutDate()->count();
+                    }
+
+                    return Consult::withoutDate()->where('receiver_id', auth()->id())->count();
+                })
                 ->badgeColor('danger')
-                ->modifyQueryUsing(fn (Builder $query) => $query->withoutDate())
+                ->modifyQueryUsing(function(Builder $query){
+                    if(auth()->user()->isSuperAdmin())
+                    {
+                        return $query->withoutDate();
+                    }
+
+                    return $query->withoutDate()->where('receiver_id',auth()->id());
+                })
         ];
     }
 }

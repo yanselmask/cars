@@ -95,6 +95,23 @@ class ListingController extends Controller
                     $query->approved();
                 },
             ])
+            ->withCount([
+                'listings as certified_count' => function ($query) {
+                    $query->approved()
+                          ->certified();
+                },
+            ])
+            ->withCount([
+                'listings as featured_count' => function ($query) {
+                    $query->approved()
+                          ->featured();
+                },
+            ])
+            ->withAvg('listings', 'price')
+            ->orderByDesc('certified_count')
+            ->orderByDesc('featured_count')
+            ->orderByDesc('listings_count')
+            ->orderBy('listings_avg_price')
             ->paginate(10);
 
         $locations = User::select('custom_fields')

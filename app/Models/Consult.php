@@ -13,17 +13,17 @@ class Consult extends Model
 
     public function sender()
     {
-        return $this->belongsTo(User::class, 'id', 'sender_id');
+        return $this->belongsTo(User::class, 'sender_id');
     }
 
     public function receiver()
     {
-        return $this->belongsTo(User::class, 'id', 'receiver_id');
+        return $this->belongsTo(User::class, 'receiver_id');
     }
 
     public function listing()
     {
-        return $this->hasOne(Listing::class, 'id', 'listing_id');
+        return $this->hasOne(Listing::class, 'id','listing_id');
     }
 
     public function scopeWithDate()

@@ -12,6 +12,8 @@ use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Storage;
+use Overtrue\LaravelFollow\Traits\Followable;
+use Overtrue\LaravelFollow\Traits\Follower;
 use Spark\Billable;
 use Spatie\Permission\Traits\HasRoles;
 use Filament\Models\Contracts\HasAvatar;
@@ -19,7 +21,7 @@ use Shetabit\Visitor\Traits\Visitor;
 
 class User extends Authenticatable implements FilamentUser, HasAvatar
 {
-    use Billable, HasFactory, Visitor, Visitor, Notifiable, HasRoles, HasSuperAdmin;
+    use Billable, HasFactory, Visitor, Visitor, Notifiable, HasRoles, HasSuperAdmin, Follower, Followable;
 
     /**
      * The attributes that are mass assignable.
@@ -129,6 +131,16 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
     public function listings(): HasMany
     {
         return $this->hasMany(Listing::class);
+    }
+
+    public function consultsSent()
+    {
+        return $this->hasMany(Consult::class,'sender_id');
+    }
+
+    public function consultsReceives()
+    {
+        return $this->hasMany(Consult::class,'receiver_id');
     }
 
     public function listingsCertified()

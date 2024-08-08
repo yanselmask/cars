@@ -8,6 +8,7 @@ use App\Models\Listing;
 use App\Models\Make;
 use App\Models\Page;
 use App\Models\User;
+use App\Notifications\NotifyNewFollower;
 use App\Repositories\ListingInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -85,7 +86,7 @@ class HomeController extends Controller
         if ($user->hasFavorited($listing->id)) {
             $user->favoritedListings()->detach($listing);
             Cache::flush();
-            return response()->json(['message' => 'Listing removed from favorite']);
+            return response()->json(['message' => 'Listing removed from favorite', 'type' => 'favorite','code' => 'removed']);
         }
 
         if (!$user || !$listing) {
@@ -96,7 +97,7 @@ class HomeController extends Controller
 
         Cache::flush();
 
-        return response()->json(['message' => 'Listing added to favorite']);
+        return response()->json(['message' => 'Listing added to favorite','type' => 'favorite', 'code' => 'added']);
     }
 
     public function addCompare(Request $request)
@@ -107,11 +108,11 @@ class HomeController extends Controller
         if ($user->hasCompared($listing->id)) {
             $user->comparedListings()->detach($listing);
             Cache::flush();
-            return response()->json(['message' => 'Listing removed from compare']);
+            return response()->json(['message' => 'Listing removed from compare','type' => 'compare','count' => $user->comparedListings()->count()]);
         }
 
         if ($user->comparedListings()->count() >= 3) {
-            return response()->json(['message' => 'Limit for compare']);
+            return response()->json(['message' => 'Limit for compare', 'type' => 'compare', 'code' => 'limit']);
         }
 
         if (!$user || !$listing) {
@@ -122,7 +123,18 @@ class HomeController extends Controller
 
         Cache::flush();
 
-        return response()->json(['message' => 'Listing added to compare']);
+        return response()->json(['message' => 'Listing added to compare', 'type' => 'compare', 'count' => $user->comparedListings()->count()]);
+    }
+
+    public function clearCompares(Request $request)
+    {
+        $user = auth()->user();
+
+        $user->comparedListings()->each(function($listing) use ($user) {
+            $user->comparedListings()->detach($listing);
+        });
+
+        return back();
     }
 
     public function compare()
@@ -142,6 +154,57 @@ class HomeController extends Controller
         $user->comparedListings()->attach($listing);
 
         return response()->json(['message' => 'Listing added to comparisons']);
+    }
+
+    public function toggleFollowUser(Request $request)
+    {
+        $user = auth()->user();
+        $followed = User::findOrFail($request->user);
+
+        if($user->id == $followed->id)
+        {
+            return response()->json(['error' => __('You can\'t follow yourself')], 404);
+        }
+
+        if(!$user)
+        {
+            return response()->json(['error' => __('User not found')], 404);
+        }
+
+        if(!$followed)
+        {
+            return response()->json(['error' => __('User not found')], 404);
+        }
+
+        if($user->isFollowing($followed))
+        {
+            $user->unfollow($followed);
+            return response()->json(['message' => __('You have stopped following this user'), 'type' => 'unfollow'],200);
+        }
+
+        $user->follow($followed);
+
+        $this->notificationFollowed($user, $followed);
+
+        return response()->json(['message' => __('You started following this user'), 'type' => 'follow'],200);
+    }
+
+    private function notificationFollowed($user, $followed)
+    {
+        notificationFilament()
+            ->success()
+            ->title(__('You have a new follower'))
+            ->body(__(':follower has started following you', ['follower' => $user->full_name]))
+            ->sendToDatabase($followed);
+    }
+
+    private function notificationConsult($email, $sent)
+    {
+        notificationFilament()
+            ->success()
+            ->title(__('You have received a new message'))
+            ->body(__(':user sent you a message', ['user' => $email]))
+            ->sendToDatabase($sent);
     }
 
     public function consultSubmit(Request $request)
@@ -179,6 +242,11 @@ class HomeController extends Controller
         $consult->save();
 
         nt('success', __('Messaged submitted'));
+
+        if($consult->receiver)
+        {
+            $this->notificationConsult($consult->email, $consult->receiver);
+        }
 
         return back();
     }

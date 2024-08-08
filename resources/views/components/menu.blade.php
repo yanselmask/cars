@@ -1,9 +1,10 @@
+@include('layouts.partials.modals.modal')
 @if(menu($menu))
 @if ($menu == 'header')
-    <div class="offcanvas offcanvas-end bg-light" id="navbarNav" tabindex="-1">
-        <div class="offcanvas-header border-light border-bottom">
-            <h5 class="offcanvas-title text-dark">{{menu($menu)->name}}</h5>
-            <button class="btn-close" type="button" data-bs-dismiss="offcanvas"></button>
+    <div class="offcanvas offcanvas-end bg-dark" id="navbarNav" tabindex="-1">
+        <div class="offcanvas-header bg-transparent border-light border-bottom">
+            <h5 class="offcanvas-title text-light">{{menu($menu)->name}}</h5>
+            <button class="btn-close btn-close-white" type="button" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body bg-dark" data-simplebar>
             <ul class="navbar-nav navbar-nav-scroll" style="max-height: 35rem;">

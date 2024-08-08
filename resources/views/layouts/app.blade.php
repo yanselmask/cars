@@ -4,10 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- SEO -->
     @stack('seo')
-
+    <!-- VENDOR CSS -->
     @include('layouts.partials.vendor_css')
-
+    <!-- TITLE -->
     <title>{{ $title ?? gs('site_name') }}</title>
 </head>
 <body class="bg-dark">
@@ -20,6 +21,5 @@
     </main>
     <!-- FOOTER -->
     <x-footer />
-    @include('layouts.partials.vendor')
 </body>
 </html>

@@ -29,10 +29,8 @@
               <ul class="nav nav-tabs nav-tabs-light mb-0">
                   @foreach ($condition as $c)
                       <li class="nav-item mb-3">
-                          <a class="nav-link @if (request()->query('condition') == $c->id || request()->query('condition') == $c->name) active @endif"
-                              href="{{ request()->fullUrlWithQuery([
-                                  'condition' => $c->id,
-                              ]) }}">{{  $c->name }}
+                          <a onclick="addLinkQuery(@js($c->id), 'condition')" class="nav-link @if (request()->query('condition') == $c->id || request()->query('condition') == $c->name) active @endif"
+                             href="javascript:;">{{  $c->name }}
                           </a>
                       </li>
                   @endforeach
@@ -331,32 +329,22 @@
               feature.addEventListener('change', (event) => {
                   const selectedValue = event.target.value;
                   const url = new URL(window.location);
-
-                  // Obtener los valores actuales de la URL
                   const currentValues = url.searchParams.getAll(pathFeatures);
 
-                  // Comprobar si el valor seleccionado está en los valores actuales
                   if (currentValues.includes(selectedValue)) {
-                      // Crear un array de nuevos valores sin el valor seleccionado
                       const newValues = currentValues.filter(value => value !== selectedValue);
-
-                      // Eliminar todos los valores del parámetro
                       url.searchParams.delete(pathFeatures);
-
-                      // Volver a agregar los valores filtrados
                       newValues.forEach(value => url.searchParams.append(pathFeatures, value));
                   } else {
-                      // Agregar el nuevo valor
                       url.searchParams.append(pathFeatures, selectedValue);
                   }
 
-                  // Eliminar el parámetro de paginación si existe
                   url.searchParams.delete('page');
-
-                  // Redirigir a la nueva URL
-                  window.location.href = url.toString();
+                  history.pushState({},null,url);
+                  history.go(0);
               });
           });
+
           rangePrice.noUiSlider.on('set',()=>{
               const url = new URL(window.location);
               url.searchParams.set('min_price', minPrice.value);
@@ -365,6 +353,7 @@
               history.pushState({},null,url);
               history.go(0);
           });
+
           rangeYear.noUiSlider.on('set',()=>{
               const url = new URL(window.location);
               url.searchParams.set('from_year', from_year.value);
@@ -373,7 +362,8 @@
               history.pushState({},null,url);
               history.go(0);
           });
-        rangeMileage.noUiSlider.on('set', () => {
+
+          rangeMileage.noUiSlider.on('set', () => {
             const url = new URL(window.location);
             url.searchParams.set('mileage_min', mileageMin.value);
             url.searchParams.set('mileage_max', mileageMax.value);
@@ -381,6 +371,7 @@
             history.pushState({},null,url);
             history.go(0);
         });
+
           keywords.addEventListener('keyup', (event) => {
               if (!executed) {
                   executed = true;
@@ -402,7 +393,6 @@
                   history.go(0);
               })
           })
-
 
           make.addEventListener('change', (event) => {
               addQueryMake(event, 'make');
@@ -456,8 +446,17 @@
               addQuery(event, 'sort');
           });
 
-          const addQuery = (event, path) => {
+          const addQuery = async (event, path) => {
               const selectedValue = event.target.value;
+              const url = new URL(window.location);
+              url.searchParams.set(path, selectedValue);
+              url.searchParams.delete('page');
+              history.pushState({},null,url);
+              history.go(0);
+          }
+
+          const addLinkQuery = async (value, path) => {
+              const selectedValue = value;
               const url = new URL(window.location);
               url.searchParams.set(path, selectedValue);
               url.searchParams.delete('page');

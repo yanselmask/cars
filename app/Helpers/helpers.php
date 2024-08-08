@@ -12,6 +12,18 @@ if (!function_exists('setActive')) {
     }
 }
 
+if (!function_exists('notificationFilament')) {
+    function notificationFilament()
+    {
+        return \Filament\Notifications\Notification::make()
+            ->actions([
+                \Filament\Notifications\Actions\Action::make('view')
+                    ->button()
+                    ->markAsRead()
+            ]);
+    }
+}
+
 if (!function_exists('viewActive')) {
     function viewActive($view = '')
     {

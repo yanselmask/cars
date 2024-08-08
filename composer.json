@@ -26,6 +26,7 @@
         "laravel/spark-paddle": "dev-main",
         "laravel/tinker": "^2.9",
         "mckenziearts/laravel-notify": "^2.5",
+        "overtrue/laravel-follow": "^5.2",
         "ralphjsmit/laravel-filament-seo": "^1.3",
         "ryangjchandler/filament-navigation": "^1.0@beta",
         "shetabit/visitor": "^2.0",

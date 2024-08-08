@@ -5,13 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Overtrue\LaravelFollow\Traits\Followable;
 use Shetabit\Visitor\Traits\Visitable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 class Make extends Model
 {
-    use HasSlug, HasFactory, Visitable;
+    use HasSlug, HasFactory, Visitable, Followable;
 
     protected $fillable = [
         'name',

@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Events\ListingWasCreated;
 use App\Models\Listing;
+use App\Models\User;
 use Illuminate\Support\Facades\Cache;
 
 class ListingObserver
@@ -23,6 +24,21 @@ class ListingObserver
             $listing->forceFill([
                 'user_id' => $user->id,
             ])->save();
+        }
+
+        if($listing->user_id) {
+            $owner = User::find($listing->user_id);
+            notificationFilament()
+                ->actions([
+                    \Filament\Notifications\Actions\Action::make('view')
+                        ->label(__('View listing'))
+                        ->button()
+                        ->url(route('listing.show', $listing->getRouteKey()))
+                ])
+            ->success()
+            ->title(__('New listing added'))
+            ->body(__(':owner has added a new listing', ['owner' => $owner->full_name]))
+            ->sendToDatabase($owner->followers);
         }
 
         if (config('listing.billing') == 'chargePerSeat') {

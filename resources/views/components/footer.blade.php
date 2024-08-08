@@ -104,8 +104,6 @@
         <p class="text-center text-lg-start order-lg-1 mb-lg-0">{!! copyright() !!}</p>
     </div>
 </footer>
-
-
 @push('js-libs')
     <script>
         const emailft = document.getElementById('newsletterftemail');
@@ -158,3 +156,4 @@
         }
     </script>
 @endpush
+@include('layouts.partials.vendor')

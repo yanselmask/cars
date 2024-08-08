@@ -1,13 +1,10 @@
 <x-app-layout>
-    @push('js-libs')
-            <script src="{{ asset('theme/js/jarallax.min.js') }}"></script>
-            <script src="{{ asset('theme/js/rellax.min.js') }}"></script>
-        @endpush
-
+    <!-- JS -->
+    @include('partials.home.js')
     @if($page)
-            @push('seo')
-                {!! seo()->for($page) !!}
-            @endpush
+    <!-- Seo -->
+        @include('partials.home.seo')
+        <!-- Section -->
     <x-section :page="$page" />
     @endif
 </x-app-layout>

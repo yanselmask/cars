@@ -38,6 +38,8 @@ Route::middleware([
             Route::get('/', 'home')->name('home');
             Route::get('/' . config('listing.path_favorites', 'favorites'), 'favorites')->name('favorites');
             Route::get('/' . config('listing.path_compares', 'compares'), 'compares')->name('compares');
+            Route::get('/compares/clear', 'clearCompares')->name('remove.compares');
+            Route::post('/toggleFollowUser', 'toggleFollowUser')->name('toggleFollowUser');
             Route::post('/newsletter/add', 'newsletterAdd')->name('newsletter.add');
             Route::post('/contact/submit', 'contactSubmit')->name('contact.submit');
             Route::post('/consult/submit', 'consultSubmit')->name('consult.submit');

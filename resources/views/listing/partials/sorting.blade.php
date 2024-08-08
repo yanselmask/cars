@@ -15,29 +15,46 @@
         <div class="d-none d-md-block border-end border-light" style="height: 1.25rem;"></div>
         <div class="d-none d-sm-block fw-bold text-light opacity-70 text-nowrap ps-md-4">
             <i class="fi-switch-horizontal me-2" style="cursor: pointer;" id="to-compare"></i>
-            <span class="align-middle">{{ __('Compare (:qty)', ['qty' => auth()?->user()?->comparedListings()->count() ?? 0 ]) }}</span>
+            <span class="align-middle compareCount">{{ __('Compare (:qty)', ['qty' => auth()?->user()?->comparedListings()->count() ?? 0 ]) }}</span>
+        </div>
+        <div class="d-flex d-sm-none">
+            <a class="nav-link nav-link-light px-2 {{ request()->query('view') == 'list' || !request()->query('view') && config('listing.listing_result_view') == 'list' ? 'active' : '' }}"
+               onclick="addLinkQuery('list', 'view')" href="javascript:;"
+               data-bs-toggle="tooltip" title="{{ __('List view') }}">
+                <i class="fi-list"></i>
+            </a>
+            <a class="nav-link nav-link-light px-2 {{ request()->query('view') == 'map' || !request()->query('view') && config('listing.listing_result_view') == 'map' ? 'active' : '' }}"
+               onclick="addLinkQuery('map', 'view')" href="javascript:;"
+               data-bs-toggle="tooltip" title="{{ __('Map view') }}">
+                <i class="fi-map-pin"></i>
+            </a>
+            <a class="nav-link nav-link-light px-2 {{ request()->query('view') == 'short' || !request()->query('view') && config('listing.listing_result_view') == 'short' ? 'active' : '' }}"
+               onclick="addLinkQuery('short', 'view')" href="javascript:;"
+               data-bs-toggle="tooltip" title="{{ __('Short view') }}">
+                <i class="fi-play-circle"></i>
+            </a>
         </div>
     </div>
     <div class="d-none d-sm-flex">
         <a class="nav-link nav-link-light px-2 {{ request()->query('view') == 'list' || !request()->query('view') && config('listing.listing_result_view') == 'list' ? 'active' : '' }}"
-           href="{{ route('listing.index', array_merge(request()->query(), ['view' => 'list'])) }}"
+           onclick="addLinkQuery('list', 'view')" href="javascript:;"
            data-bs-toggle="tooltip" title="{{ __('List view') }}">
             <i class="fi-list"></i>
         </a>
         <a class="nav-link nav-link-light px-2 {{ request()->query('view') == 'grid' || !request()->query('view') && config('listing.listing_result_view') == 'grid' ? 'active' : '' }}"
-           href="{{ route('listing.index', array_merge(request()->query(), ['view' => 'grid'])) }}"
+           onclick="addLinkQuery('grid', 'view')" href="javascript:;"
            data-bs-toggle="tooltip" title="{{ __('Grid view') }}">
             <i class="fi-grid"></i>
         </a>
         <a class="nav-link nav-link-light px-2 {{ request()->query('view') == 'map' || !request()->query('view') && config('listing.listing_result_view') == 'map' ? 'active' : '' }}"
-           href="{{ route('listing.index', array_merge(request()->query(), ['view' => 'map'])) }}"
+           onclick="addLinkQuery('map', 'view')" href="javascript:;"
            data-bs-toggle="tooltip" title="{{ __('Map view') }}">
-            <i class="fi-map"></i>
+            <i class="fi-map-pin"></i>
         </a>
         <a class="nav-link nav-link-light px-2 {{ request()->query('view') == 'short' || !request()->query('view') && config('listing.listing_result_view') == 'short' ? 'active' : '' }}"
-           href="{{ route('listing.index', array_merge(request()->query(), ['view' => 'short'])) }}"
+           onclick="addLinkQuery('map', 'view')" href="javascript:;"
            data-bs-toggle="tooltip" title="{{ __('Short view') }}">
-            <i class="fi-video"></i>
+            <i class="fi-play-circle"></i>
         </a>
     </div>
 </div>

@@ -74,7 +74,7 @@ class AppPanelProvider extends PanelProvider
             ->plugin(\Kenepa\TranslationManager\TranslationManagerPlugin::make())
             ->userMenuItems([
                 'profile' => MenuItem::make()
-                    ->label(fn () => auth()->user()->fullname)
+                    ->label(fn () => auth()->user()->full_name)
                     ->url(fn (): string => EditProfilePage::getUrl())
                     ->icon('heroicon-m-user-circle')
                     ->visible(function (): bool {
@@ -88,6 +88,7 @@ class AppPanelProvider extends PanelProvider
                     ->sort(4),
             ])
             ->brandLogo(site_logo())
-            ->favicon(site_favicon());
+            ->favicon(site_favicon())
+            ->databaseNotifications();
     }
 }

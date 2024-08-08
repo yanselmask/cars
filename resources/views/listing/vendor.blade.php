@@ -80,10 +80,11 @@
                                 @endif
                             </div>
                         @endif
+                        <x-follow-button class="btn-xs" :user="$user" />
                     </div>
                 </div>
                 <ul class="list-unstyled text-light py-2 mb-3">
-                    <li><strong>{{ __('Available car offers') }}: </strong><span
+                    <li><strong>{{ __('Available cars') }}: </strong><span
                             class="opacity-70">{{ $user->listings->count() }}</span></li>
                     <li><strong>{{ __('Cars certified') }}: </strong><span
                             class="opacity-70">{{ $user->listingsCertified->count() }}</span></li>

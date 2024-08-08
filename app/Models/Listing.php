@@ -18,7 +18,6 @@ use Spatie\Image\Enums\CropPosition;
 use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Shetabit\Visitor\Traits\Visitable;
-use Spatie\Image\Enums\AlignPosition;
 
 #[ObservedBy([ListingObserver::class])]
 class Listing extends Model implements HasMedia
@@ -318,6 +317,11 @@ class Listing extends Model implements HasMedia
     {
         return $sql->WhereDate('featured_expirate', '>', now())
                     ->orWhere('is_featured', true);
+    }
+
+    public function scopeCertified($sql)
+    {
+        return $sql->where('is_certified', true);
     }
 
     public function scopeSorting($sql)
