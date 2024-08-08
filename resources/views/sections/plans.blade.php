@@ -1,4 +1,4 @@
- <section class="container mb-5 pb-lg-5 pb-2 pb-sm-3">
+<section class="container mb-5 pb-lg-5 pb-2 pb-sm-3">
      <h2 class="h3 text-light pb-2 mb-4">{{ $data['title'] }}</h2>
      <div class="row">
          @foreach (config('spark.billables.user.plans') as $plan)
