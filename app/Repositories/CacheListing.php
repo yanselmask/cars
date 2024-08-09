@@ -51,7 +51,7 @@ class CacheListing implements ListingInterface
 
     public function getRelated($id, $limit = 6)
     {
-        $key = 'listing.related.hash.' . md5(http_build_query(request()->query()));
+        $key = 'listing.related.' . $id . '.hash.' . md5(http_build_query(request()->query()));
 
         return Cache::rememberForever($key, function () use ($id, $limit) {
             return $this->listings->getRelated($id, $limit);

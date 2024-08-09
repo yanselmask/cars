@@ -178,12 +178,14 @@ class Listing implements ListingInterface
         $listing  = $this->findById($id);
 
         return $this->listingWithResourcers()
-            ->where('id', '!=', $listing->id)
+            ->where('id','!=', $listing->id)
             ->where(function ($query) use ($listing) {
                 $query->where('user_id', $listing->user_id)
                     ->OrWhere('make_id', $listing->make_id)
                     ->OrWhere('makemodel_id', $listing->makemodel_id);
             })
+            ->approved()
+            ->OwnerHasSubscriptionActived()
             ->orderBy('price')
             ->orderByDesc('created_at')
             ->paginate($limit);
