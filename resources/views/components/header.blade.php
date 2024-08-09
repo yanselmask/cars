@@ -19,7 +19,7 @@
             @auth
                 @role('Super Admin')
                     <a class="btn btn-link btn-light btn-sm d-none d-lg-block order-lg-3"
-                       href="{{ getPath('admin') }}">
+                       href="{{ getPath('admin',true) }}">
                         <i class="fi-user me-2"></i>{{ __('Dashboard') }}</a>
                 @else
                     <a class="btn btn-link btn-light btn-sm d-none d-lg-block order-lg-3"
