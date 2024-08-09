@@ -7,6 +7,7 @@ use App\Filament\Widgets\DashboardOverview;
 use App\Filament\Widgets\UsersOverview;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Radio;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -72,6 +73,28 @@ class AdminPanelProvider extends PanelProvider
             ->plugin(FilamentSpatieRolesPermissionsPlugin::make())
             ->plugin(
                 \RyanChandler\FilamentNavigation\FilamentNavigation::make()
+                    ->itemType('Page',[
+                        Select::make('page')
+                            ->options(\App\Models\Page::select('slug','name')
+                                ->Published()
+                                ->get()
+                                ->mapWithKeys(function ($item) {
+                                    return [$item->slug => $item->name];
+                                })->toArray())
+                            ->required(),
+                        ]
+                    )
+                    ->itemType('Post',[
+                            Select::make('post')
+                                ->options(\App\Models\Post::select('slug','name')
+                                    ->Published()
+                                    ->get()
+                                    ->mapWithKeys(function ($item) {
+                                        return [$item->slug => $item->name];
+                                    })->toArray())
+                                ->required(),
+                        ]
+                    )
                     ->withExtraFields([
                         TextInput::make('icon')
                             ->label(__('Icon')),
@@ -83,6 +106,16 @@ class AdminPanelProvider extends PanelProvider
                         ])
                         ->inline()
                         ->inlineLabel(),
+                        Radio::make('authorization')
+                            ->label('Authorization')
+                            ->options([
+                                'guest' => __('Guest'),
+                                'auth' => 'Auth',
+                                'all' => __('All'),
+                            ])
+                            ->inline()
+                            ->inlineLabel()
+                            ->required(),
                         TextInput::make('classes')
                         ->label(__('Classes')),
                         Checkbox::make('divider'),

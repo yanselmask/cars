@@ -41,6 +41,8 @@ class BlogController extends Controller
 
     public function show(Post $post)
     {
+        abort_unless($post->actived,404);
+
         $post = $this->posts->findById($post->id);
 
         visitor()->visit($post);

@@ -8,7 +8,8 @@ class Pages implements PagesInterface
 {
     public function findById($id)
     {
-        return Page::where('id', $id)
+        return Page::published()
+            ->where('id', $id)
             ->with('user')
             ->first();
     }

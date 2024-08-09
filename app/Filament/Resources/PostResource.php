@@ -183,7 +183,8 @@ class PostResource extends Resource
                             Forms\Components\Grid::make(2)
                             ->schema([
                                 Forms\Components\Select::make('status')
-                                    ->options(Status::getLabels()),
+                                    ->options(Status::getLabels())
+                                    ->default(\App\Enums\Status::PUBLISHED),
                                 Forms\Components\Select::make('user_id')
                                     ->relationship(name: 'user', titleAttribute: 'name')
                                     ->default(auth()->user()->id),

@@ -41,6 +41,11 @@ class Page extends Model
         return $this->belongsToMany(FrontSection::class)->withPivot('sort_order')->orderBy('sort_order');
     }
 
+    public function getActivedAttribute()
+    {
+       return $this->published()->where('id', $this->id)->count();
+    }
+
     /**
      * Get the route key for the model.
      *
@@ -49,5 +54,10 @@ class Page extends Model
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public function scopePublished($query)
+    {
+        return $query->where('status', \App\Enums\Status::PUBLISHED);
     }
 }

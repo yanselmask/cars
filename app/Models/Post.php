@@ -158,4 +158,9 @@ class Post extends Model implements HasMedia
         // Guarda el contenido HTML modificado
         return $dom->saveHTML();
     }
+
+    public function getActivedAttribute()
+    {
+        return $this->published()->where('id', $this->id)->count();
+    }
 }

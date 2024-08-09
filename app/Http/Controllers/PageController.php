@@ -18,6 +18,8 @@ class PageController extends Controller
 
     public function show(Page $page)
     {
+        abort_unless($page->actived,404);
+
         $page = $this->pages->findById($page->id);
 
         visitor()->visit($page);
