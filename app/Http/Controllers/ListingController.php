@@ -21,7 +21,7 @@ class ListingController extends Controller
        $listings = match(request()->query('view')){
            'map' => $this->listings->getPaginated(config('listing.items_paginate_for_view_map')),
            'short' => $this->listings->getShortsPaginated(config('listing.items_paginate_for_short_view')),
-           default => $this->listings->getPaginated()
+           default => $this->listings->getPaginated(config('listing.items_paginate'))
        };
 
         if(request()->has('markers'))
