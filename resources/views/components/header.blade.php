@@ -27,10 +27,17 @@
                         <i class="fi-user me-2"></i>{{ __('Dashboard') }}</a>
                 @endrole
             @if (auth()->user()->canPublishListing())
-                <a class="btn btn-primary btn-sm ms-2 order-lg-3"
-                    href="{{ getPath('vendor', true) . 'listings/create' }}">
-                    <i class="fi-plus me-2"></i>{{ __('Sell car') }}
-                </a>
+                        @role('Super Admin')
+                        <a class="btn btn-primary btn-sm ms-2 order-lg-3"
+                           href="{{ getPath('admin', true) . 'listings/create' }}">
+                            <i class="fi-plus me-2"></i>{{ __('Sell car') }}
+                        </a>
+                    @else
+                        <a class="btn btn-primary btn-sm ms-2 order-lg-3"
+                            href="{{ getPath('vendor', true) . 'listings/create' }}">
+                            <i class="fi-plus me-2"></i>{{ __('Sell car') }}
+                        </a>
+                        @endrole
             @endif
             @endauth
         @endif
