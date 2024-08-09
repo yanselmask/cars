@@ -41,6 +41,7 @@ class GroupResource extends Resource
                               ->translateLabel(),
                           Forms\Components\Select::make('status')
                               ->options(\App\Enums\Status::getLabels())
+                              ->default(\App\Enums\Status::PUBLISHED)
                               ->required()
                       ]),
                   Forms\Components\FileUpload::make('icon')

@@ -20,11 +20,6 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
         ]);
-
-        $middleware->web([
-            \App\Http\Middleware\CheckIfAppIsModeTest::class,
-            \App\Http\Middleware\ClearCacheEveryUpdate::class,
-        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
