@@ -129,9 +129,10 @@ return [
     | footer widgets. API keys should be securely stored and managed.
     |
     */
-    'items_paginate_for_short_view' => 27,
+    'items_paginate' => env('ITEMS_PAGINATION', 8),
+    'items_paginate_for_view_map' => env('ITEMS_PAGINATION_FOR_VIEW_MAP', 20),
+    'items_paginate_for_short_view' => env('ITEMS_PAGINATION_FOR_SHORT_VIEW', 27),
     'coordinates_default' => [34.092232, -117.435051],
-    'items_paginate_for_view_map' => 20,
     'zoom_map_items' => 2,
     'zoom_map_show_listing' => 12,
     'map_api_key' => env('MAP_API_KEY', 'MmtDOmoFbdFVkOnG4QTJ'), // API key for map services
