@@ -14,7 +14,7 @@
             <div class="col text-light text-center">
                 <div class="d-table bg-dark rounded-3 mx-auto p-3">
                     <img loading="lazy" src="{{ asset('theme/img/steering-wheel.svg') }}" width="48"
-                         alt="Icon">
+                         alt="{{__('Icon')}}">
                 </div>
                 <div class="fs-sm pt-2 mt-1">{{ __('Single Owner') }}</div>
             </div>
@@ -23,7 +23,7 @@
             <div class="col text-light text-center">
                 <div class="d-table bg-dark rounded-3 mx-auto p-3"><img loading="lazy"
                                                                         src="{{ asset('theme/img/driving-test.svg') }}" width="48"
-                                                                        alt="Icon"></div>
+                                                                        alt="{{__('Icon')}}"></div>
                 <div class="fs-sm pt-2 mt-1">{{ __('Well-Equipped') }}</div>
             </div>
         @endif
@@ -31,7 +31,7 @@
             <div class="col text-light text-center">
                 <div class="d-table bg-dark rounded-3 mx-auto p-3"><img loading="lazy"
                                                                         src="{{ asset('theme/img/accident.svg') }}" width="48"
-                                                                        alt="Icon"></div>
+                                                                        alt="{{__('Icon')}}"></div>
                 <div class="fs-sm pt-2 mt-1">{{ __('No Accident / Damage Reported') }}</div>
             </div>
         @endif

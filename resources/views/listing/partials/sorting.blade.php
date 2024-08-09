@@ -18,7 +18,7 @@
             <span class="align-middle compareCount">{{ __('Compare (:qty)', ['qty' => auth()?->user()?->comparedListings()->count() ?? 0 ]) }}</span>
         </div>
         <div class="d-flex d-sm-none">
-            <a class="nav-link nav-link-light px-2 {{ request()->query('view') == 'list' || !request()->query('view') && config('listing.listing_result_view') == 'list' ? 'active' : '' }}"
+            <a class="nav-link nav-link-light px-2 {{ request()->query('view') == 'list' || request()->query('view') == 'grid' || (!request()->query('view') && config('listing.listing_result_view') == 'list' ?? !request()->query('view') && config('listing.listing_result_view') == 'grid') ? 'active' : '' }}"
                onclick="addLinkQuery('list', 'view')" href="javascript:;"
                data-bs-toggle="tooltip" title="{{ __('List view') }}">
                 <i class="fi-list"></i>

@@ -60,6 +60,20 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         ];
     }
 
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::deleted(function (User $user) {
+            \DB::transaction(function () use ($user) {
+                $user->listings()->each(function (Listing $listing) {
+                    $listing->update(['user_id' => null]);
+                });
+                $user->delete();
+            });
+        });
+    }
+
     public function canAccessPanel(Panel $panel): bool
     {
         if ($panel->getId() === config('listing.admin_path')) {
@@ -104,16 +118,31 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
 
     public function canPublishListing():bool
     {
+        if($this->isSuperAdmin())
+        {
+            return true;
+        }
+
         return $this->isSeller() && $this->credits > 0 ? $this->credits  : false;
     }
 
     public function canFeatureListing():bool
     {
+        if($this->isSuperAdmin())
+        {
+            return true;
+        }
+
         return $this->credits_features > 0 ?? false;
     }
 
     public function canLinkedVideo():bool
     {
+        if($this->isSuperAdmin())
+        {
+            return true;
+        }
+
         return $this->sparkPlan()->options['can_linked_video'] ?? false;
     }
 
@@ -197,11 +226,50 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         return $this->custom_fields_json?->facebook;
     }
 
+    public function getRunningSubscriptionAttribute()
+    {
+            return $this->HasSubscriptionActived()->where('id', $this->id)->count();
+    }
+
     public function scopeSeller($query)
     {
         return $query->whereHas('roles', function ($query) {
            $query->where('name', config('listing.seller_role'))
                 ->orWhere('name', 'Super Admin');
+        });
+    }
+
+    public function scopeSuperAdmin($query)
+    {
+        return $query->whereHas('roles', function ($query) {
+            $query->where('name', 'Super Admin');
+        });
+    }
+
+    public function scopeNotSuperAdmin($query)
+    {
+        return $query->whereHas('roles', function ($query) {
+            $query->where('name','!=', 'Super Admin');
+        });
+    }
+
+    public function scopeHasSubscriptionActived($query)
+    {
+        return $query->where(function($query){
+                    $query->whereHas('subscriptions', function ($query) {
+                        $query->where('status', 'active');
+                    })->orWhereHas('roles', function ($query) {
+                        $query->where('name', 'Super Admin');
+                    });
+                });
+    }
+
+    public function scopeDontHaveSubscriptionActived($query)
+    {
+        return $query->where(function($query){
+            $query->whereHas('subscriptions', function ($query) {
+                $query->where('status','!=', 'active');
+            });
         });
     }
 

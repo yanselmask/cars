@@ -57,7 +57,10 @@ class FrontSectionResource extends Resource
                                     Forms\Components\Select::make('listings')
                                         ->multiple()
                                         ->maxItems(3)
-                                        ->options(\App\Models\Listing::select('name', 'id')->get()->mapWithKeys(fn ($type) => [$type->id => $type->name]))
+                                        ->options(\App\Models\Listing::approved()
+                                            ->OwnerHasSubscriptionActived()
+                                            ->select('name', 'id')
+                                            ->get()->mapWithKeys(fn ($type) => [$type->id => $type->name]))
                                 ]),
                             Forms\Components\Builder\Block::make('brands')
                                 ->schema([

@@ -50,6 +50,8 @@ class ListingController extends Controller
 
     public function show(Listing $listing)
     {
+        abort_unless(( $listing->user && $listing->user->runningSubscription && $listing->status == \App\Enums\ListingStatus::APPROVED), 404);
+
         $listing = $this->listings->findById($listing->id);
 
         $related = $this->listings->getRelated($listing->id);
@@ -88,8 +90,8 @@ class ListingController extends Controller
     public function vendors()
     {
         $vendors = User::when(request()->query('city'), function ($query) {
-            $query->whereLike('custom_fields->address', '%' . request()->query('city') . '%');
-        })
+             $query->whereLike('custom_fields->address', '%' . request()->query('city') . '%');
+            })
             ->withCount([
                 'listings' => function ($query) {
                     $query->approved();
@@ -107,6 +109,7 @@ class ListingController extends Controller
                           ->featured();
                 },
             ])
+            ->HasSubscriptionActived()
             ->seller()
             ->withAvg('listings', 'price')
             ->orderByDesc('certified_count')
@@ -125,6 +128,8 @@ class ListingController extends Controller
 
     public function vendor(User $user)
     {
+        abort_unless($user->runningSubscription,404);
+
         $listings = $this->listings->getPaginateForVendor($user->id);
 
         return view('listing.vendor', compact('user', 'listings'));

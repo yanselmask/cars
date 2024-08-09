@@ -22,8 +22,6 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->web([
-//            \App\Http\Middleware\CheckIfAppIsInstalled::class,
-//            \Torann\Currency\Middleware\CurrencyMiddleware::class,
             \App\Http\Middleware\CheckIfAppIsModeTest::class,
             \App\Http\Middleware\ClearCacheEveryUpdate::class,
         ]);

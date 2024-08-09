@@ -184,7 +184,8 @@ class Listing implements ListingInterface
                     ->OrWhere('make_id', $listing->make_id)
                     ->OrWhere('makemodel_id', $listing->makemodel_id);
             })
-            ->sorting()
+            ->orderBy('price')
+            ->orderByDesc('created_at')
             ->paginate($limit);
     }
 
@@ -200,13 +201,13 @@ class Listing implements ListingInterface
                     'price_hight' => $sql->orderBy('price', 'desc'),
                     'popular' => $sql->withCount('visitLogs')
                         ->orderByDesc('visit_logs_count'),
-                    default => $sql->orderBy('id', 'desc'),
+                    default => $sql->orderByDesc('id'),
                 };
             })
             ->when(!request()->query('sort'), function ($sql) {
-                return $sql->orderByDesc('is_featured')->orderByDesc('id');
+                return $sql->orderByDesc('is_featured')
+                           ->orderByDesc('id');
             })
-            ->with('user', 'make', 'makemodel', 'type', 'transmission', 'fueltype', 'engine', 'drivetype', 'offertype', 'features', 'currency', 'condition')
             ->sorting()
             ->paginate($limit);
     }

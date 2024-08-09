@@ -30,10 +30,14 @@
                         </select>
                     </div>
                 </div>
-                @foreach ($listings as $listing)
+                @forelse ($listings as $listing)
                     <!-- Item-->
                     <x-listing-list :listing="$listing" />
-                @endforeach
+                @empty
+                    @include('listing.partials.no-vendors',[
+                        'content' => __('This seller has not yet published cars')
+                    ])
+                @endforelse
 
                 <!-- Pagination-->
                 {{ $listings->links() }}

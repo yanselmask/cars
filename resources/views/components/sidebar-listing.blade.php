@@ -68,16 +68,16 @@
                       @endforeach
                   </ul>
               </div>
+                  <div class="pb-4 mb-2">
+                      <h3 class="h6 text-light">{{ __('Keywords') }}</h3>
+                      <input type="text" placeholder="{{ __('Keywords...') }}" name="keywords"
+                             class="form-control form-control-light " id="keywords"
+                             value="{{ request()->query('keywords') }}">
+                  </div>
               <div class="pb-4 mb-2">
                   <h3 class="h6 text-light">{{ __('Location') }}</h3>
                   <input value="{{request()->query('location')}}" class="form-control form-control-light" id="autocomplete" placeholder="{{__('Location')}}">
                   <div id="map"></div>
-              </div>
-              <div class="pb-4 mb-2">
-                  <h3 class="h6 text-light">{{ __('Keywords') }}</h3>
-                  <input type="text" placeholder="{{ __('Keywords...') }}" name="keywords"
-                      class="form-control form-control-light " id="keywords"
-                      value="{{ request()->query('keywords') }}">
               </div>
               <div class="pb-4 mb-2">
                   <h3 class="h6 text-light">{{ __('Make & Model') }}</h3>
@@ -323,7 +323,6 @@
           const btnsremoveparams = document.querySelectorAll('.remove-param');
           const features = document.querySelectorAll('.feature');
           const pathFeatures = 'features[]';
-          let executed = false;
 
           features.forEach((feature) => {
               feature.addEventListener('change', (event) => {
@@ -372,13 +371,8 @@
             history.go(0);
         });
 
-          keywords.addEventListener('keyup', (event) => {
-              if (!executed) {
-                  executed = true;
-                  setTimeout(() => {
-                      addQuery(event, 'keywords');
-                  }, 1500);
-              }
+          keywords.addEventListener('focusout', (event) => {
+              addQuery(event, 'keywords');
           });
 
           btnsremoveparams.forEach((btn) => {

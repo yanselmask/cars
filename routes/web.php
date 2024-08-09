@@ -21,6 +21,8 @@ Route::get('/update',function(){
 });
 Route::middleware([
     'auth',
+    \App\Http\Middleware\CheckIfAppIsInstalled::class,
+    \Torann\Currency\Middleware\CurrencyMiddleware::class,
 ])->group(function () {
     Route::controller(HomeController::class)
         ->group(function () {

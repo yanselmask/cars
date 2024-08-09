@@ -41,7 +41,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    @foreach ($vendors as $vendor)
+                    @forelse ($vendors as $vendor)
                         <!-- Complex options via external local .json file -->
                         <!-- Content overlay on hover -->
                     <div class="col-sm-4 mb-3">
@@ -80,7 +80,11 @@
                             </div>
                         </div>
                     </div>
-                    @endforeach
+                    @empty
+                        @include('listing.partials.no-vendors',[
+                        'content' => __('It seems that we do not have a seller available')
+                        ])
+                    @endforelse
                     {{ $vendors->withQueryString()->links() }}
                 </div>
             </div>

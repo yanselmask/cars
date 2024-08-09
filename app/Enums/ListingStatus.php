@@ -12,12 +12,15 @@ enum ListingStatus: int implements HasLabel, HasColor
     case APPROVED = 1;
     case REJECTED = 2;
 
+    case EXPIRATED = 3;
+
     public function getColor(): string | array | null
     {
         return match ($this) {
             self::PENDING => 'warning',
             self::APPROVED => 'success',
             self::REJECTED => 'danger',
+            self::EXPIRATED => 'secondary',
         };
     }
 
@@ -32,6 +35,7 @@ enum ListingStatus: int implements HasLabel, HasColor
             0 => __('Pending'),
             1 => __('Approved'),
             2 => __('Rejected'),
+            3 => __('Expirated'),
         ];
     }
 }

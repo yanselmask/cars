@@ -124,7 +124,10 @@ class PostResource extends Resource
                                         Forms\Components\Select::make('listings')
                                             ->multiple()
                                             ->maxItems(6)
-                                            ->options(\App\Models\Listing::approved()->select('name', 'id')->get()->mapWithKeys(fn ($type) => [$type->id => $type->name]))
+                                            ->options(\App\Models\Listing::approved()
+                                                        ->OwnerHasSubscriptionActived()
+                                                        ->select('name', 'id')->get()
+                                                        ->mapWithKeys(fn ($type) => [$type->id => $type->name]))
                                     ]),
                                 Forms\Components\Builder\Block::make('map')
                                     ->schema([
@@ -162,7 +165,9 @@ class PostResource extends Resource
                                         Forms\Components\Select::make('ids')
                                             ->multiple()
                                             ->maxItems(6)
-                                            ->options(\App\Models\Post::published()->select('name', 'id')->get()->mapWithKeys(fn ($post) => [$post->id => $post->name]))
+                                            ->options(\App\Models\Post::published()
+                                                        ->select('name', 'id')->get()
+                                                        ->mapWithKeys(fn ($post) => [$post->id => $post->name]))
                                     ]),
                             ])->collapsible(),
                             SEO::make()

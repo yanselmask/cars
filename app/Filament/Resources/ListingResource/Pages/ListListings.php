@@ -71,6 +71,17 @@ class ListListings extends ListRecords
                 })
                 ->badgeColor('danger')
                 ->modifyQueryUsing(fn (Builder $query) => $query->Rejected()),
+            __('Expirates') => Tab::make()
+                ->icon('heroicon-m-eye-slash')
+                ->badge(function(){
+                    if(auth()->user()->isSuperAdmin())
+                    {
+                        return Listing::query()->expirated()->count();
+                    }
+                    return Listing::query()->where('user_id',auth()->id())->expirated()->count();
+                })
+                ->badgeColor('secondary')
+                ->modifyQueryUsing(fn (Builder $query) => $query->expirated()),
         ];
     }
 }

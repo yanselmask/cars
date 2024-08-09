@@ -1,10 +1,10 @@
 @php
     $listings = \App\Models\Listing::query()
     ->with('user', 'make', 'makemodel', 'type', 'transmission', 'fueltype', 'engine', 'drivetype', 'exteriorcolor', 'interiorcolor', 'offertype', 'features', 'currency', 'condition')
+    ->whereIn('id',$data['listings'])
     ->approved()
+    ->OwnerHasSubscriptionActived()
     ->limit(6)
-    ->approved()
-    ->orderByDesc('created_at')
     ->get()
 @endphp
 @if($listings->count() > 0)

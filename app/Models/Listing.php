@@ -18,6 +18,7 @@ use Spatie\Image\Enums\CropPosition;
 use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Shetabit\Visitor\Traits\Visitable;
+use function Clue\StreamFilter\fun;
 
 #[ObservedBy([ListingObserver::class])]
 class Listing extends Model implements HasMedia
@@ -211,6 +212,11 @@ class Listing extends Model implements HasMedia
         return $this->belongsTo(Currency::class);
     }
 
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
+    }
+
     public function getPricingAttribute()
     {
         return currency_format($this->price, $this->currency->code ?? config('currency.default'));
@@ -304,7 +310,8 @@ class Listing extends Model implements HasMedia
 
     public function scopeExpirated($sql)
     {
-        return $sql->whereDate('listing_expirate', '<=', now());
+        return $sql->where('status', \App\Enums\ListingStatus::EXPIRATED)
+                   ->orWhereDate('listing_expirate', '<=', now());
     }
 
     public function scopeNotExpirated($sql)
@@ -324,12 +331,27 @@ class Listing extends Model implements HasMedia
         return $sql->where('is_certified', true);
     }
 
+    public function scopeOwnerHasSubscriptionActived($query)
+    {
+        return $query->whereHas('user',function($query){
+                    $query->HasSubscriptionActived();
+               });
+    }
+
+    public function scopeOwnerDontHaveSubscriptionActived($query)
+    {
+        return $query->whereHas('user',function($query){
+            $query->DontHaveSubscriptionActived();
+        });
+    }
+
     public function scopeSorting($sql)
     {
         return $sql
+            ->withCount('visitLogs')
+            ->OwnerHasSubscriptionActived()
             ->approved()
             ->NotExpirated()
-            ->withCount('visitLogs')
             ->orderByDesc('visit_logs_count')
             ->orderByDesc('is_featured')
             ->orderByDesc('is_certified')

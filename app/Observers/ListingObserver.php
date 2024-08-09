@@ -27,7 +27,9 @@ class ListingObserver
         }
 
         if($listing->user_id) {
+            //Getting owner of listing
             $owner = User::find($listing->user_id);
+            //Send notification to followers
             notificationFilament()
                 ->actions([
                     \Filament\Notifications\Actions\Action::make('view')

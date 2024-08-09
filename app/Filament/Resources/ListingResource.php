@@ -29,7 +29,7 @@ class ListingResource extends Resource
 
     protected static ?string $navigationGroup = 'Listings';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 0;
 
     public static function form(Form $form): Form
     {
@@ -75,12 +75,20 @@ class ListingResource extends Resource
                                         ->rules(['alpha_dash'])
                                         ->disabled(!auth()->user()->sparkPlan()?->options['can_change_slug'] ?? true),
                                 ]),
-                            Forms\Components\Radio::make('listedby_id')
-                                ->label(__('Listed By'))
-                                ->options(\App\Models\ListedBy::select('name', 'id')->get()->mapWithKeys(fn ($listed) => [$listed->id => $listed->name]))
-                                ->descriptions(\App\Models\ListedBy::select('description', 'id')->get()->mapWithKeys(fn ($listed) => [$listed->id => $listed->description]))
-                                ->required()
-                                ->columnSpanFull(),
+                            Forms\Components\Grid::make(2)
+                            ->schema([
+                                Forms\Components\Radio::make('listedby_id')
+                                    ->label(__('Listed By'))
+                                    ->options(\App\Models\ListedBy::select('name', 'id')->get()->mapWithKeys(fn ($listed) => [$listed->id => $listed->name]))
+                                    ->descriptions(\App\Models\ListedBy::select('description', 'id')->get()->mapWithKeys(fn ($listed) => [$listed->id => $listed->description]))
+                                    ->required(),
+                                Forms\Components\Radio::make('group_id')
+                                    ->label(__('Group'))
+                                    ->inline()
+                                    ->inlineLabel(false)
+                                    ->options(\App\Models\Group::select('name', 'id')->active()->get()->mapWithKeys(fn ($group) => [$group->id => $group->name]))
+                                    ->required()
+                            ]),
                             Forms\Components\Radio::make('is_featured')
                                 ->label(__('Featured'))
                                 ->options(fn (): array => match (auth()->user()->canFeatureListing() || auth()->user()->isSuperAdmin()) {
@@ -225,7 +233,7 @@ class ListingResource extends Resource
                             SpatieMediaLibraryFileUpload::make('gallery')
                                 ->label(__('Gallery'))
                                 ->collection('gallery')
-                                ->getPanelLayout('grid')
+                                ->panelLayout('grid')
                                 ->multiple((isset(auth()->user()->sparkPlan()->options['images_limit']) && auth()->user()->sparkPlan()->options['images_limit'] > 1) ? true : false)
                                 ->reorderable()
                                 ->maxFiles(auth()->user()->sparkPlan()->options['images_limit'] ?? 1)
@@ -236,7 +244,7 @@ class ListingResource extends Resource
                                 ->hint(new HtmlString('<a href="/billing">Premium</a>'))
                                 ->hintIcon('heroicon-m-question-mark-circle', tooltip: __('This is a premium option'))
                                 ->hintColor('primary')
-                                ->disabled(!auth()->user()->canLinkedVideo())
+                                ->disabled(fn() => !auth()->user()->canLinkedVideo())
                         ]),
                     Forms\Components\Wizard\Step::make(__('Location'))
                         ->schema([
@@ -276,6 +284,7 @@ class ListingResource extends Resource
                                     ->lazy(), // important to use lazy, to avoid updates as you type
                             ]),
                             \Cheesegrits\FilamentGoogleMaps\Fields\Geocomplete::make('full_address')
+                                ->countries(config('listing.geo_countries'))
                                 ->label(__('Full Address'))
                                 ->afterStateUpdated(function ($state, callable $get, callable $set) {
                                     $set('city',app('geocoder')->geocode($state)->get()[0]->getLocality());

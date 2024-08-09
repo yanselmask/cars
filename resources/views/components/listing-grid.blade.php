@@ -1,4 +1,4 @@
-<div class="{{ $class }} listing">
+<div class="{{ $class }} listing @include('listing.partials.border-type') listing-grid">
     <div class="tns-carousel-wrapper card-img-top card-img-hover"><a class="img-overlay"
             href="{{ route('listing.show', $listing) }}"></a>
         @include('components.badges-listing')
